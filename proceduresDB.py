@@ -13,6 +13,8 @@ class ProceduresDB:
         with open("testPDB/pdb.json", "r") as read_file:
             ProceduresDB.data = json.load(read_file)
             # assert procData is-a dictionary
+        if not data:
+            print("testPDB/pdb.json not readable.")
 
     def sortedNames():
         return ProceduresDB.data.keys()

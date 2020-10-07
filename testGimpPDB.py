@@ -182,7 +182,7 @@ def testProcs(image, drawable):
 
     for key in ProceduresDB.sortedNames():
 
-        # print(key)
+        print(key)
         TestStats.sample("procedures")
 
         if UserFilter.userWantsTest(key):
