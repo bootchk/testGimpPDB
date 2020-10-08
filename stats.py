@@ -36,8 +36,10 @@ class TestStats:
     @classmethod
     def summarize(cls):
 
-        print("megaTestGimp Test Statistics")
         print("============================")
+        print("testGimpPDB Statistics")
+        
         for key in cls.stats:
             print (f" {key} : {cls.stats[key]}" )
         print("============================")
+        print("")

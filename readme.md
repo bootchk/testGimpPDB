@@ -2,12 +2,13 @@
 
 A Gimp plugin that tests most procedures in Gimp PDB.
 
+*!!! Use only in a testing environment, not in a production environment, since it will alter your local GIMP resources!!!*
+
 Appears in menus as *Test>Test Gimp PDB...*
 
 Not totally automated, a human must read and interpret a log.
 
 A user interface lets you choose subsets of PDB procedures.
-
 
 Improvises parameters to plugins.
 Values are of the correct type, not necessarily in range.
@@ -34,6 +35,7 @@ Some PDB procedures are never tested because they obstruct automated testing:
    - recurse (i.e. this plugin doesn't test itself)
    - delete test data needed by other tests
    - quit Gimp
+   - other special cases
 
 It can test all procedures in *your* PDB.
 The PDB contains procedures of a stock Gimp installation (so-called internal procedures, and official plugins)
@@ -47,9 +49,12 @@ Plugins are tested non-interactively, with improvised actual parameters
 Dumb testing:
 
   - certain semantic constraints are not understood by the tests,
-    e.g. tests don't understand certain procedures will not create Gimp artifacts that already exist.
+    e.g. tests don't understand certain procedures will not try to create Gimp artifacts that already exist.
   - tests do not understand how procedure result relates to inputs,
-    only that there should be a result of a certain type.  I.E. output values are not tested.
+    only that there should be a returned result of a certain type.  I.E. result values are not compared to an expected value (except of course for the status result)
+  - tests do not understand procedure side effects
+    I.E. changes to passed images are not compared to an expected image
+    and other changes to Gimp resources are not examined.
 
 Primarily tests that a procedure can be called without engendering:
   - seg fault
@@ -80,6 +85,19 @@ Note the main plugin file must be named same as directory (since Gimp v3.)
   - PyGObject Python module
   - Various standard Python modules (e.g. logging.)
 
+## Warning
+
+Running this plugin can call many procedures that create local Gimp resources such as brushes.  Don't run this plugin in an environment that contains production resources.  You may need to periodically flush local Gimp resources ( e.g. delete subsets of .config/GIMP/2.99/)
+
+## Regenerating PDB metadata
+
+This plugin reads the formal specifications for PDB procedures from a .json file in this repository.
+The .json file is a snapshot from a particular build and installation of Gimp.
+It should be periodically regenerated.
+See the directory testPDB.
+To regenerate, you must run a plugin that calls the PDB procedure dump_to_file (which might go away?)
+Then run the nawk script testPDBTxt.nawk to convert to JSON.
+
 
 ## TODO
 
@@ -89,3 +107,5 @@ Note the main plugin file must be named same as directory (since Gimp v3.)
     where at least one element of the set
     typically would be in range.
   - capture test results and compare to known/previous results
+  - allow the subset of interactive plugins to be tested (currently excluded)
+  - certain rare parameter types not yet improvised

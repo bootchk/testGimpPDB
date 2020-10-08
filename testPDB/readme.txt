@@ -1,8 +1,8 @@
 This directory contains a nawk script to convert a pdb dump (pdb.txt) to json (pdb.json).
 And examples of said data files, which should be refreshed as gimp repository changes.
 
-pdb.json is used as the input to plug-ins/megaTestGimp.
-megaTestGimp is data-driven (pdb.json), automated test of PDB.
+pdb.json is used as the input to plug-ins/testGimpPDB.
+testGimpPDB is data-driven (pdb.json), automated test of PDB.
 
 For now the tests are fuzzy,
 i.e. with type valid but arbitrarily valued inputs to procedures under test,
@@ -21,4 +21,4 @@ Process:
 
 3) edit pdb.json to remove the last comma
 
-3) run the test plugin    Test>MegaTestGimp  which reads the .json
+3) run the test plugin    Test>testGimpPDB  which reads the .json

@@ -2,7 +2,7 @@
 
 
 """
-Logging for megaTestGimp
+Logging for testGimpPDB
 """
 
 
@@ -10,7 +10,7 @@ Logging for megaTestGimp
 import logging
 
 # logger for this plugin.  GimpFu has its own logger
-logger = logging.getLogger('megaGimpTest')
+logger = logging.getLogger('testGimpPDB')
 
 # TODO make the level come from the command line or the environment
 logger.setLevel(logging.INFO)
@@ -61,10 +61,13 @@ class TestLog:
             result = False
         else:
             print("=================================")
-            print("MegaTest summary.")
-            print("=================================")
+            print("testGimpPDB summary:")
+
             for line in TestLog.logSummary:
                 print(line)
+
+            print("end of testGimpPDB summary.")
+            print("=================================")
             print("")
             result = True
         return result

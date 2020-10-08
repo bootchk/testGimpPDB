@@ -1,5 +1,5 @@
 """
-Utilities for plugin megaTestGimp
+Utilities for plugin testGimpPDB
 
 """
 from procedureCategory import ProcedureCategory
