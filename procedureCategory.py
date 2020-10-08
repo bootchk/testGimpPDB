@@ -11,6 +11,9 @@ class ProcedureCategory:
        "GIMP Plug-In",
        "Internal GIMP procedure",
        "Temporary Procedure"
+
+    We further divide the "GIMP Plug-in catetory" by parsing
+    procedure names which should follow naming convention.
     """
 
     def isScriptFu(procName):
@@ -46,9 +49,14 @@ class ProcedureCategory:
         return procName.find("-delete")>0
 
     def isLoadSave(procName):
-        """ save/load tested in another plugin testGimpExportImport
+        """
+        Does procedure save/load images?
 
-        Typically name file-<foo>-save and -load"""
+        Note is another plugin in github bootch/testGimpExportImport
+        will better test such procedures (using a test set of file formats.)
+
+        Typically name file-<foo>-save and -load
+        """
         if (procName.startswith('file')):
             return True
         return False

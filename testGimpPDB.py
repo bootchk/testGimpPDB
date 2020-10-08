@@ -54,6 +54,11 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
     # not all pdb procedures use the current image and Drawable
     # They are passed so they are in scope when we eval
 
+    """
+    form a GimpFu statement.
+    Since this is GimpFu plugin, any calls to other plugins
+    will be run-mode noninteractive.
+    """
     newName = procName.replace("-", "_")
     testStmt = "pdb." + newName + params
 
