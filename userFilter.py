@@ -28,17 +28,18 @@ class UserFilter:
 
     """
     Divide tests into exclusive subsets.
-    User chooses from among subsets.
+    Test person chooses from among subsets.
+    Note the subsets use naming conventions, not only the declared proc type.
     """
     def userWantsTest(procedure_name):
         result = True
         if   ProcedureCategory.isScriptFu(procedure_name):
             if not UserFilter._shouldTestScriptFu :
                 result = False
-        if   ProcedureCategory.isPythonFu(procedure_name):
+        elif   ProcedureCategory.isPythonFu(procedure_name):
             if not UserFilter._shouldTestPythonFu :
                 result = False
-        if   ProcedureCategory.isCPlugin(procedure_name):
+        elif   ProcedureCategory.isCPlugin(procedure_name):
             if not UserFilter._shouldTestCPlugin :
                 result = False
         elif ProcedureCategory.isLoadSave(procedure_name):
@@ -49,9 +50,9 @@ class UserFilter:
                 result = False
         else:
             """
-            Other will be: Temporary and Internal and Extension
-            and anything not named properly
-            TODO allow choice of Temporary or Internal
+            Other is: Internal or Extension
+            or any procedure not named properly
+            TODO allow choice of Internal or Extension
             """
             if not UserFilter._shouldTestOther:
                 result = False
