@@ -28,6 +28,13 @@ The log will contain interleaved log messages from:
 
 Each of those can be configured/built to do more/less logging.
 
+At the end of the log:
+  - test statistics and summary by this plugin
+  - a summary by GimpFu
+  - a final Python exception if GimpFu discovered any errors
+  - many other usually spurious(?) messages when Gimp recovers from this plugin
+Note the above may change as this plugin, GimpFu, and Gimp evolve.
+
 ## The extent of testing
 
 Some PDB procedures are never tested because they obstruct automated testing:
@@ -36,6 +43,7 @@ Some PDB procedures are never tested because they obstruct automated testing:
    - delete test data needed by other tests
    - quit Gimp
    - other special cases
+Special cases are hardcoded in excludedTestCases.py
 
 It can test all procedures in *your* PDB.
 The PDB contains procedures of a stock Gimp installation (so-called internal procedures, and official plugins)

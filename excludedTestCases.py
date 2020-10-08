@@ -1,42 +1,11 @@
 """
-Utilities for plugin testGimpPDB
-
+Understands what procedures are not easily testable
+for various reasons.
 """
 from procedureCategory import ProcedureCategory
 
 
-
-def shouldTestProcedure(procName):
-    """ Decides to NOT test certain procedures.
-
-    Generally, any that prevent lights-out testing.
-    Reasons:
-    - infinite recursion
-    - quitting
-    - interactive, open windows and hang test waiting on user Input
-    - delete test objects (they should be run last)
-    """
-
-    if ProcedureCategory.isDeleting(procName):
-        return False
-
-    # We will test load/save if user requests it.
-    # But better to use plugin testGimpExportImport
-    # OLD if isLoadSave(procName):
-    #    return False
-
-    # !!! Not test self, infinite recursion
-    if procName in ("python-fu-mega-test-gimp"):
-        return False
-
-    # !!! If we quit, testing stops
-    if procName in ("gimp-quit"):
-        return False
-
-    # !!! This opens a dialog that locks GUI
-    if procName in ("plug-in-busy-dialog"):
-        return False
-
+def isProcedureSpecialCase(procName):
     """
     Special cases.
     Some open windows, impeding lights-out testing.
@@ -44,7 +13,7 @@ def shouldTestProcedure(procName):
 
     Others are known bad actors, usually they hang or take too long.
     """
-    if procName in (
+    return procName in (
        # TODO why are these excluded?
        "plug-in-animationplay",
        "python-fu-console",
@@ -62,7 +31,7 @@ def shouldTestProcedure(procName):
        "script-fu-ripply-anim",
        # ??
        "extension-script-fu",
-       #
+       # don't test example plugins
        "goat-exercise-lua",
        "goat-exercise-python",
        # temporary procedures, author Itkin
@@ -96,16 +65,47 @@ def shouldTestProcedure(procName):
        "gimp-online-bugs-features",
        "gimp-online-roadmap",
        # gimp-web
-        ):
-        result = False
-    else:
-        result = True
-    return result
+        )
+
+
+
+def shouldTestProcedure(procName):
+    """ Decides to NOT test certain procedures.
+
+    Generally, any that prevent lights-out testing.
+    Reasons:
+    - infinite recursion
+    - quitting
+    - interactive, open windows and hang test waiting on user Input
+    - delete test objects (they should be run last)
+    """
+
+    isExcluded =  (
+       # procedures that delete improvised resources
+       ProcedureCategory.isDeleting(procName)
+       # self, infinite recursion
+       or (procName in ("python-fu-test-gimp-pdb"))
+       # counterproductive to abort gimp
+       or (procName in ("gimp-quit"))
+       # opens a dialog that locks GUI
+       or (procName in ("plug-in-busy-dialog"))
+       # more special cases
+       or (isProcedureSpecialCase(procName))
+    )
+    return not isExcluded
+
+    # We will test load/save if user requests it.
+    # But better to use plugin testGimpExportImport
+    # OLD if isLoadSave(procName):
+
+
+
+
 
 # Not used?
 def printPDBError(testStmt):
     """
-    megaGimpTest is-a GimpFu plugin, so pdb is defined,
+    testGimpPDB is-a GimpFu plugin, so pdb is defined,
     but get_last_error() is not *in* the PDB, only a method of the pdb.
     Hence we call Gimp.get_pdb().
 

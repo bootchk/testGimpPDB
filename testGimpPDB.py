@@ -30,7 +30,7 @@ from gi.repository import Gio   # Gio.File
 from gimpfu import *
 
 from proceduresDB import ProceduresDB
-from megaGimpTestUtils import *
+from excludedTestCases import *
 from procedureCategory import ProcedureCategory
 from userFilter import UserFilter
 from testHarness import *
