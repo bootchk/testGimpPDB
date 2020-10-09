@@ -9,6 +9,9 @@ class TestStats:
     def _sample(cls, name):
         """ Increment count of samples of name. """
 
+        # strip trailing newline from error messages from other programs
+        name = name.rstrip("\n")
+
         if name in cls.stats:
             cls.stats[name] = cls.stats[name] + 1
         else:
@@ -16,7 +19,11 @@ class TestStats:
 
     @classmethod
     def sample(cls, name, subcategory=None):
-        """ Increment count of samples of name. """
+        """ Increment count of samples of name.
+
+        If subcategory not None, scan it for common strings
+        and also sample it under name+subcategory.
+        """
 
         # sample the main stat
         cls._sample(name)
@@ -38,7 +45,7 @@ class TestStats:
 
         print("============================")
         print("testGimpPDB Statistics")
-        
+
         for key in cls.stats:
             print (f" {key} : {cls.stats[key]}" )
         print("============================")

@@ -1,8 +1,12 @@
 # TestGimpPDB
 
-A Gimp plugin that tests most procedures in Gimp PDB.
+A Gimp plugin that minimally tests most procedures in Gimp PDB.
 
 *!!! Use only in a testing environment, not in a production environment, since it will alter your local GIMP resources!!!*
+
+*!!! Work in progress.  This is not stable. It is not a complete test of Gimp.  It is not sanctioned by Gimp.org!!!*
+
+I am using it to test Gimp 3.  With minor changes, it might also work for other Gimp versions.
 
 Appears in menus as *Test>Test Gimp PDB...*
 
@@ -10,21 +14,43 @@ Not totally automated, a human must read and interpret a log.
 
 A user interface lets you choose subsets of PDB procedures.
 
-Improvises parameters to plugins.
-Values are of the correct type, not necessarily in range.
+Mostly "sanity" tests.  Only the PDB status result is compared to an expected value.
+
+Not all PDB procedures will pass since it dumbly improvises parameters to plugins.
+Parameter values are of the correct type, not necessarily in range, nor semantically meaningful.
+
+## Why test the PDB?
+
+The PDB is high in the stack of layers, so testing it exercises many layers.
+
+The PDB contains:
+
+  - plugins, that themselves call other plugins or internal procedures in the PDB.
+  - internal procedures (interface to libgimp)
+  - other extensions
+
+Layers that may be exercised by this testing :
+
+  - plugins and internal procedures in the PDB
+  - interpreters (for Scheme, Python, Lua plugins)
+  - libgimp
+  - gimp core 
+  - libraries that Gimp uses
 
 ## The log
 
 The log defaults to standard out.
 Thus you should start Gimp in a console.
 
-The log will contain interleaved log messages from:
+The log might contain interleaved log messages from:
 
-  - the procedure
+  - the PDB procedure
   - GimpFu
+  - PyGObject
   - Python interpreter
   - Gimp
   - Babl and Gegl
+  - GLib and similar
 
 Each of those can be configured/built to do more/less logging.
 
@@ -32,7 +58,9 @@ At the end of the log:
   - test statistics and summary by this plugin
   - a summary by GimpFu
   - a final Python exception if GimpFu discovered any errors
-  - many other usually spurious(?) messages when Gimp recovers from this plugin
+    (in the execution of this plugin, which encompasses all called PDB procedures.)
+  - many other usually spurious(?) messages when Gimp recovers from this plugin.
+
 Note the above may change as this plugin, GimpFu, and Gimp evolve.
 
 ## The extent of testing
@@ -42,8 +70,7 @@ Some PDB procedures are never tested because they obstruct automated testing:
    - recurse (i.e. this plugin doesn't test itself)
    - delete test data needed by other tests
    - quit Gimp
-   - other special cases
-Special cases are hardcoded in excludedTestCases.py
+   - other special cases (hardcoded in excludedTestCases.py)
 
 It can test all procedures in *your* PDB.
 The PDB contains procedures of a stock Gimp installation (so-called internal procedures, and official plugins)
@@ -78,6 +105,20 @@ Gimp errors that indicate flaw in Gimp:
   - wrong parameter types
   - almost any other error e.g. ScriptFu: unknown symbol
 
+# Improvised test data
+
+The primary test data is the image that is open when you begin testing.
+This plugin clones it and passes the clone to most procedures.
+Some procedures expect certain qualities of the image:
+  - a selection exists
+  - strokes exist
+  - a particular image mode e.g. RGBA
+  - etc.
+
+Thus you can repeat testing with different starting images.
+
+Most other improvised data is canned (hard coded) and arbitrary,
+but not randomly chosen.
 
 ## Installation
 

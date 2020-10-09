@@ -32,15 +32,18 @@ def isProcedureSpecialCase(procName):
        # ??
        "extension-script-fu",
        # don't test example plugins
+       # TODO goat-exercise-python is not canonically named python-fu-goat..
        "goat-exercise-lua",
        "goat-exercise-python",
+       "plug-in-goat-exercise-vala",
+       "plug-in-goat-exercise-c",
        # temporary procedures, author Itkin
        "gimp-palette-export-text",
        "gimp-palette-export-css",
        "gimp-palette-export-java",
        "gimp-palette-export-php",
        "gimp-palette-export-python",
-       #
+       # TODO why excluding this?
        "file-print-gtk",
        # help, author ???
        "gimp-help-using-web",
@@ -78,6 +81,7 @@ def shouldTestProcedure(procName):
     - quitting
     - interactive, open windows and hang test waiting on user Input
     - delete test objects (they should be run last)
+    - special cases
     """
 
     isExcluded =  (
