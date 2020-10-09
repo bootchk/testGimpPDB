@@ -19,10 +19,10 @@ class TestStats:
 
     @classmethod
     def sample(cls, name, subcategory=None):
-        """ Increment count of samples of name.
+        """ Increment count of samples of name+subcategory.
 
         If subcategory not None, scan it for common strings
-        and also sample it under name+subcategory.
+        and also sample it under a condensed name+subcategory.
         """
 
         # sample the main stat

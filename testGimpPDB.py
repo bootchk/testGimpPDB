@@ -143,13 +143,6 @@ def testGeneralProc(procName, inParamList,  image, drawable):
 
 
 def testProcGivenInParams(procName, inParamList,  image, drawable):
-
-    # Exclude certain procs
-    if not shouldTestProcedure(procName):
-        TestStats.sample("omit bad actor")
-        TestLog.say(f"omit certain: {procName}")
-        return
-
     """
     Dispatch on various flavors of procedure signature.
     """
@@ -185,12 +178,21 @@ def testProcs(image, drawable):
     Setup each test in various contexts e.g. a test image.
     """
 
-    for key in ProceduresDB.sortedNames():
+    for procName in ProceduresDB.sortedNames():
 
-        # print(key)
-        TestStats.sample("procedures")
+        # print(procName)
+        TestStats.sample("procedures in PDB")
 
-        if UserFilter.userWantsTest(key):
+        if UserFilter.userWantsTest(procName):
+
+            # Exclude certain procs
+            if not shouldTestProcedure(procName):
+                TestStats.sample("omit bad actor")
+                TestLog.say(f"omit bad actor: {procName}")
+                continue
+            else:
+                TestStats.sample("tested procedures")
+
             """
             So testing is always from a known base, test on a copy of original image
             Note there is no undo() operation in the PDB, to undo the previous test.
@@ -203,7 +205,7 @@ def testProcs(image, drawable):
             pdb.gimp_image_undo_disable(testImage)
 
             # pass procName, its dictionary of attributes
-            testAProc(key, ProceduresDB.attributeDictionary(key),  testImage, testDrawable)
+            testAProc(procName, ProceduresDB.attributeDictionary(procName),  testImage, testDrawable)
 
             # delete test image or undo changes made by procedure
             pdb.gimp_image_delete(testImage)
