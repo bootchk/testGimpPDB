@@ -39,15 +39,19 @@ class TestLog:
     '''
     '''
 
-    logSummary = []
+    failSummary = []
+
+
+    @classmethod
+    def sayFail(cls, message):
+        ''' Accumulate failure messages. '''
+        TestLog.failSummary.append(message)
+
 
     @classmethod
     def say(cls, message):
-        ''' '''
+        ''' Info interspersed in standard log (usually console) '''
 
-        TestLog.logSummary.append(message)
-
-        # interspersed in standard log (usually console)
         logger.info(message)
 
         ''' wrapper of warnings.warn() that fixpoints the parameters. '''
@@ -57,16 +61,17 @@ class TestLog:
 
     @classmethod
     def summarize(cls):
-        if not TestLog.logSummary:
+        if not TestLog.failSummary:
             result = False
         else:
             print("=================================")
-            print("testGimpPDB summary:")
+            print("testGimpPDB summary of failures:")
+            print("")
 
-            for line in TestLog.logSummary:
+            for line in TestLog.failSummary:
                 print(line)
-
-            print("end of testGimpPDB summary.")
+            print("")
+            print("end of testGimpPDB summary of failures.")
             print("=================================")
             print("")
             result = True

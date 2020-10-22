@@ -83,6 +83,7 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
     TestLog.say(f"End test, PDB status: {error_str}")
     if error_str != "success":
         TestStats.sample("fail", error_str)
+        TestLog.sayFail(f"Fail: {testStmt}, PDB status: {error_str}")
     else:
         TestStats.sample("pass")
 
