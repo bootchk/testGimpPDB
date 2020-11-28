@@ -37,6 +37,9 @@ logger.addHandler(ch)
 class TestLog:
 
     '''
+    This logs tests.
+
+    The test plugin may also log for debuggging itself.
     '''
 
     failSummary = []

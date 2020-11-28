@@ -1,6 +1,12 @@
 
 from gimpfu import *
 
+import logging
+
+# logger for this plugin.  GimpFu has its own logger
+
+logger = logging.getLogger('testHarness')
+
 def generateFooGimpData(drawable):
     """ Generate into Gimp, instances of various kinds, each instance named "foo"
 
@@ -62,7 +68,7 @@ def generateFooGimpData(drawable):
     current_name = gimp.context_get_gradient()
     duplicate_name = gimp.gradient_duplicate(current_name)
     gimp.gradient_rename(duplicate_name, "foo")
-    print(f"Created 'foo' gradient instance from {duplicate_name}")
+    logger.debug(f"Created 'foo' gradient instance from {duplicate_name}")
 
     # channel
     # layer mask
@@ -71,9 +77,17 @@ def generateFooGimpData(drawable):
     # vectors
     # tattoo
 
-    # buffer: this is a edit buffer from a cut/copy
+    # buffer: an edit buffer from a cut/copy
+
     # FAIL: gone in v3?  buffer = pdb.gimp_drawable_get_buffer(drawable)
-    result = pdb.gimp_edit_copy(drawable)   # buffer from selection
+
+    # FAIL: result = pdb.gimp_edit_copy(drawable)   # buffer from selection
+    # GimpFu should accept a single item where a list is required ???
+    # For now, use the exact signature
+
+    did_copy = pdb.gimp_edit_copy(1, [drawable,])
+
+    # Verify there is a buffer
     buffers = pdb.gimp_buffers_get_list("")
     print(f"Buffers: {buffers}")
     # TODO is returning a list of length 0 of type GimpStringArray which GimpFu doesn't handle
