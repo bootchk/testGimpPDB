@@ -5,7 +5,8 @@ import logging
 
 # logger for this plugin.  GimpFu has its own logger
 
-logger = logging.getLogger('testHarness')
+logger = logging.getLogger('testGimpPDB.testHarness')
+assert logger is not None
 
 def generateFooGimpData(drawable):
     """ Generate into Gimp, instances of various kinds, each instance named "foo"
@@ -56,13 +57,13 @@ def generateFooGimpData(drawable):
     current_name = gimp.context_get_palette()
     duplicate_name = gimp.palette_duplicate(current_name)
     gimp.palette_rename(duplicate_name, "foo")
-    print(f"Created 'foo' palette instance from {duplicate_name}")
+    logger.debug(f"Created 'foo' palette instance from {duplicate_name}")
 
     #brush
     current_name = gimp.context_get_brush()
     duplicate_name = gimp.brush_duplicate(current_name)
     gimp.brush_rename(duplicate_name, "foo")
-    print(f"Created 'foo' brush instance from {duplicate_name}")
+    logger.debug(f"Created 'foo' brush instance from {duplicate_name}")
 
     # gradient
     current_name = gimp.context_get_gradient()
@@ -86,11 +87,16 @@ def generateFooGimpData(drawable):
     # For now, use the exact signature
 
     did_copy = pdb.gimp_edit_copy(1, [drawable,])
+    if not did_copy:
+        logger.debug(f"Failed to create buffers")
 
     # Verify there is a buffer
     buffers = pdb.gimp_buffers_get_list("")
-    print(f"Buffers: {buffers}")
-    # TODO is returning a list of length 0 of type GimpStringArray which GimpFu doesn't handle
+    logger.debug(f"Created buffers: {buffers}")
+    # TODO is returning a list of length 0 of type GimpStringArray
+    # which GimpFu or PyGObject doesn't handle
+    # i.e. convert to a list of strings
+    # Expect a non-empty list of names of buffers
     #pdb.gimp_buffer_rename(old, "foo")
 
     # TODO curve, dynamics, pattern NOT have same approximation
@@ -121,7 +127,7 @@ def generateGlobalFooParameters(image, drawable):
 
     # fooFile is-a GLocalFile, i.e. file doesn't exist yet if path is malformed
     # create the file?
-    print(fooFile.__gtype__, stream.__gtype__)
+    logger.debug(f"Created fooFile: {fooFile.get_parse_name()} types: {fooFile.__gtype__} , {stream.__gtype__}")
     #raise Exception
 
     """

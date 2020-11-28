@@ -13,7 +13,8 @@ import logging
 logger = logging.getLogger('testGimpPDB')
 
 # TODO make the level come from the command line or the environment
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
+#logger.setLevel(logging.INFO)
 #logger.setLevel(logging.WARNING)
 
 # create file handler which logs even debug messages
@@ -22,7 +23,7 @@ logger.setLevel(logging.INFO)
 # create console handler with same log level
 ch = logging.StreamHandler()
 # possible levels are DEBUG, INFO, WARNING, ERROR, CRITICAL
-ch.setLevel(logging.INFO)
+ch.setLevel(logging.DEBUG)
 # create formatter and add it to the handlers
 formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
 #fh.setFormatter(formatter)
