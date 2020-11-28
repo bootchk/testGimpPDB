@@ -29,8 +29,10 @@ def isProcedureSpecialCase(procName):
        "plug-in-plug-in-details",
        # Hang, without error messages
        "script-fu-ripply-anim",
-       # ??
+       # Don't call the script-fu interpreter.  It has no documented params?
        "extension-script-fu",
+       # temporary, crashes in gimp-display-new ???
+       "script-fu-font-map",
        # don't test example plugins
        # TODO goat-exercise-python is not canonically named python-fu-goat..
        "goat-exercise-lua",

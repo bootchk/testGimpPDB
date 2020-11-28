@@ -1,0 +1,994 @@
+```
+GNU Image Manipulation Program version 2.99.1
+git-describe: Unknown, shouldn't happen
+Build: unknown rev 0 for linux
+# C compiler #
+	Using built-in specs.
+	COLLECT_GCC=gcc
+	COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
+	OFFLOAD_TARGET_NAMES=nvptx-none:hsa
+	OFFLOAD_TARGET_DEFAULT=1
+	Target: x86_64-linux-gnu
+	Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.2.1-9ubuntu2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+	Thread model: posix
+	gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)
+
+# Libraries #
+using babl version 0.1.78 (compiled against version 0.1.78)
+using GEGL version 0.4.27 (compiled against version 0.4.27)
+using GLib version 2.62.4 (compiled against version 2.62.4)
+using GdkPixbuf version 2.40.0 (compiled against version 2.40.0)
+using GTK+ version 3.24.12 (compiled against version 3.24.12)
+using Pango version 1.42.3 (compiled against version 1.42.3)
+using Fontconfig version 2.13.1 (compiled against version 2.13.1)
+using Cairo version 1.16.0 (compiled against version 1.16.0)
+
+```
+> GIMP-WARNING: gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-xach-effect
+
+Stack trace:
+```
+
+# Stack traces obtained from PID 95 - Thread 95 #
+
+[New LWP 96]
+[New LWP 97]
+[New LWP 99]
+[New LWP 129]
+[New LWP 131]
+[New LWP 137]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  Id   Target Id                                        Frame
+* 1    Thread 0x7f80dca5fec0 (LWP 95) "gimp-2.99"       0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  2    Thread 0x7f80dc804700 (LWP 96) "worker"          0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  3    Thread 0x7f80d747c700 (LWP 97) "gmain"           0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  4    Thread 0x7f80d6255700 (LWP 99) "async"           0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  5    Thread 0x7f80c7fff700 (LWP 129) "dconf worker"   0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  6    Thread 0x7f80d500f700 (LWP 131) "swap writer"    0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  7    Thread 0x7f80d5911700 (LWP 137) "pool-gimp-2.99" 0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 7 (Thread 0x7f80d5911700 (LWP 137)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991ea6 in g_cond_wait_until () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e09163e1 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e0916a06 in g_async_queue_timeout_pop () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f969 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#6  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#7  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 6 (Thread 0x7f80d500f700 (LWP 131)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f3fa2d in gegl_tile_backend_swap_writer_thread () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 5 (Thread 0x7f80c7fff700 (LWP 129)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80d480881d in  () at /usr/lib/x86_64-linux-gnu/gio/modules/libdconfsettings.so
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 4 (Thread 0x7f80d6255700 (LWP 99)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x0000557a44301964 in gimp_parallel_run_async_thread_func(GimpParallelRunAsyncThread*) (thread=0x557a44891f80 <gimp_parallel_run_async_threads>) at gimp-parallel.cc:378
+        task = <optimized out>
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 3 (Thread 0x7f80d747c700 (LWP 97)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e0945c31 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 2 (Thread 0x7f80dc804700 (LWP 96)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f853c3 in gegl_parallel_distribute_thread_func () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 1 (Thread 0x7f80dca5fec0 (LWP 95)):
+#0  0x00007f80e079031c in read () at /lib/x86_64-linux-gnu/libpthread.so.0
+#1  0x00007f80e1405047 in read (__nbytes=256, __buf=0x7fff7a433670, __fd=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/unistd.h:44
+        status = 21882
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000\377\177\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "w\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 142
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#2  0x00007f80e1405047 in gimp_stack_trace_print (prog_name=prog_name@entry=0x0, stream=stream@entry=0x0, trace=trace@entry=0x7fff7a4337e0) at ../libgimpbase/gimputils.c:1345
+        status = 21882
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000\377\177\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "w\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 142
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#3  0x0000557a440244ca in gui_message (gimp=0x557a44efa050, handler=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", message=0x557a4b067310 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-xach-effect") at gui-message.c:141
+        trace = 0x0
+        gen_trace = 1
+#4  0x0000557a442fe590 in gimp_show_message (gimp=gimp@entry=0x557a44efa050, handler=handler@entry=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", domain@entry=0x0, message=message@entry=0x557a4b067310 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-xach-effect") at gimp-gui.c:158
+        desc = 0x557a4447be09 "Message"
+        __func__ = "gimp_show_message"
+#5  0x0000557a44019435 in gimp_message_log_func (log_domain=0x557a4447aa8f "Gimp-Widgets", flags=<optimized out>, message=0x557a4b067310 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-xach-effect", data=0x557a44efa050) at errors.c:263
+        gimp = 0x557a44efa050
+        config = <optimized out>
+        msg_domain = 0x0
+        severity = <optimized out>
+        gui_message = <optimized out>
+        debug_policy = GIMP_DEBUG_POLICY_WARNING
+#6  0x00007f80e094cc0c in g_logv () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#7  0x00007f80e094cdf3 in g_log () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#8  0x0000557a44049314 in plug_in_actions_update (group=0x557a47e88c60, data=<optimized out>) at plug-in-actions.c:169
+        procedure = 0x557a46c24e60
+        sensitive = 1
+        tooltip = 0x0
+        proc = 0x557a46c24e60
+        image = <optimized out>
+        manager = <optimized out>
+        drawable = 0x557a477ea210
+        list = 0x557a47f36000 = {0x557a46c24e60, 0x557a4b06d3e0, 0x557a4b06d220, 0x557a4b06d060, 0x557a46c30220, 0x557a46c305a0, 0x557a46c34220, 0x557a46c343e0, 0x557a46c345a0, 0x557a46c35060, 0x557a46c35220, 0x557a46c353e0, 0x557a46c355a0, 0x557a46c35e60, 0x557a46c38e60, 0x557a46c3c060, 0x557a46c3c220, 0x557a46c3c5a0, 0x557a46c403e0, 0x557a46c405a0, 0x557a46c433e0, 0x557a46c30ca0, 0x557a46c34060, 0x557a46c38ae0, 0x557a46c34920, 0x557a46c30920, 0x557a46c30e60, 0x557a46c30ae0, 0x557a46c40760, 0x557a46c34760, 0x557a46c34ae0, 0x557a46c435a0, 0x557a46c38ca0, 0x557a46c3ce60, 0x557a46c4a060, 0x557a46c385a0, 0x557a46c38220, 0x557a46c40060, 0x557a46c43ae0, 0x557a46c245a0, 0x557a46c1aca0, 0x557a46c383e0, 0x557a46c3c3e0, 0x557a46c3cca0, 0x557a46c40ca0, 0x557a46c40e60, 0x557a46c34ca0, 0x557a46c34e60, 0x557a46c38920, 0x557a46c38060, 0x557a46c3c920, 0x557a46c30760, 0x557a46c35ae0, 0x557a46c24760, 0x557a46c40920, 0x557a46c43220, 0x557a46c43920, 0x557a46c3c760, 0x557a46c43060, 0x557a46c35ca0, 0x557a46c38760, 0x557a46c3cae0, 0x557a46c40ae0, 0x557a46c43760, 0x557a46c43ca0, 0x557a46c40220, 0x557a46c35760, 0x557a46c43e60, 0x557a46c35920, 0x557a46c24ca0, 0x557a46c30060, 0x557a46c303e0, 0x557a46c24220, 0x557a46c1ee60, 0x557a46c1eca0, 0x557a46c1eae0, 0x557a46c1e920, 0x557a46c1e760, 0x557a46c24060, 0x557a46c15920, 0x557a46c15ca0, 0x557a46c15e60, 0x557a46c1a060, 0x557a46c1a220, 0x557a46c1a3e0, 0x557a46c1a5a0, 0x557a46c1a760, 0x557a46c1e060, 0x557a46c1e220, 0x557a46c1e3e0, 0x557a46c1e5a0, 0x557a46c1a920, 0x557a46c1aae0, 0x557a46c15ae0, 0x557a46c1ae60, 0x557a46c15760, 0x557a46c155a0, 0x557a46c153e0, 0x557a46c15220, 0x557a46c15060, 0x557a46c0ee60, 0x557a46c0eca0, 0x557a46c0eae0, 0x557a46c0e920, 0x557a46c0e760, 0x557a46c0e5a0, 0x557a46c0e3e0, 0x557a46c0e220, 0x557a46c0e060, 0x557a46c09e60, 0x557a46c09ca0, 0x557a46c09ae0, 0x557a46c09920, 0x557a46c09760, 0x557a46c095a0, 0x557a46c093e0, 0x557a46c09220, 0x557a46c09060, 0x557a46c06e60, 0x557a46c06ca0, 0x557a46c06ae0, 0x557a46c06920, 0x557a46c06760, 0x557a46c065a0, 0x557a46c063e0, 0x557a46c06220, 0x557a46c06060, 0x557a46c03e60, 0x557a46c03ca0, 0x557a46c03ae0, 0x557a46c03920, 0x557a46c03760, 0x557a46c035a0, 0x557a46c033e0, 0x557a46c03220, 0x557a46c03060, 0x557a46bffe60, 0x557a46bffca0, 0x557a46bffae0, 0x557a46bff920, 0x557a46bff760, 0x557a46bff5a0, 0x557a46bff3e0, 0x557a46bff220, 0x557a46bff060, 0x557a46bf8e60, 0x557a46bf8ca0, 0x557a46bf8ae0, 0x557a46bf8920, 0x557a46bf8760, 0x557a46bf85a0, 0x557a46bf83e0, 0x557a46bf8220, 0x557a46bf8060, 0x557a46bf3e60, 0x557a46bf3ca0, 0x557a46bf3ae0, 0x557a46bf3920, 0x557a46bf3760, 0x557a46bf35a0, 0x557a46bf33e0, 0x557a46bf3220, 0x557a46bf3060, 0x557a46befe60, 0x557a46befca0, 0x557a46befae0, 0x557a46bef920, 0x557a46bef760, 0x557a46bef5a0, 0x557a46bef3e0, 0x557a46bef220, 0x557a46bef060, 0x557a46be8e60, 0x557a46be8ca0, 0x557a46be8ae0, 0x557a46be8920, 0x557a46be8760, 0x557a46be85a0, 0x557a46be83e0, 0x557a46be8220, 0x557a46be8060, 0x557a46be2e60, 0x557a46be2ca0, 0x557a46be2ae0, 0x557a46be2920, 0x557a46be2760, 0x557a46be25a0, 0x557a46be23e0, 0x557a46be2220, 0x557a46be2060, 0x557a46bdee60, 0x557a46bdeca0, 0x557a46bdeae0, 0x557a46bde920, 0x557a46bde760, 0x557a46bde5a0, 0x557a46bde3e0, 0x557a46bde220, 0x557a46bde060, 0x557a46bdde60...}
+#9  0x0000557a4423269b in gimp_ui_manager_real_update (manager=<optimized out>, update_data=0x557a47e90300) at gimpuimanager.c:381
+        list = 0x557a44edeae0 = {0x557a47e88c60, 0x557a47e88b40}
+#10 0x00007f80e0a35c93 in g_cclosure_marshal_VOID__POINTERv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#11 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#12 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#13 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#14 0x0000557a441e66f2 in gimp_item_tree_view_select_item (view=<optimized out>, item=0x0, insert_data=<optimized out>) at gimpitemtreeview.c:1094
+        tree_view = 0x557a47e90300
+        options_sensitive = 0
+        success = 1
+#15 0x0000557a441edc2c in gimp_layer_tree_view_select_item (view=view@entry=0x557a47e90300, item=0x0, insert_data=0x0) at gimplayertreeview.c:591
+        layer_view = 0x557a47e90300
+        success = <optimized out>
+#16 0x0000557a442f5640 in gimp_marshal_BOOLEAN__OBJECT_POINTER (closure=0x557a47c36bc0, return_value=0x7fff7a4341a0, n_param_values=<optimized out>, param_values=0x7fff7a434070, invocation_hint=<optimized out>, marshal_data=<optimized out>) at gimpmarshal.c:344
+        cc = 0x557a47c36bc0
+        data1 = 0x557a47e90300
+        data2 = <optimized out>
+        callback = 0x557a441edbf0 <gimp_layer_tree_view_select_item>
+        v_return = <optimized out>
+        __func__ = "gimp_marshal_BOOLEAN__OBJECT_POINTER"
+#17 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#18 0x00007f80e0a45cc6 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#19 0x00007f80e0a4e99e in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#20 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#21 0x0000557a4419d261 in gimp_container_view_select_item (view=view@entry=0x557a47e90300, viewable=viewable@entry=0x0) at gimpcontainerview.c:685
+        private = 0x557a47ec2840
+        success = 0
+        insert_data = <optimized out>
+        __func__ = "gimp_container_view_select_item"
+#22 0x0000557a4419d455 in gimp_container_view_real_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.c:415
+        private = 0x557a47ec2840
+#23 0x0000557a4419973a in gimp_container_tree_view_set_container (view=0x557a47e90300, container=<optimized out>) at gimpcontainertreeview.c:714
+        tree_view = 0x557a47e90300
+        old_container = <optimized out>
+#24 0x0000557a441e6a05 in gimp_item_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimpitemtreeview.c:940
+        item_view = 0x557a47e90300
+        old_container = <optimized out>
+#25 0x0000557a441edef3 in gimp_layer_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimplayertreeview.c:480
+        layer_view = 0x557a47e90300
+        old_container = <optimized out>
+#26 0x0000557a4419c8fd in gimp_container_view_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.h:39
+        private = <optimized out>
+        __func__ = "gimp_container_view_set_container"
+#27 0x0000557a441e5a1a in gimp_item_tree_view_real_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpcontainerview.h:39
+#28 0x0000557a441ca866 in gimp_drawable_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpdrawabletreeview.c:316
+#29 0x0000557a441ee039 in gimp_layer_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimplayertreeview.c:918
+        layer_view = 0x557a47e90300
+#30 0x00007f80e0a35de3 in g_cclosure_marshal_VOID__OBJECTv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#31 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#32 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#33 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#34 0x0000557a441e6ebd in gimp_item_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpitemtreeview.c:683
+        __func__ = "gimp_item_tree_view_set_image"
+#35 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#36 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#37 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#38 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#39 0x0000557a4432d599 in gimp_context_real_set_image (image=<optimized out>, context=0x557a44f1a230) at gimpcontext.c:1931
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#40 0x0000557a4432d599 in gimp_context_real_set_display (context=0x557a44f1a230, display=<optimized out>) at gimpcontext.c:2020
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#41 0x0000557a44131065 in gimp_image_window_switch_page (notebook=<optimized out>, page=<optimized out>, page_num=<optimized out>, window=0x557a46e96350) at gimpimagewindow.c:2015
+        private = 0x557a46e96050
+        shell = <optimized out>
+        active_display = 0x557a48b1f060
+        __func__ = "gimp_image_window_switch_page"
+#42 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#43 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#44 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#45 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#46 0x00007f80e17fd81d in gtk_notebook_set_current_page () at /lib/x86_64-linux-gnu/libgtk-3.so.0
+#47 0x0000557a44112e70 in gimp_display_shell_present (shell=0x557a4b177f30) at gimpdisplayshell.c:1320
+        window = 0x557a46e96350
+        __func__ = "gimp_display_shell_present"
+#48 0x0000557a44110621 in gimp_display_new (gimp=gimp@entry=0x557a44efa050, image=image@entry=0x557a4ad536b0, unit=unit@entry=GIMP_UNIT_PIXEL, scale=scale@entry=1, popup_manager=0x557a46c49200, dialog_factory=0x557a46abd5f0, monitor=monitor@entry=0x557a44b7fd90) at gimpdisplay.c:396
+        display = 0x557a48b1f060
+        private = 0x557a48b1f000
+        window = 0x557a46e96350
+        shell = 0x557a4b177f30
+        __func__ = "gimp_display_new"
+#49 0x0000557a4401ebf5 in gui_display_create (gimp=0x557a44efa050, image=0x557a4ad536b0, unit=GIMP_UNIT_PIXEL, scale=1, monitor=<optimized out>) at gui-vtable.c:411
+        image_managers = 0x557a44e4ad60 = {0x557a46c49200, 0x557a450a89f0}
+        context = 0x557a44f1a230
+        display = <optimized out>
+        __func__ = "gui_display_create"
+#50 0x0000557a4427087b in display_new_invoker (procedure=0x557a45182e80, gimp=0x557a44efa050, context=<optimized out>, progress=<optimized out>, args=<optimized out>, error=0x7fff7a435380) at display-cmds.c:99
+        success = 1
+        return_vals = <optimized out>
+        image = 0x557a4ad536b0
+        display = 0x0
+#51 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a45182e80, gimp=0x557a44efa050, context=context@entry=0x557a45208930, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b16ba60, error=error@entry=0x7fff7a435380) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#52 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a45208930, progress=0x557a4661cb20, error=error@entry=0x7fff7a435380, name=name@entry=0x557a478db4f0 "gimp-display-new", args=args@entry=0x557a4b16ba60) at gimppdb.c:321
+        procedure = 0x557a45182e80
+        return_vals = 0x0
+        list = 0x557a44dbd600 = {0x557a45182e80}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#53 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4acb1520, plug_in=0x557a452649e0) at gimpplugin-message.c:584
+        proc_frame = 0x557a4b184000
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a478db4f0 "gimp-display-new"
+        proc_name = <optimized out>
+        args = 0x557a4b16ba60
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#54 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a452649e0, msg=msg@entry=0x7fff7a435400) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#55 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a452649e0, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4acb1520}
+        got_message = <optimized out>
+        plug_in = 0x557a452649e0
+#56 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a452649e0) at gimpplugin.c:177
+        plug_in = 0x557a452649e0
+#57 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#58 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#59 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#60 0x0000557a442cec75 in gimp_plug_in_main_loop (plug_in=<optimized out>) at gimpplugin.c:841
+        proc_frame = 0x557a4b184000
+        __func__ = "gimp_plug_in_main_loop"
+#61 0x0000557a442e2a40 in gimp_plug_in_manager_call_run_temp (manager=<optimized out>, context=<optimized out>, progress=0x557a4661cb20, procedure=0x557a46c30760, args=0x557a4b178480) at gimppluginmanager-call.c:363
+        proc_frame = 0x557a4b184000
+        proc_run = {name = 0x557a47deae80 "script-fu-font-map", n_params = 8, params = 0x557a4968ae00}
+        return_vals = 0x0
+        plug_in = 0x557a452649e0
+        __func__ = "gimp_plug_in_manager_call_run_temp"
+#62 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a46c30760, gimp=0x557a44efa050, context=context@entry=0x557a452091b0, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b178480, error=error@entry=0x7fff7a435690) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#63 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a452091b0, progress=0x557a4661cb20, error=error@entry=0x7fff7a435690, name=name@entry=0x557a4afc6cf0 "script-fu-font-map", args=args@entry=0x557a4b178480) at gimppdb.c:321
+        procedure = 0x557a46c30760
+        return_vals = 0x0
+        list = 0x557a44ea62e0 = {0x557a46c30760}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#64 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4b0720a0, plug_in=0x557a45265310) at gimpplugin-message.c:584
+        proc_frame = 0x557a45265588
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a4afc6cf0 "script-fu-font-map"
+        proc_name = <optimized out>
+        args = 0x557a4b178480
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#65 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a45265310, msg=msg@entry=0x7fff7a435710) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#66 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a45265310, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4b0720a0}
+        got_message = <optimized out>
+        plug_in = 0x557a45265310
+#67 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a45265310) at gimpplugin.c:177
+        plug_in = 0x557a45265310
+#68 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#69 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#70 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#71 0x0000557a44019007 in app_run (full_prog_name=<optimized out>, filenames=<optimized out>, alternate_system_gimprc=<optimized out>, alternate_gimprc=<optimized out>, session_name=<optimized out>, batch_interpreter=0x0, batch_commands=0x0, as_new=0, no_interface=0, no_data=0, no_fonts=0, no_splash=0, be_verbose=1, use_shm=1, use_cpu_accel=1, console_messages=0, use_debug_handler=0, show_playground=1, show_debug_menu=1, stack_trace_mode=GIMP_STACK_TRACE_QUERY, pdb_compat_mode=GIMP_PDB_COMPAT_WARN, backtrace_file=0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt") at app.c:440
+        update_status_func = <optimized out>
+        gimp = 0x557a44efa050
+        loop = <optimized out>
+        run_loop = 0x557a47919430
+        default_folder = <optimized out>
+        gimpdir = <optimized out>
+        abort_message = <optimized out>
+        temprc = <optimized out>
+        language = <optimized out>
+        font_error = 0x0
+        __func__ = "app_run"
+#72 0x0000557a440188ce in main (argc=<optimized out>, argv=<optimized out>) at main.c:636
+        context = 0x557a44b7c180
+        error = 0x0
+        abort_message = <optimized out>
+        basename = <optimized out>
+        system_gimprc_file = 0x0
+        user_gimprc_file = 0x0
+        backtrace_file = 0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt"
+        i = <optimized out>
+[Inferior 1 (process 95) detached]
+
+```
+> GIMP-WARNING: gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-xach-effect
+
+Stack trace:
+```
+
+# Stack traces obtained from PID 95 - Thread 95 #
+
+[New LWP 96]
+[New LWP 97]
+[New LWP 99]
+[New LWP 129]
+[New LWP 131]
+[New LWP 137]
+[New LWP 149]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  Id   Target Id                                        Frame
+* 1    Thread 0x7f80dca5fec0 (LWP 95) "gimp-2.99"       0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  2    Thread 0x7f80dc804700 (LWP 96) "worker"          0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  3    Thread 0x7f80d747c700 (LWP 97) "gmain"           0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  4    Thread 0x7f80d6255700 (LWP 99) "async"           0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  5    Thread 0x7f80c7fff700 (LWP 129) "dconf worker"   0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  6    Thread 0x7f80d500f700 (LWP 131) "swap writer"    0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  7    Thread 0x7f80d5911700 (LWP 137) "pool-gimp-2.99" 0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  8    Thread 0x7f80b94b8700 (LWP 149) "pool-gimp-2.99" 0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 8 (Thread 0x7f80b94b8700 (LWP 149)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991ea6 in g_cond_wait_until () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e09163e1 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e096fa1a in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 7 (Thread 0x7f80d5911700 (LWP 137)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991ea6 in g_cond_wait_until () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e09163e1 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e096fa1a in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 6 (Thread 0x7f80d500f700 (LWP 131)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f3fa2d in gegl_tile_backend_swap_writer_thread () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 5 (Thread 0x7f80c7fff700 (LWP 129)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80d480881d in  () at /usr/lib/x86_64-linux-gnu/gio/modules/libdconfsettings.so
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 4 (Thread 0x7f80d6255700 (LWP 99)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x0000557a44301964 in gimp_parallel_run_async_thread_func(GimpParallelRunAsyncThread*) (thread=0x557a44891f80 <gimp_parallel_run_async_threads>) at gimp-parallel.cc:378
+        task = <optimized out>
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 3 (Thread 0x7f80d747c700 (LWP 97)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e0945c31 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 2 (Thread 0x7f80dc804700 (LWP 96)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f853c3 in gegl_parallel_distribute_thread_func () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 1 (Thread 0x7f80dca5fec0 (LWP 95)):
+#0  0x00007f80e079031c in read () at /lib/x86_64-linux-gnu/libpthread.so.0
+#1  0x00007f80e1405047 in read (__nbytes=256, __buf=0x7fff7a433670, __fd=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/unistd.h:44
+        status = 21882
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000zU\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "q\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 150
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#2  0x00007f80e1405047 in gimp_stack_trace_print (prog_name=prog_name@entry=0x0, stream=stream@entry=0x0, trace=trace@entry=0x7fff7a4337e0) at ../libgimpbase/gimputils.c:1345
+        status = 21882
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000zU\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "q\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 150
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#3  0x0000557a440244ca in gui_message (gimp=0x557a44efa050, handler=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", message=0x557a4ad43c00 "gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-xach-effect") at gui-message.c:141
+        trace = 0x0
+        gen_trace = 1
+#4  0x0000557a442fe590 in gimp_show_message (gimp=gimp@entry=0x557a44efa050, handler=handler@entry=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", domain@entry=0x0, message=message@entry=0x557a4ad43c00 "gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-xach-effect") at gimp-gui.c:158
+        desc = 0x557a4447be09 "Message"
+        __func__ = "gimp_show_message"
+#5  0x0000557a44019435 in gimp_message_log_func (log_domain=0x557a4447aa8f "Gimp-Widgets", flags=<optimized out>, message=0x557a4ad43c00 "gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-xach-effect", data=0x557a44efa050) at errors.c:263
+        gimp = 0x557a44efa050
+        config = <optimized out>
+        msg_domain = 0x0
+        severity = <optimized out>
+        gui_message = <optimized out>
+        debug_policy = GIMP_DEBUG_POLICY_WARNING
+#6  0x00007f80e094cc0c in g_logv () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#7  0x00007f80e094cdf3 in g_log () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#8  0x0000557a4404933e in plug_in_actions_update (group=0x557a47e88c60, data=<optimized out>) at plug-in-actions.c:176
+        procedure = 0x557a46c24e60
+        sensitive = <optimized out>
+        tooltip = 0x557a480b8060 "Add a subtle translucent 3D effect to the selected region (or alpha)"
+        proc = 0x557a46c24e60
+        image = <optimized out>
+        manager = <optimized out>
+        drawable = 0x557a477ea210
+        list = 0x557a47f36000 = {0x557a46c24e60, 0x557a4b06d3e0, 0x557a4b06d220, 0x557a4b06d060, 0x557a46c30220, 0x557a46c305a0, 0x557a46c34220, 0x557a46c343e0, 0x557a46c345a0, 0x557a46c35060, 0x557a46c35220, 0x557a46c353e0, 0x557a46c355a0, 0x557a46c35e60, 0x557a46c38e60, 0x557a46c3c060, 0x557a46c3c220, 0x557a46c3c5a0, 0x557a46c403e0, 0x557a46c405a0, 0x557a46c433e0, 0x557a46c30ca0, 0x557a46c34060, 0x557a46c38ae0, 0x557a46c34920, 0x557a46c30920, 0x557a46c30e60, 0x557a46c30ae0, 0x557a46c40760, 0x557a46c34760, 0x557a46c34ae0, 0x557a46c435a0, 0x557a46c38ca0, 0x557a46c3ce60, 0x557a46c4a060, 0x557a46c385a0, 0x557a46c38220, 0x557a46c40060, 0x557a46c43ae0, 0x557a46c245a0, 0x557a46c1aca0, 0x557a46c383e0, 0x557a46c3c3e0, 0x557a46c3cca0, 0x557a46c40ca0, 0x557a46c40e60, 0x557a46c34ca0, 0x557a46c34e60, 0x557a46c38920, 0x557a46c38060, 0x557a46c3c920, 0x557a46c30760, 0x557a46c35ae0, 0x557a46c24760, 0x557a46c40920, 0x557a46c43220, 0x557a46c43920, 0x557a46c3c760, 0x557a46c43060, 0x557a46c35ca0, 0x557a46c38760, 0x557a46c3cae0, 0x557a46c40ae0, 0x557a46c43760, 0x557a46c43ca0, 0x557a46c40220, 0x557a46c35760, 0x557a46c43e60, 0x557a46c35920, 0x557a46c24ca0, 0x557a46c30060, 0x557a46c303e0, 0x557a46c24220, 0x557a46c1ee60, 0x557a46c1eca0, 0x557a46c1eae0, 0x557a46c1e920, 0x557a46c1e760, 0x557a46c24060, 0x557a46c15920, 0x557a46c15ca0, 0x557a46c15e60, 0x557a46c1a060, 0x557a46c1a220, 0x557a46c1a3e0, 0x557a46c1a5a0, 0x557a46c1a760, 0x557a46c1e060, 0x557a46c1e220, 0x557a46c1e3e0, 0x557a46c1e5a0, 0x557a46c1a920, 0x557a46c1aae0, 0x557a46c15ae0, 0x557a46c1ae60, 0x557a46c15760, 0x557a46c155a0, 0x557a46c153e0, 0x557a46c15220, 0x557a46c15060, 0x557a46c0ee60, 0x557a46c0eca0, 0x557a46c0eae0, 0x557a46c0e920, 0x557a46c0e760, 0x557a46c0e5a0, 0x557a46c0e3e0, 0x557a46c0e220, 0x557a46c0e060, 0x557a46c09e60, 0x557a46c09ca0, 0x557a46c09ae0, 0x557a46c09920, 0x557a46c09760, 0x557a46c095a0, 0x557a46c093e0, 0x557a46c09220, 0x557a46c09060, 0x557a46c06e60, 0x557a46c06ca0, 0x557a46c06ae0, 0x557a46c06920, 0x557a46c06760, 0x557a46c065a0, 0x557a46c063e0, 0x557a46c06220, 0x557a46c06060, 0x557a46c03e60, 0x557a46c03ca0, 0x557a46c03ae0, 0x557a46c03920, 0x557a46c03760, 0x557a46c035a0, 0x557a46c033e0, 0x557a46c03220, 0x557a46c03060, 0x557a46bffe60, 0x557a46bffca0, 0x557a46bffae0, 0x557a46bff920, 0x557a46bff760, 0x557a46bff5a0, 0x557a46bff3e0, 0x557a46bff220, 0x557a46bff060, 0x557a46bf8e60, 0x557a46bf8ca0, 0x557a46bf8ae0, 0x557a46bf8920, 0x557a46bf8760, 0x557a46bf85a0, 0x557a46bf83e0, 0x557a46bf8220, 0x557a46bf8060, 0x557a46bf3e60, 0x557a46bf3ca0, 0x557a46bf3ae0, 0x557a46bf3920, 0x557a46bf3760, 0x557a46bf35a0, 0x557a46bf33e0, 0x557a46bf3220, 0x557a46bf3060, 0x557a46befe60, 0x557a46befca0, 0x557a46befae0, 0x557a46bef920, 0x557a46bef760, 0x557a46bef5a0, 0x557a46bef3e0, 0x557a46bef220, 0x557a46bef060, 0x557a46be8e60, 0x557a46be8ca0, 0x557a46be8ae0, 0x557a46be8920, 0x557a46be8760, 0x557a46be85a0, 0x557a46be83e0, 0x557a46be8220, 0x557a46be8060, 0x557a46be2e60, 0x557a46be2ca0, 0x557a46be2ae0, 0x557a46be2920, 0x557a46be2760, 0x557a46be25a0, 0x557a46be23e0, 0x557a46be2220, 0x557a46be2060, 0x557a46bdee60, 0x557a46bdeca0, 0x557a46bdeae0, 0x557a46bde920, 0x557a46bde760, 0x557a46bde5a0, 0x557a46bde3e0, 0x557a46bde220, 0x557a46bde060, 0x557a46bdde60...}
+#9  0x0000557a4423269b in gimp_ui_manager_real_update (manager=<optimized out>, update_data=0x557a47e90300) at gimpuimanager.c:381
+        list = 0x557a44edeae0 = {0x557a47e88c60, 0x557a47e88b40}
+#10 0x00007f80e0a35c93 in g_cclosure_marshal_VOID__POINTERv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#11 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#12 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#13 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#14 0x0000557a441e66f2 in gimp_item_tree_view_select_item (view=<optimized out>, item=0x0, insert_data=<optimized out>) at gimpitemtreeview.c:1094
+        tree_view = 0x557a47e90300
+        options_sensitive = 0
+        success = 1
+#15 0x0000557a441edc2c in gimp_layer_tree_view_select_item (view=view@entry=0x557a47e90300, item=0x0, insert_data=0x0) at gimplayertreeview.c:591
+        layer_view = 0x557a47e90300
+        success = <optimized out>
+#16 0x0000557a442f5640 in gimp_marshal_BOOLEAN__OBJECT_POINTER (closure=0x557a47c36bc0, return_value=0x7fff7a4341a0, n_param_values=<optimized out>, param_values=0x7fff7a434070, invocation_hint=<optimized out>, marshal_data=<optimized out>) at gimpmarshal.c:344
+        cc = 0x557a47c36bc0
+        data1 = 0x557a47e90300
+        data2 = <optimized out>
+        callback = 0x557a441edbf0 <gimp_layer_tree_view_select_item>
+        v_return = <optimized out>
+        __func__ = "gimp_marshal_BOOLEAN__OBJECT_POINTER"
+#17 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#18 0x00007f80e0a45cc6 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#19 0x00007f80e0a4e99e in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#20 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#21 0x0000557a4419d261 in gimp_container_view_select_item (view=view@entry=0x557a47e90300, viewable=viewable@entry=0x0) at gimpcontainerview.c:685
+        private = 0x557a47ec2840
+        success = 0
+        insert_data = <optimized out>
+        __func__ = "gimp_container_view_select_item"
+#22 0x0000557a4419d455 in gimp_container_view_real_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.c:415
+        private = 0x557a47ec2840
+#23 0x0000557a4419973a in gimp_container_tree_view_set_container (view=0x557a47e90300, container=<optimized out>) at gimpcontainertreeview.c:714
+        tree_view = 0x557a47e90300
+        old_container = <optimized out>
+#24 0x0000557a441e6a05 in gimp_item_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimpitemtreeview.c:940
+        item_view = 0x557a47e90300
+        old_container = <optimized out>
+#25 0x0000557a441edef3 in gimp_layer_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimplayertreeview.c:480
+        layer_view = 0x557a47e90300
+        old_container = <optimized out>
+#26 0x0000557a4419c8fd in gimp_container_view_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.h:39
+        private = <optimized out>
+        __func__ = "gimp_container_view_set_container"
+#27 0x0000557a441e5a1a in gimp_item_tree_view_real_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpcontainerview.h:39
+#28 0x0000557a441ca866 in gimp_drawable_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpdrawabletreeview.c:316
+#29 0x0000557a441ee039 in gimp_layer_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimplayertreeview.c:918
+        layer_view = 0x557a47e90300
+#30 0x00007f80e0a35de3 in g_cclosure_marshal_VOID__OBJECTv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#31 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#32 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#33 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#34 0x0000557a441e6ebd in gimp_item_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpitemtreeview.c:683
+        __func__ = "gimp_item_tree_view_set_image"
+#35 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#36 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#37 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#38 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#39 0x0000557a4432d599 in gimp_context_real_set_image (image=<optimized out>, context=0x557a44f1a230) at gimpcontext.c:1931
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#40 0x0000557a4432d599 in gimp_context_real_set_display (context=0x557a44f1a230, display=<optimized out>) at gimpcontext.c:2020
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#41 0x0000557a44131065 in gimp_image_window_switch_page (notebook=<optimized out>, page=<optimized out>, page_num=<optimized out>, window=0x557a46e96350) at gimpimagewindow.c:2015
+        private = 0x557a46e96050
+        shell = <optimized out>
+        active_display = 0x557a48b1f060
+        __func__ = "gimp_image_window_switch_page"
+#42 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#43 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#44 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#45 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#46 0x00007f80e17fd81d in gtk_notebook_set_current_page () at /lib/x86_64-linux-gnu/libgtk-3.so.0
+#47 0x0000557a44112e70 in gimp_display_shell_present (shell=0x557a4b177f30) at gimpdisplayshell.c:1320
+        window = 0x557a46e96350
+        __func__ = "gimp_display_shell_present"
+#48 0x0000557a44110621 in gimp_display_new (gimp=gimp@entry=0x557a44efa050, image=image@entry=0x557a4ad536b0, unit=unit@entry=GIMP_UNIT_PIXEL, scale=scale@entry=1, popup_manager=0x557a46c49200, dialog_factory=0x557a46abd5f0, monitor=monitor@entry=0x557a44b7fd90) at gimpdisplay.c:396
+        display = 0x557a48b1f060
+        private = 0x557a48b1f000
+        window = 0x557a46e96350
+        shell = 0x557a4b177f30
+        __func__ = "gimp_display_new"
+#49 0x0000557a4401ebf5 in gui_display_create (gimp=0x557a44efa050, image=0x557a4ad536b0, unit=GIMP_UNIT_PIXEL, scale=1, monitor=<optimized out>) at gui-vtable.c:411
+        image_managers = 0x557a44e4ad60 = {0x557a46c49200, 0x557a450a89f0}
+        context = 0x557a44f1a230
+        display = <optimized out>
+        __func__ = "gui_display_create"
+#50 0x0000557a4427087b in display_new_invoker (procedure=0x557a45182e80, gimp=0x557a44efa050, context=<optimized out>, progress=<optimized out>, args=<optimized out>, error=0x7fff7a435380) at display-cmds.c:99
+        success = 1
+        return_vals = <optimized out>
+        image = 0x557a4ad536b0
+        display = 0x0
+#51 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a45182e80, gimp=0x557a44efa050, context=context@entry=0x557a45208930, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b16ba60, error=error@entry=0x7fff7a435380) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#52 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a45208930, progress=0x557a4661cb20, error=error@entry=0x7fff7a435380, name=name@entry=0x557a478db4f0 "gimp-display-new", args=args@entry=0x557a4b16ba60) at gimppdb.c:321
+        procedure = 0x557a45182e80
+        return_vals = 0x0
+        list = 0x557a44dbd600 = {0x557a45182e80}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#53 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4acb1520, plug_in=0x557a452649e0) at gimpplugin-message.c:584
+        proc_frame = 0x557a4b184000
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a478db4f0 "gimp-display-new"
+        proc_name = <optimized out>
+        args = 0x557a4b16ba60
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#54 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a452649e0, msg=msg@entry=0x7fff7a435400) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#55 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a452649e0, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4acb1520}
+        got_message = <optimized out>
+        plug_in = 0x557a452649e0
+#56 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a452649e0) at gimpplugin.c:177
+        plug_in = 0x557a452649e0
+#57 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#58 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#59 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#60 0x0000557a442cec75 in gimp_plug_in_main_loop (plug_in=<optimized out>) at gimpplugin.c:841
+        proc_frame = 0x557a4b184000
+        __func__ = "gimp_plug_in_main_loop"
+#61 0x0000557a442e2a40 in gimp_plug_in_manager_call_run_temp (manager=<optimized out>, context=<optimized out>, progress=0x557a4661cb20, procedure=0x557a46c30760, args=0x557a4b178480) at gimppluginmanager-call.c:363
+        proc_frame = 0x557a4b184000
+        proc_run = {name = 0x557a47deae80 "script-fu-font-map", n_params = 8, params = 0x557a4968ae00}
+        return_vals = 0x0
+        plug_in = 0x557a452649e0
+        __func__ = "gimp_plug_in_manager_call_run_temp"
+#62 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a46c30760, gimp=0x557a44efa050, context=context@entry=0x557a452091b0, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b178480, error=error@entry=0x7fff7a435690) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#63 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a452091b0, progress=0x557a4661cb20, error=error@entry=0x7fff7a435690, name=name@entry=0x557a4afc6cf0 "script-fu-font-map", args=args@entry=0x557a4b178480) at gimppdb.c:321
+        procedure = 0x557a46c30760
+        return_vals = 0x0
+        list = 0x557a44ea62e0 = {0x557a46c30760}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#64 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4b0720a0, plug_in=0x557a45265310) at gimpplugin-message.c:584
+        proc_frame = 0x557a45265588
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a4afc6cf0 "script-fu-font-map"
+        proc_name = <optimized out>
+        args = 0x557a4b178480
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#65 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a45265310, msg=msg@entry=0x7fff7a435710) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#66 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a45265310, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4b0720a0}
+        got_message = <optimized out>
+        plug_in = 0x557a45265310
+#67 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a45265310) at gimpplugin.c:177
+        plug_in = 0x557a45265310
+#68 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#69 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#70 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#71 0x0000557a44019007 in app_run (full_prog_name=<optimized out>, filenames=<optimized out>, alternate_system_gimprc=<optimized out>, alternate_gimprc=<optimized out>, session_name=<optimized out>, batch_interpreter=0x0, batch_commands=0x0, as_new=0, no_interface=0, no_data=0, no_fonts=0, no_splash=0, be_verbose=1, use_shm=1, use_cpu_accel=1, console_messages=0, use_debug_handler=0, show_playground=1, show_debug_menu=1, stack_trace_mode=GIMP_STACK_TRACE_QUERY, pdb_compat_mode=GIMP_PDB_COMPAT_WARN, backtrace_file=0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt") at app.c:440
+        update_status_func = <optimized out>
+        gimp = 0x557a44efa050
+        loop = <optimized out>
+        run_loop = 0x557a47919430
+        default_folder = <optimized out>
+        gimpdir = <optimized out>
+        abort_message = <optimized out>
+        temprc = <optimized out>
+        language = <optimized out>
+        font_error = 0x0
+        __func__ = "app_run"
+#72 0x0000557a440188ce in main (argc=<optimized out>, argv=<optimized out>) at main.c:636
+        context = 0x557a44b7c180
+        error = 0x0
+        abort_message = <optimized out>
+        basename = <optimized out>
+        system_gimprc_file = 0x0
+        user_gimprc_file = 0x0
+        backtrace_file = 0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt"
+        i = <optimized out>
+[Inferior 1 (process 95) detached]
+
+```
+> GIMP-WARNING: gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-weave
+
+Stack trace:
+```
+
+# Stack traces obtained from PID 95 - Thread 95 #
+
+[New LWP 96]
+[New LWP 97]
+[New LWP 99]
+[New LWP 129]
+[New LWP 131]
+[New LWP 137]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  Id   Target Id                                        Frame
+* 1    Thread 0x7f80dca5fec0 (LWP 95) "gimp-2.99"       0x00007f80e079031c in read () from /lib/x86_64-linux-gnu/libpthread.so.0
+  2    Thread 0x7f80dc804700 (LWP 96) "worker"          0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  3    Thread 0x7f80d747c700 (LWP 97) "gmain"           0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  4    Thread 0x7f80d6255700 (LWP 99) "async"           0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  5    Thread 0x7f80c7fff700 (LWP 129) "dconf worker"   0x00007f80e06a0bbf in poll () from /lib/x86_64-linux-gnu/libc.so.6
+  6    Thread 0x7f80d500f700 (LWP 131) "swap writer"    0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+  7    Thread 0x7f80d5911700 (LWP 137) "pool-gimp-2.99" 0x00007f80e06a68dd in syscall () from /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 7 (Thread 0x7f80d5911700 (LWP 137)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991ea6 in g_cond_wait_until () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e09163e1 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e0916a06 in g_async_queue_timeout_pop () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f969 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#6  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#7  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 6 (Thread 0x7f80d500f700 (LWP 131)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f3fa2d in gegl_tile_backend_swap_writer_thread () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 5 (Thread 0x7f80c7fff700 (LWP 129)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80d480881d in  () at /usr/lib/x86_64-linux-gnu/gio/modules/libdconfsettings.so
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 4 (Thread 0x7f80d6255700 (LWP 99)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x0000557a44301964 in gimp_parallel_run_async_thread_func(GimpParallelRunAsyncThread*) (thread=0x557a44891f80 <gimp_parallel_run_async_threads>) at gimp-parallel.cc:378
+        task = <optimized out>
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 3 (Thread 0x7f80d747c700 (LWP 97)):
+#0  0x00007f80e06a0bbf in poll () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0945aae in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0945be3 in g_main_context_iteration () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#3  0x00007f80e0945c31 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#5  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#6  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 2 (Thread 0x7f80dc804700 (LWP 96)):
+#0  0x00007f80e06a68dd in syscall () at /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f80e0991d83 in g_cond_wait () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#2  0x00007f80e0f853c3 in gegl_parallel_distribute_thread_func () at /usr/local/lib/x86_64-linux-gnu/libgegl-0.4.so.0
+#3  0x00007f80e096f181 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#4  0x00007f80e0785669 in start_thread () at /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f80e06ad2b3 in clone () at /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 1 (Thread 0x7f80dca5fec0 (LWP 95)):
+#0  0x00007f80e079031c in read () at /lib/x86_64-linux-gnu/libpthread.so.0
+#1  0x00007f80e1405047 in read (__nbytes=256, __buf=0x7fff7a433670, __fd=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/unistd.h:44
+        status = 32640
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000\003\000\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "q\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 157
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#2  0x00007f80e1405047 in gimp_stack_trace_print (prog_name=prog_name@entry=0x0, stream=stream@entry=0x0, trace=trace@entry=0x7fff7a4337e0) at ../libgimpbase/gimputils.c:1345
+        status = 32640
+        stack_printed = 0
+        gtrace = 0x0
+        gimp_pid = "95\000DzU\000\000\320\066Cz\377\177\000"
+        buffer = "0\000\000\000\000\000\000\000\037\201\245\340\200\177\000\000\320\066Cz\377\177\000\000\275z\243\340\200\177\000\000\200\067Cz\377\177\000\000\000\000\000\000\000\000\000\000\020v\353DzU\000\000pF\246\340\200\177\000\000\000\000\000\000\000\000\000\000\255\263\243\340\200\177\000\000?\000\000\000\003\000\000\000P\232\331DzU\000\000\000\000\000\000\000\000\000\000\332\060t\340\200\177\000\000 8Cz\377\177\000\000\252@\\\340\200\177\000\000C\000\000\000\000\000\000\000\066=\\\340\200\177\000\000LC_MESSAGES/gimp30.mo\000\000\000\240<\\\340\200\177", '\000' <repeats 18 times>, "q\000\000\000\000\000\000\000"...
+        read_n = <optimized out>
+        sync_fd = {13, 14}
+        out_fd = {16, 17}
+        fork_pid = 157
+        pid = 95
+        eintr_count = 0
+        tid = 95
+#3  0x0000557a440244ca in gui_message (gimp=0x557a44efa050, handler=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", message=0x557a68340800 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-weave") at gui-message.c:141
+        trace = 0x0
+        gen_trace = 1
+#4  0x0000557a442fe590 in gimp_show_message (gimp=gimp@entry=0x557a44efa050, handler=handler@entry=0x0, severity=GIMP_MESSAGE_BUG_WARNING, domain=0x557a44540c81 "GIMP", domain@entry=0x0, message=message@entry=0x557a68340800 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-weave") at gimp-gui.c:158
+        desc = 0x557a4447be09 "Message"
+        __func__ = "gimp_show_message"
+#5  0x0000557a44019435 in gimp_message_log_func (log_domain=0x557a4447aa8f "Gimp-Widgets", flags=<optimized out>, message=0x557a68340800 "gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-weave", data=0x557a44efa050) at errors.c:263
+        gimp = 0x557a44efa050
+        config = <optimized out>
+        msg_domain = 0x0
+        severity = <optimized out>
+        gui_message = <optimized out>
+        debug_policy = GIMP_DEBUG_POLICY_WARNING
+#6  0x00007f80e094cc0c in g_logv () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#7  0x00007f80e094cdf3 in g_log () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#8  0x0000557a44049314 in plug_in_actions_update (group=0x557a47e88c60, data=<optimized out>) at plug-in-actions.c:169
+        procedure = 0x557a4b06d060
+        sensitive = 1
+        tooltip = 0x0
+        proc = 0x557a4b06d060
+        image = <optimized out>
+        manager = <optimized out>
+        drawable = 0x557a477ea210
+        list = 0x557a478e5e00 = {0x557a4b06d060, 0x557a46c30220, 0x557a46c305a0, 0x557a46c34220, 0x557a46c343e0, 0x557a46c345a0, 0x557a46c35060, 0x557a46c35220, 0x557a46c353e0, 0x557a46c355a0, 0x557a46c35e60, 0x557a46c38e60, 0x557a46c3c060, 0x557a46c3c220, 0x557a46c3c5a0, 0x557a46c403e0, 0x557a46c405a0, 0x557a46c433e0, 0x557a46c30ca0, 0x557a46c34060, 0x557a46c38ae0, 0x557a46c34920, 0x557a46c30920, 0x557a46c30e60, 0x557a46c30ae0, 0x557a46c40760, 0x557a46c34760, 0x557a46c34ae0, 0x557a46c435a0, 0x557a46c38ca0, 0x557a46c3ce60, 0x557a46c4a060, 0x557a46c385a0, 0x557a46c38220, 0x557a46c40060, 0x557a46c43ae0, 0x557a46c245a0, 0x557a46c1aca0, 0x557a46c383e0, 0x557a46c3c3e0, 0x557a46c3cca0, 0x557a46c40ca0, 0x557a46c40e60, 0x557a46c34ca0, 0x557a46c34e60, 0x557a46c38920, 0x557a46c38060, 0x557a46c3c920, 0x557a46c30760, 0x557a46c35ae0, 0x557a46c24760, 0x557a46c40920, 0x557a46c43220, 0x557a46c43920, 0x557a46c3c760, 0x557a46c43060, 0x557a46c35ca0, 0x557a46c38760, 0x557a46c3cae0, 0x557a46c40ae0, 0x557a46c43760, 0x557a46c43ca0, 0x557a46c40220, 0x557a46c35760, 0x557a46c43e60, 0x557a46c35920, 0x557a46c24ca0, 0x557a46c30060, 0x557a46c303e0, 0x557a46c24220, 0x557a46c1ee60, 0x557a46c1eca0, 0x557a46c1eae0, 0x557a46c1e920, 0x557a46c1e760, 0x557a46c24060, 0x557a46c15920, 0x557a46c15ca0, 0x557a46c15e60, 0x557a46c1a060, 0x557a46c1a220, 0x557a46c1a3e0, 0x557a46c1a5a0, 0x557a46c1a760, 0x557a46c1e060, 0x557a46c1e220, 0x557a46c1e3e0, 0x557a46c1e5a0, 0x557a46c1a920, 0x557a46c1aae0, 0x557a46c15ae0, 0x557a46c1ae60, 0x557a46c15760, 0x557a46c155a0, 0x557a46c153e0, 0x557a46c15220, 0x557a46c15060, 0x557a46c0ee60, 0x557a46c0eca0, 0x557a46c0eae0, 0x557a46c0e920, 0x557a46c0e760, 0x557a46c0e5a0, 0x557a46c0e3e0, 0x557a46c0e220, 0x557a46c0e060, 0x557a46c09e60, 0x557a46c09ca0, 0x557a46c09ae0, 0x557a46c09920, 0x557a46c09760, 0x557a46c095a0, 0x557a46c093e0, 0x557a46c09220, 0x557a46c09060, 0x557a46c06e60, 0x557a46c06ca0, 0x557a46c06ae0, 0x557a46c06920, 0x557a46c06760, 0x557a46c065a0, 0x557a46c063e0, 0x557a46c06220, 0x557a46c06060, 0x557a46c03e60, 0x557a46c03ca0, 0x557a46c03ae0, 0x557a46c03920, 0x557a46c03760, 0x557a46c035a0, 0x557a46c033e0, 0x557a46c03220, 0x557a46c03060, 0x557a46bffe60, 0x557a46bffca0, 0x557a46bffae0, 0x557a46bff920, 0x557a46bff760, 0x557a46bff5a0, 0x557a46bff3e0, 0x557a46bff220, 0x557a46bff060, 0x557a46bf8e60, 0x557a46bf8ca0, 0x557a46bf8ae0, 0x557a46bf8920, 0x557a46bf8760, 0x557a46bf85a0, 0x557a46bf83e0, 0x557a46bf8220, 0x557a46bf8060, 0x557a46bf3e60, 0x557a46bf3ca0, 0x557a46bf3ae0, 0x557a46bf3920, 0x557a46bf3760, 0x557a46bf35a0, 0x557a46bf33e0, 0x557a46bf3220, 0x557a46bf3060, 0x557a46befe60, 0x557a46befca0, 0x557a46befae0, 0x557a46bef920, 0x557a46bef760, 0x557a46bef5a0, 0x557a46bef3e0, 0x557a46bef220, 0x557a46bef060, 0x557a46be8e60, 0x557a46be8ca0, 0x557a46be8ae0, 0x557a46be8920, 0x557a46be8760, 0x557a46be85a0, 0x557a46be83e0, 0x557a46be8220, 0x557a46be8060, 0x557a46be2e60, 0x557a46be2ca0, 0x557a46be2ae0, 0x557a46be2920, 0x557a46be2760, 0x557a46be25a0, 0x557a46be23e0, 0x557a46be2220, 0x557a46be2060, 0x557a46bdee60, 0x557a46bdeca0, 0x557a46bdeae0, 0x557a46bde920, 0x557a46bde760, 0x557a46bde5a0, 0x557a46bde3e0, 0x557a46bde220, 0x557a46bde060, 0x557a46bdde60, 0x557a46bddca0, 0x557a46bddae0, 0x557a46bdd920...}
+#9  0x0000557a4423269b in gimp_ui_manager_real_update (manager=<optimized out>, update_data=0x557a47e90300) at gimpuimanager.c:381
+        list = 0x557a44edeae0 = {0x557a47e88c60, 0x557a47e88b40}
+#10 0x00007f80e0a35c93 in g_cclosure_marshal_VOID__POINTERv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#11 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#12 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#13 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#14 0x0000557a441e66f2 in gimp_item_tree_view_select_item (view=<optimized out>, item=0x0, insert_data=<optimized out>) at gimpitemtreeview.c:1094
+        tree_view = 0x557a47e90300
+        options_sensitive = 0
+        success = 1
+#15 0x0000557a441edc2c in gimp_layer_tree_view_select_item (view=view@entry=0x557a47e90300, item=0x0, insert_data=0x0) at gimplayertreeview.c:591
+        layer_view = 0x557a47e90300
+        success = <optimized out>
+#16 0x0000557a442f5640 in gimp_marshal_BOOLEAN__OBJECT_POINTER (closure=0x557a47c36bc0, return_value=0x7fff7a4341a0, n_param_values=<optimized out>, param_values=0x7fff7a434070, invocation_hint=<optimized out>, marshal_data=<optimized out>) at gimpmarshal.c:344
+        cc = 0x557a47c36bc0
+        data1 = 0x557a47e90300
+        data2 = <optimized out>
+        callback = 0x557a441edbf0 <gimp_layer_tree_view_select_item>
+        v_return = <optimized out>
+        __func__ = "gimp_marshal_BOOLEAN__OBJECT_POINTER"
+#17 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#18 0x00007f80e0a45cc6 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#19 0x00007f80e0a4e99e in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#20 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#21 0x0000557a4419d261 in gimp_container_view_select_item (view=view@entry=0x557a47e90300, viewable=viewable@entry=0x0) at gimpcontainerview.c:685
+        private = 0x557a47ec2840
+        success = 0
+        insert_data = <optimized out>
+        __func__ = "gimp_container_view_select_item"
+#22 0x0000557a4419d455 in gimp_container_view_real_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.c:415
+        private = 0x557a47ec2840
+#23 0x0000557a4419973a in gimp_container_tree_view_set_container (view=0x557a47e90300, container=<optimized out>) at gimpcontainertreeview.c:714
+        tree_view = 0x557a47e90300
+        old_container = <optimized out>
+#24 0x0000557a441e6a05 in gimp_item_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimpitemtreeview.c:940
+        item_view = 0x557a47e90300
+        old_container = <optimized out>
+#25 0x0000557a441edef3 in gimp_layer_tree_view_set_container (view=0x557a47e90300, container=0x0) at gimplayertreeview.c:480
+        layer_view = 0x557a47e90300
+        old_container = <optimized out>
+#26 0x0000557a4419c8fd in gimp_container_view_set_container (view=0x557a47e90300, container=0x0) at gimpcontainerview.h:39
+        private = <optimized out>
+        __func__ = "gimp_container_view_set_container"
+#27 0x0000557a441e5a1a in gimp_item_tree_view_real_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpcontainerview.h:39
+#28 0x0000557a441ca866 in gimp_drawable_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpdrawabletreeview.c:316
+#29 0x0000557a441ee039 in gimp_layer_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimplayertreeview.c:918
+        layer_view = 0x557a47e90300
+#30 0x00007f80e0a35de3 in g_cclosure_marshal_VOID__OBJECTv () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#31 0x00007f80e0a32936 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#32 0x00007f80e0a4f36c in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#33 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#34 0x0000557a441e6ebd in gimp_item_tree_view_set_image (view=0x557a47e90300, image=0x557a4ad536b0) at gimpitemtreeview.c:683
+        __func__ = "gimp_item_tree_view_set_image"
+#35 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#36 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#37 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#38 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#39 0x0000557a4432d599 in gimp_context_real_set_image (image=<optimized out>, context=0x557a44f1a230) at gimpcontext.c:1931
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#40 0x0000557a4432d599 in gimp_context_real_set_display (context=0x557a44f1a230, display=<optimized out>) at gimpcontext.c:2020
+        image = 0x557a4ad536b0
+        old_display = <optimized out>
+#41 0x0000557a44131065 in gimp_image_window_switch_page (notebook=<optimized out>, page=<optimized out>, page_num=<optimized out>, window=0x557a46e96350) at gimpimagewindow.c:2015
+        private = 0x557a46e96050
+        shell = <optimized out>
+        active_display = 0x557a48b1f060
+        __func__ = "gimp_image_window_switch_page"
+#42 0x00007f80e0a326e2 in g_closure_invoke () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#43 0x00007f80e0a46544 in  () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#44 0x00007f80e0a4f327 in g_signal_emit_valist () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#45 0x00007f80e0a4f9b3 in g_signal_emit () at /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#46 0x00007f80e17fd81d in gtk_notebook_set_current_page () at /lib/x86_64-linux-gnu/libgtk-3.so.0
+#47 0x0000557a44112e70 in gimp_display_shell_present (shell=0x557a4b177f30) at gimpdisplayshell.c:1320
+        window = 0x557a46e96350
+        __func__ = "gimp_display_shell_present"
+#48 0x0000557a44110621 in gimp_display_new (gimp=gimp@entry=0x557a44efa050, image=image@entry=0x557a4ad536b0, unit=unit@entry=GIMP_UNIT_PIXEL, scale=scale@entry=1, popup_manager=0x557a46c49200, dialog_factory=0x557a46abd5f0, monitor=monitor@entry=0x557a44b7fd90) at gimpdisplay.c:396
+        display = 0x557a48b1f060
+        private = 0x557a48b1f000
+        window = 0x557a46e96350
+        shell = 0x557a4b177f30
+        __func__ = "gimp_display_new"
+#49 0x0000557a4401ebf5 in gui_display_create (gimp=0x557a44efa050, image=0x557a4ad536b0, unit=GIMP_UNIT_PIXEL, scale=1, monitor=<optimized out>) at gui-vtable.c:411
+        image_managers = 0x557a44e4ad60 = {0x557a46c49200, 0x557a450a89f0}
+        context = 0x557a44f1a230
+        display = <optimized out>
+        __func__ = "gui_display_create"
+#50 0x0000557a4427087b in display_new_invoker (procedure=0x557a45182e80, gimp=0x557a44efa050, context=<optimized out>, progress=<optimized out>, args=<optimized out>, error=0x7fff7a435380) at display-cmds.c:99
+        success = 1
+        return_vals = <optimized out>
+        image = 0x557a4ad536b0
+        display = 0x0
+#51 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a45182e80, gimp=0x557a44efa050, context=context@entry=0x557a45208930, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b16ba60, error=error@entry=0x7fff7a435380) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#52 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a45208930, progress=0x557a4661cb20, error=error@entry=0x7fff7a435380, name=name@entry=0x557a478db4f0 "gimp-display-new", args=args@entry=0x557a4b16ba60) at gimppdb.c:321
+        procedure = 0x557a45182e80
+        return_vals = 0x0
+        list = 0x557a44dbd600 = {0x557a45182e80}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#53 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4acb1520, plug_in=0x557a452649e0) at gimpplugin-message.c:584
+        proc_frame = 0x557a4b184000
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a478db4f0 "gimp-display-new"
+        proc_name = <optimized out>
+        args = 0x557a4b16ba60
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#54 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a452649e0, msg=msg@entry=0x7fff7a435400) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#55 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a452649e0, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4acb1520}
+        got_message = <optimized out>
+        plug_in = 0x557a452649e0
+#56 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a452649e0) at gimpplugin.c:177
+        plug_in = 0x557a452649e0
+#57 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#58 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#59 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#60 0x0000557a442cec75 in gimp_plug_in_main_loop (plug_in=<optimized out>) at gimpplugin.c:841
+        proc_frame = 0x557a4b184000
+        __func__ = "gimp_plug_in_main_loop"
+#61 0x0000557a442e2a40 in gimp_plug_in_manager_call_run_temp (manager=<optimized out>, context=<optimized out>, progress=0x557a4661cb20, procedure=0x557a46c30760, args=0x557a4b178480) at gimppluginmanager-call.c:363
+        proc_frame = 0x557a4b184000
+        proc_run = {name = 0x557a47deae80 "script-fu-font-map", n_params = 8, params = 0x557a4968ae00}
+        return_vals = 0x0
+        plug_in = 0x557a452649e0
+        __func__ = "gimp_plug_in_manager_call_run_temp"
+#62 0x0000557a442cca4f in gimp_procedure_execute (procedure=procedure@entry=0x557a46c30760, gimp=0x557a44efa050, context=context@entry=0x557a452091b0, progress=progress@entry=0x557a4661cb20, args=args@entry=0x557a4b178480, error=error@entry=0x7fff7a435690) at gimpprocedure.c:515
+        return_vals = <optimized out>
+        pdb_error = 0x0
+        __func__ = "gimp_procedure_execute"
+#63 0x0000557a442c5699 in gimp_pdb_execute_procedure_by_name_args (pdb=0x557a44dfb660, context=0x557a452091b0, progress=0x557a4661cb20, error=error@entry=0x7fff7a435690, name=name@entry=0x557a4afc6cf0 "script-fu-font-map", args=args@entry=0x557a4b178480) at gimppdb.c:321
+        procedure = 0x557a46c30760
+        return_vals = 0x0
+        list = 0x557a44ea62e0 = {0x557a46c30760}
+        __func__ = "gimp_pdb_execute_procedure_by_name_args"
+#64 0x0000557a442d0995 in gimp_plug_in_handle_proc_run (proc_run=0x557a4b0720a0, plug_in=0x557a45265310) at gimpplugin-message.c:584
+        proc_frame = 0x557a45265588
+        procedure = <optimized out>
+        return_vals = 0x0
+        canonical = 0x557a4afc6cf0 "script-fu-font-map"
+        proc_name = <optimized out>
+        args = 0x557a4b178480
+        error = 0x0
+        __func__ = "gimp_plug_in_handle_proc_run"
+        __func__ = "gimp_plug_in_handle_message"
+#65 0x0000557a442d0995 in gimp_plug_in_handle_message (plug_in=plug_in@entry=0x557a45265310, msg=msg@entry=0x7fff7a435710) at gimpplugin-message.c:128
+        __func__ = "gimp_plug_in_handle_message"
+#66 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, data=0x557a45265310, cond=G_IO_IN) at gimpplugin.c:209
+        msg = {type = 5, data = 0x557a4b0720a0}
+        got_message = <optimized out>
+        plug_in = 0x557a45265310
+#67 0x0000557a442cf339 in gimp_plug_in_recv_message (channel=<optimized out>, cond=G_IO_IN, data=0x557a45265310) at gimpplugin.c:177
+        plug_in = 0x557a45265310
+#68 0x00007f80e094578e in g_main_context_dispatch () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#69 0x00007f80e0945b40 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#70 0x00007f80e0945e33 in g_main_loop_run () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#71 0x0000557a44019007 in app_run (full_prog_name=<optimized out>, filenames=<optimized out>, alternate_system_gimprc=<optimized out>, alternate_gimprc=<optimized out>, session_name=<optimized out>, batch_interpreter=0x0, batch_commands=0x0, as_new=0, no_interface=0, no_data=0, no_fonts=0, no_splash=0, be_verbose=1, use_shm=1, use_cpu_accel=1, console_messages=0, use_debug_handler=0, show_playground=1, show_debug_menu=1, stack_trace_mode=GIMP_STACK_TRACE_QUERY, pdb_compat_mode=GIMP_PDB_COMPAT_WARN, backtrace_file=0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt") at app.c:440
+        update_status_func = <optimized out>
+        gimp = 0x557a44efa050
+        loop = <optimized out>
+        run_loop = 0x557a47919430
+        default_folder = <optimized out>
+        gimpdir = <optimized out>
+        abort_message = <optimized out>
+        temprc = <optimized out>
+        language = <optimized out>
+        font_error = 0x0
+        __func__ = "app_run"
+#72 0x0000557a440188ce in main (argc=<optimized out>, argv=<optimized out>) at main.c:636
+        context = 0x557a44b7c180
+        error = 0x0
+        abort_message = <optimized out>
+        basename = <optimized out>
+        system_gimprc_file = 0x0
+        user_gimprc_file = 0x0
+        backtrace_file = 0x557a44b7bee0 "/work/.home/.config/GIMP/2.99/CrashLog/GIMP-crash-1603389949.txt"
+        i = <optimized out>
+[Inferior 1 (process 95) detached]
+
+```
+> GIMP-WARNING: gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-weave
+
+> GIMP-WARNING: gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-waves-anim
+
+> GIMP-WARNING: gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-waves-anim
+
+> GIMP-WARNING: gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-tile-blur
+
+> GIMP-WARNING: gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-tile-blur
+
+> GIMP-WARNING: gimp_action_group_set_action_sensitive: Unable to set sensitivity of action which doesn't exist: script-fu-spinning-globe
+
+> GIMP-WARNING: gimp_action_group_set_action_tooltip: Unable to set tooltip of action which doesn't exist: script-fu-spinning-globe
