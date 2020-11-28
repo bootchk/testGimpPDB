@@ -26,6 +26,7 @@ import gi
 from gi.repository import GObject
 from gi.repository import Gio   # Gio.File
 
+import time
 
 from gimpfu import *
 
@@ -169,6 +170,30 @@ def testAProc(procName, paramsDict,  image, drawable):
     testProcGivenInParams(procName, paramsDict["in"], image, drawable)
 
 
+def testSingleProc(procName, image, drawable):
+    """ For a wild procName, i.e. possibly entered by user """
+    """
+    So testing is from a known base, test on a copy of original image
+    Note there is no undo() operation in the PDB, to undo the previous test.
+    Alternatively, use the same image over and over, but errors will be different?
+    """
+    testImage = pdb.gimp_image_duplicate(image)
+    testDrawable = pdb.gimp_image_get_active_drawable(testImage)
+
+    # Not testing undo. Disable it for speed.
+    pdb.gimp_image_undo_disable(testImage)
+
+    # pass procName, its dictionary of attributes
+    try:
+        testAProc(procName, ProceduresDB.attributeDictionary(procName),  testImage, testDrawable)
+    except KeyError:
+        message = f"Failed to find procedure in PDB: {procName}, use hyphens?"
+        TestLog.say(message)
+        pdb.gimp_message(message)
+
+
+    # delete test image or undo changes made by procedure
+    pdb.gimp_image_delete(testImage)
 
 
 def testProcs(image, drawable):
@@ -195,28 +220,12 @@ def testProcs(image, drawable):
             else:
                 TestStats.sample("tested procedures")
 
-            """
-            So testing is always from a known base, test on a copy of original image
-            Note there is no undo() operation in the PDB, to undo the previous test.
-            Alternatively, use the same image over and over, but errors will be different?
-            """
-            testImage = pdb.gimp_image_duplicate(image)
-            testDrawable = pdb.gimp_image_get_active_drawable(testImage)
-
-            # Not testing undo. Disable it for speed.
-            pdb.gimp_image_undo_disable(testImage)
-
-            # pass procName, its dictionary of attributes
-            testAProc(procName, ProceduresDB.attributeDictionary(procName),  testImage, testDrawable)
-
-            # delete test image or undo changes made by procedure
-            pdb.gimp_image_delete(testImage)
+            testSingleProc(procName, image, drawable)
 
             # Temporary
             testedCount += 1
             if testedCount > 100:
                 return
-
 
 
 
@@ -249,7 +258,10 @@ def plugin_main(image, drawable,
          shouldTestExportImport, shouldTestTemporary, shouldTestOther)
 
     if oneToTest :
-        print(f"tested {oneToTest}")
+        logger.debug(f"tested {oneToTest}")
+        testSingleProc(oneToTest, image, drawable)
+        # to allow for possible GUI to be seen, short delay
+        time.sleep(5)  # seconds
     else:
         # run set of tests
         testProcs(image, drawable)
