@@ -6,6 +6,8 @@ A Gimp plugin that minimally tests most procedures in Gimp PDB.
 
 *!!! Work in progress.  This is not stable. It is not a complete test of Gimp.  It is not sanctioned by Gimp.org!!!*
 
+*!!! It is a GimpFu plugin and also requires my repository GimpFuV3. !!!*
+
 I am using it to test Gimp 3.  With minor changes, it might also work for other Gimp versions.
 
 Appears in menus as *Test>Test Gimp PDB...*
@@ -34,7 +36,7 @@ Layers that may be exercised by this testing :
   - plugins and internal procedures in the PDB
   - interpreters (for Scheme, Python, Lua plugins)
   - libgimp
-  - gimp core 
+  - gimp core
   - libraries that Gimp uses
 
 ## The log
