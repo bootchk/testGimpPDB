@@ -44,7 +44,9 @@ from stats import TestStats
 # Plugin is not i18n ???
 gettext.install("gimp30-python", gimp.locale_directory)
 
-
+# global improvised data assigned by generateGlobalFooParameters()
+fooFile=None
+fooVectors=None
 
 
 def testProcHavingNoParams(procName):
