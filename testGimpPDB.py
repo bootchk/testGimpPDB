@@ -294,10 +294,10 @@ register(
      (PF_DRAWABLE, "d", _("_Drawable"), None),
      (PF_TOGGLE, "shouldTestScriptFu", "ScriptFu procedures?", 1),
      (PF_TOGGLE, "shouldTestPythonFu", "PythonFu procedures?", 1),
-     (PF_TOGGLE, "shouldTestCPlugin", "CPlugin procedures?", 1),
+     (PF_TOGGLE, "shouldTestCPlugin", "C Plugin procedures?", 1),
      (PF_TOGGLE, "shouldTestExportImport", "Export/Import procedures?", 1),
      (PF_TOGGLE, "shouldTestTemporary", "Temporary procedures?", 1),
-     (PF_TOGGLE, "shouldTestOther", "Other procedures?", 1),
+     (PF_TOGGLE, "shouldTestOther", "Other (Internal, etc.) procedures?", 1),
      (PF_STRING, "oneToTest", "Test one:", ""),
     ],
     [], # No return value

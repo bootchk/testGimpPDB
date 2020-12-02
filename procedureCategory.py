@@ -14,6 +14,8 @@ class ProcedureCategory:
 
     We further divide the "GIMP Plug-in catetory" by parsing
     procedure names which should follow naming convention.
+
+    Only two Extension? extension-script-fu and extension-gimp-help
     """
 
     def isScriptFu(procName):
