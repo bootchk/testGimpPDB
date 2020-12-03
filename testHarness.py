@@ -106,18 +106,26 @@ def generateFooGimpData(drawable):
     # script-fu-paste-as-pattern will allow create a named pattern
 
 
-def generateGlobalFooParameters(image, drawable):
+def improviseFooParameters(image, drawable):
     """
-    Generate instances (passed as args to PDB procedures, not by a name known to Gimp).
-    Used like 'image', 'drawable', instances passed into the tests,
-    but here it is global.
+    Create instances of various Gimp types.
+    Passed as args to PDB procedures, by name.
+    Used like 'image', 'drawable', instances passed into the tests.
     """
-    global fooVectors   # declare global so can assign to global
-    # GimpFu notation, not gi
-    fooVectors = gimp.Vectors(image, "foo")
 
-    global fooFile
-     # create a GObject file descriptor
+    """
+    Use any vectors in the image, else improvise one
+    """
+    # GimpFu, not gi
+    fooVectors = gimp.Vectors(image, "foo")
+    if fooVectors is None:
+        fooVectors = pdb.gimp_vectors_new()
+        # is empty, and is not attached to image
+    if fooVectors is None:
+        logger.warning(f"fooVectors is None, tests requiring vector args will fail.")
+
+
+    # create a GObject file descriptor
 
     # create a named file
     # fooFile = Gio.file_new_for_path("/work/foo")
@@ -135,3 +143,5 @@ def generateGlobalFooParameters(image, drawable):
     We don't create a global fooDrawableArray since GimpFu will automatically convert Drawable to GimpDrawableArray
     where required.
     """
+
+    return fooVectors, fooFile

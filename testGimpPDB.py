@@ -44,7 +44,7 @@ from stats import TestStats
 # Plugin is not i18n ???
 gettext.install("gimp30-python", gimp.locale_directory)
 
-# global improvised data assigned by generateGlobalFooParameters()
+# global improvised data assigned by improviseGlobalFooParameters()
 fooFile=None
 fooVectors=None
 
@@ -243,8 +243,11 @@ def plugin_main(image, drawable,
     # Generate named resources in Gimp
     generateFooGimpData(drawable)
 
-    # generate named globals for various parameters
-    generateGlobalFooParameters(image, drawable)
+    global fooVectors
+    global fooFile
+    fooVectors, fooFile = improviseFooParameters(image, drawable)
+    assert fooVectors is not None
+    # assert these are now in scope for eval()
 
     # Not testing undo.  Disable it for speed.
     pdb.gimp_image_undo_disable(image)

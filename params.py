@@ -28,6 +28,10 @@ def generateQuotedIntegerLiteral():
 
 
 def generateParamString(procName, inParamList,  image, drawable):
+    """
+    Generate a string of the form '(foo,)' or '()'
+    Returns None for unhandled types (an error)
+    """
     # TODO why GParam and GimpParam ??
     result = "("
     for aType in inParamList:
@@ -86,6 +90,8 @@ def generateParamString(procName, inParamList,  image, drawable):
             Refer to "drawable", since GimpFu will convert to GimpParamDrawableArray automatically.
             However, this depends on the int for n_drawables being 1.
             """
+            # assert drawable is a wrapped GimpFu Adapter
+            print(f"Drawable: {drawable}")  # DEBUG unwrapped
             result = appendParameter(result, 'drawable')
 
         # TODO more types
@@ -105,4 +111,5 @@ def generateParamString(procName, inParamList,  image, drawable):
             return ""
 
     result = result + ')'
+    # assert result is '()' or of the form '(foo,)'
     return result
