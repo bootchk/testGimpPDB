@@ -57,6 +57,7 @@ def generateParamString(procName, inParamList,  image, drawable):
             # Use a convenient one
             result = appendParameter(result, 'drawable')
         elif aType == "GParamEnum" or aType == "GimpParamEnum" :
+            # Sometimes run_mode e.g. for Internal  gimp-file-load-layers
             # enums are ints
             result = appendParameter(result, generateQuotedIntegerLiteral())
         elif aType == "GimpParamImage" :
@@ -72,10 +73,18 @@ def generateParamString(procName, inParamList,  image, drawable):
         elif aType == "GimpParamRGB" :
             # a 3-tuple suffices, GimpFu marshals to a Gimp.RGB
             result = appendParameter(result, '(12, 13, 14)')
+        elif aType == "GimpParamUnit" :
+            # call out to Gimp for a defined constant
+            # result = appendParameter(result, 'Gimp.Unit.UNIT_PIXEL')
+            # int works?
+            result = appendParameter(result, generateQuotedIntegerLiteral())
         elif aType == "GimpParamFloatArray" :
             # a 4-tuple often suffices
             # TODO  prefixed with len ?? result = appendParameter(result, '4, (1.0, 1.0, 5.0, 5.0)')
             result = appendParameter(result, '(1.0, 1.0, 5.0, 5.0)')
+        elif aType == "GimpParamUInt8Array" :
+            # a 4-tuple often suffices e.g. gimp-image-set-colormap
+            result = appendParameter(result, '(1, 2, 3, 4)')
         elif aType == "GimpParamVectors" :
             # refer to test harness object
             result = appendParameter(result, 'fooVectors')

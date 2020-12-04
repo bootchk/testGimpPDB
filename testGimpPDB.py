@@ -313,7 +313,7 @@ def plugin_main(image, drawable,
          shouldTestExportImport, shouldTestTemporary, shouldTestOther)
 
     if oneToTest :
-        logger.debug(f"tested {oneToTest}")
+        logger.debug(f"Testing single procedure: {oneToTest}")
         testSingleProc(oneToTest, image, drawable)
         # to allow for possible GUI to be seen, short delay
         time.sleep(5)  # seconds
