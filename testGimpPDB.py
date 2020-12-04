@@ -35,7 +35,7 @@ from excludedTestCases import *
 from procedureCategory import ProcedureCategory
 from userFilter import UserFilter
 from testHarness import *
-from params import *
+from params import generateParamString
 from testLog import TestLog
 from stats import TestStats
 
@@ -47,6 +47,14 @@ gettext.install("gimp30-python", gimp.locale_directory)
 # global improvised data assigned by improviseGlobalFooParameters()
 fooFile=None
 fooVectors=None
+
+
+
+def omit(procName):
+    TestLog.say(f"Omit: {procName}")
+    TestStats.sample("omit")
+
+
 
 
 def testProcHavingNoParams(procName):
@@ -94,7 +102,7 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
 
 
 def testProcHavingStringParam(procName):
-    # TODO get an appropriate name of an existing object, by parsing the procname
+    # TODO get an appropriate name of an existing object, by parsing the procName
     evalCatchingExceptions(procName, '("foo")')
 
 
@@ -107,7 +115,7 @@ def testPluginWith3Params():
         TestLog.say(f"test plugin: {procName}")
         evalCatchingExceptions(procName, '(image, drawable)', image, drawable)
     else:
-        TestLog.say(f"omit test plugin: {procName}")
+        TestLog.say(f"omit: {procName}")
 """
 
 
@@ -127,6 +135,7 @@ def testProcThatIsPlugin(procName, inParamList, image, drawable):
         result = True
     else:
         result = False
+    return result
 
 
 
@@ -161,11 +170,12 @@ def testProcGivenInParams(procName, inParamList,  image, drawable):
         pass
     else:
         # Omitted: unhandled signature or unhandled parameter type or is interactive
-        TestLog.say(f"Omitting test of {procName}")
+        omit(procName)
 
 
 
-
+# TODO this layer is of little use???
+# The test should also test that out params are the proper type?
 def testAProc(procName, paramsDict,  image, drawable):
     # We don't care about the out params
     # not len(paramsDict["out"]
@@ -173,9 +183,11 @@ def testAProc(procName, paramsDict,  image, drawable):
 
 
 def testSingleProc(procName, image, drawable):
-    """ For a wild procName, i.e. possibly entered by user """
     """
-    So testing is from a known base, test on a copy of original image
+    Bracket test with creation of duplicate image, drawable.
+    For a wild procName, i.e. possibly entered by user.
+
+    So testing is from a known base image, the one the user submitted.
     Note there is no undo() operation in the PDB, to undo the previous test.
     Alternatively, use the same image over and over, but errors will be different?
     """
@@ -193,9 +205,9 @@ def testSingleProc(procName, image, drawable):
         TestLog.say(message)
         pdb.gimp_message(message)
 
-
     # delete test image or undo changes made by procedure
     pdb.gimp_image_delete(testImage)
+
 
 
 def testProcs(image, drawable):
@@ -216,18 +228,16 @@ def testProcs(image, drawable):
 
             # Exclude certain procs
             if not shouldTestProcedure(procName):
-                TestStats.sample("omit bad actor")
-                TestLog.say(f"omit bad actor: {procName}")
-                continue
+                omit(procName)
             else:
                 TestStats.sample("tested procedures")
-
-            testSingleProc(procName, image, drawable)
+                testSingleProc(procName, image, drawable)
 
             # Temporary
             testedCount += 1
             if testedCount > 100:
                 return
+
 
 
 

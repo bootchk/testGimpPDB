@@ -70,6 +70,34 @@ def isProcedureSpecialCase(procName):
        "gimp-online-bugs-features",
        "gimp-online-roadmap",
        # gimp-web
+
+       #Exclude some pdb management functions.
+       #We know they work??
+       #For setters, we would need to improvise a proc to mess with.
+       #We do test "gimp-pdb-set-data" and "gimp-pdb-get-data" and "gimp-pdb-get-data-size",
+       #and e.g. query
+       "gimp-pdb-set-proc-attribution",
+       "gimp-pdb-get-proc-attribution",
+       "gimp-pdb-set-proc-documentation",
+       "gimp-pdb-get-proc-documentation",
+       "gimp-pdb-set-proc-menu-label",
+       "gimp-pdb-get-proc-menu-label",
+       "gimp-pdb-add-proc-menu-path",
+       "gimp-pdb-get-proc-menu-paths",
+       "gimp-pdb-set-proc-icon",
+       "gimp-pdb-set-proc-image-types",
+       "gimp-pdb-get-proc-image-types",
+       "gimp-pdb-get-proc-info",
+       "gimp-pdb-get-proc-argument",
+       "gimp-pdb-get-proc-return-value",
+
+       "gimp-pdb-set-file-proc-thumbnail-loader",
+       "gimp-pdb-set-file-proc-handles-remote",
+       "gimp-pdb-set-file-proc-handles-raw",
+       "gimp-pdb-set-file-proc-mime-types",
+       "gimp-pdb-set-file-proc-priority",
+       "gimp-pdb-set-file-proc-save-handler",
+       "gimp-pdb-set-file-proc-load-handler",
         )
 
 
