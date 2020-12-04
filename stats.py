@@ -1,8 +1,28 @@
 
 
 class TestStats:
+    """
+    A dictionary of statistics (counters) specific to testing the PDB.
+    """
 
     stats = {}  # dictionary of counters
+
+
+    @classmethod
+    def preload(cls):
+        """ Into the ordered dictionary, insert empty counters
+        in the order we want them to read out.
+        Names should match names used by the sampler.
+        """
+        cls.stats["procedures in PDB"] = 0
+        cls.stats["user filtered"] = 0
+        cls.stats["user unfiltered"] = 0
+        cls.stats["excluded"] = 0
+        cls.stats["unexcluded"] = 0
+        cls.stats["uncalled"] = 0
+        cls.stats["called"] = 0
+        cls.stats["pass"] = 0
+        cls.stats["fail"] = 0
 
 
     @classmethod

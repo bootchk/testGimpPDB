@@ -2,18 +2,43 @@
 
 
 """
-Plugin that tests Gimp PDB.
+Plugin that tests procedures in Gimp PDB.
+By calling them with improvised parameters.
 
-Test calling procedures in PDB.
-Some procedures are omitted.
+Filtering, i.e. categories of stats:
+First, user can choose subsets, "user filtered" or "user unfiltered"
+Then, we predefine "excluded" sets that:
+ - cannot be tested: interactive
+ - or should not be tested: not worth testing, we know they work
+Then:
+   "called"
+   "uncalled": bugs or limitations in this plugin may throw, preventing call,
+Then:
+   Gimpfu can throw, "GimpFu exception"
+   "pass"
+   "fail".
 
-Test via GimpFu
+Interpreting "fail"
+1) Many "fail" mean this plugin doesn't understand semantics,
+i.e. improvization is dumb.  E.G. PDB result like: "out of range"
+2) PDB result: "execution error" is hard to interpret.
+It means that the procedure lacks good error message, does not give specifics.
+
+Stats:
+procedures in PDB: count of registered PDB procedures
+procedures in PDB = user filtered + user unfiltered
+user unfiltered = excluded + unexcluded
+unexcluded = called + uncalled
+called = pass + fail + GimpFu exception
+
+Test via GimpFu, which affects how this is coded
+(relying on GimpFu to promote parameters to a needed type.)
 
 Goals:
 - stress test GimpFu
 - find crashes in Gimp
 
-Parameters to PDB procedures are arbitrary.
+Improvised parameters to PDB procedures are arbitrary but not random (yet.)
 
 Tests do NOT test semantics:
 - don't know the expected result,
@@ -55,10 +80,10 @@ def omit(procName):
     TestStats.sample("omit")
 
 
-
-
+"""
 def testProcHavingNoParams(procName):
      evalCatchingExceptions(procName, "()")
+"""
 
 
 def evalCatchingExceptions(procName, params, image=None, drawable=None):
@@ -80,13 +105,16 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
 
     except Exception as err:
         """
-        An exception here emanates from faulty Gimpfu code.
-        Since Gimpfu catches and proceeds past exceptions while doing
-        its own eval of author source.
-        That is, GimpFu will log exceptions that the tested procedure throws.
+        An exception here can be:
+           - fault in Gimpfu itself
+           - fault in the string submitted to eval
+           - when procedure under test (PUT) is a Python plugin:
+               - again fault in GimpFu
+               - fault in PUT code (exceptions that the tested procedure throws.
         """
         TestStats.sample("GimpFu exception", str(err) )
         TestLog.say(f"exception in Gimpfu code: {err} for test: {testStmt}")
+        return
 
     # Log end of test, with weak result.
     # get the pdb status, it is a weak form of pass/fail
@@ -101,14 +129,15 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
     # TODO stronger form of pass, test effects are as expected
 
 
+
+'''
+OLD
 def testProcHavingStringParam(procName):
     # TODO get an appropriate name of an existing object, by parsing the procName
     evalCatchingExceptions(procName, '("foo")')
 
 
 
-"""
-OLD
 def testPluginWith3Params():
     # Since in GimpFu, no need to pass run mode
     if len(inParamList)==3:
@@ -116,7 +145,6 @@ def testPluginWith3Params():
         evalCatchingExceptions(procName, '(image, drawable)', image, drawable)
     else:
         TestLog.say(f"omit: {procName}")
-"""
 
 
 
@@ -136,25 +164,30 @@ def testProcThatIsPlugin(procName, inParamList, image, drawable):
     else:
         result = False
     return result
+'''
 
 
 
 
 def testGeneralProc(procName, inParamList,  image, drawable):
+    """
+    Call a proc
+    """
 
     paramString = generateParamString(procName, inParamList,  image, drawable)
     if paramString:
+        TestStats.sample("called")
         evalCatchingExceptions(procName, paramString, image, drawable)
-        result = True
     else:
-        result = False
-
-    # success means we tested it, not that it succeeded
-    return result
-
+        # could not generate param string
+        TestLog.say(f"Not call, could not improvise params: {procName}")
+        TestStats.sample("uncalled")
 
 
 
+
+
+'''
 def testProcGivenInParams(procName, inParamList,  image, drawable):
     """
     Dispatch on various flavors of procedure signature.
@@ -171,6 +204,7 @@ def testProcGivenInParams(procName, inParamList,  image, drawable):
     else:
         # Omitted: unhandled signature or unhandled parameter type or is interactive
         omit(procName)
+'''
 
 
 
@@ -179,7 +213,8 @@ def testProcGivenInParams(procName, inParamList,  image, drawable):
 def testAProc(procName, paramsDict,  image, drawable):
     # We don't care about the out params
     # not len(paramsDict["out"]
-    testProcGivenInParams(procName, paramsDict["in"], image, drawable)
+    # OLD testProcGivenInParams(procName, paramsDict["in"], image, drawable)
+    testGeneralProc(procName, paramsDict["in"], image, drawable)
 
 
 def testSingleProc(procName, image, drawable):
@@ -218,6 +253,8 @@ def testProcs(image, drawable):
     Setup each test in various contexts e.g. a test image.
     """
     testedCount = 0
+    TestStats.preload()
+
 
     for procName in ProceduresDB.sortedNames():
 
@@ -225,18 +262,21 @@ def testProcs(image, drawable):
         TestStats.sample("procedures in PDB")
 
         if UserFilter.userWantsTest(procName):
+            TestStats.sample("user unfiltered")
 
             # Exclude certain procs
             if not shouldTestProcedure(procName):
-                omit(procName)
+                TestStats.sample("excluded")
             else:
-                TestStats.sample("tested procedures")
+                TestStats.sample("unexcluded")
                 testSingleProc(procName, image, drawable)
 
             # Temporary
             testedCount += 1
             if testedCount > 100:
                 return
+        else:
+            TestStats.sample("user filtered")
 
 
 
