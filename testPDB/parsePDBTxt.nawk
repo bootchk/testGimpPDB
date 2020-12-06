@@ -1,11 +1,17 @@
 # parse a dump of the pdb, into PDB procedure signatures
 
-# Input is a text file dump of the pdb, created by calling pdb.dump_to_file(f)
+# Input is a text file dump of the pdb.
+# You can created such a file:
+# Open the GIMP Python Console (Filters>Development>Python>Console)
+# >import gimpfu
+# >pdb.gimp_procedural_db_dump("filename")
+# (seems broken in Gimp 2.8)
+# (Since V3 gimp_pdb_dump)
+# (Might be a plugin of another name: pdb.dump_to_file("filename"))
 
 # Output is two files:
 # 1) a JSON file (many lines per PDB procedure)  to stdout
-# 2) a file  (each line a type signature for a PDB procedure)
-# TODO to a separate file e.g. signature.txt
+# 2) a file  (each line a type signature for a PDB procedure), to gimpPDBSignatures.txt
 
 # invoke   nawk -f parsePDBTxt.nawk pdb.txt >pdb.json
 
@@ -16,10 +22,96 @@
 
 
 
+
+# Implementation notes
+
 # Implements a small state machine
 
 # note that both the input and the JSON do not omit empty containers
 # e.g. a list of out params always, even if list is empty
+
+# !!! strings in the input have quote characters, be careful to strip as necessary
+
+
+
+# !!! strip, not replace with space
+function stripQuotes(text) {
+  gsub("\"", "", text)
+  return text
+}
+
+
+
+# Translate gimp types v2 to v3
+# use associative array
+
+
+function initTypeTranslations() {
+  print "initTypeTranslations"
+
+  # Single use GIMP_PDB_COLORARRAY only gimp-palette-get-colors
+
+  # Types in 2.10.20 obsolete in 3.0 ??  Not always convergent
+  # GIMP_PDB_INT8 ?
+  # GIMP_PDB_INT16 ?
+
+  # Divergent Types
+  # Some INT32 => Boolean
+  # Some INT32 for run mode => GParamEnum
+
+  # Some GIMP_PDB_INT8 => Boolean
+  # Some GIMP_PDB_INT8 => pixelel color?
+
+  # Types in 3.0 not present in 2.10.20
+  # GParamBoolean (no GIMP_PDB_BOOL in 2.10.20)
+  # GParamEnum
+
+  # Not sure this is correct?
+  typeTranslations["GIMP_PDB_INT16"]  = "GParamInt"
+  # !!! Since divergent, most frequent translation
+  typeTranslations["GIMP_PDB_INT32"]  = "GParamInt"
+  typeTranslations["GIMP_PDB_FLOAT"]  = "GParamFloat"
+  typeTranslations["GIMP_PDB_DOUBLE"] = "GParamDouble"
+  typeTranslations["GIMP_PDB_STRING"] = "GParamString"
+  # !!! Since divergent, most frequent translation
+  typeTranslations["GIMP_PDB_INT8"]    = "GParamBoolean"
+
+  typeTranslations["GIMP_PDB_IMAGE"]    = "GimpParamImage"
+  typeTranslations["GIMP_PDB_DRAWABLE"] = "GParamDrawable"
+  typeTranslations["GIMP_PDB_LAYER"]    = "GimpParamLayer"
+  typeTranslations["GIMP_PDB_ITEM"]     = "GimpParamItem"
+  typeTranslations["GIMP_PDB_CHANNEL"]  = "GimpParamChannel"
+
+  typeTranslations["GIMP_PDB_INT8ARRAY"]  = "GimpParamInt8Array"
+  typeTranslations["GIMP_PDB_UINT8ARRAY"] = "GimpParamUInt8Array"
+  typeTranslations["GIMP_PDB_INT32ARRAY"] = "GimpParamInt32Array"
+  typeTranslations["GIMP_PDB_FLOATARRAY"] = "GimpParamFloatArray"
+  typeTranslations["GIMP_PDB_STRINGARRAY"] = "GimpParamStringArray"
+  typeTranslations["GIMP_PDB_COLORARRAY"] = "GimpParamRGBArray"
+
+  typeTranslations["GIMP_PDB_COLOR"]      = "GimpParamRGB"
+  typeTranslations["GIMP_PDB_VECTORS"]    = "GimpParamVectors"
+  typeTranslations["GIMP_PDB_PARASITE"]   = "GimpParamParasite"
+  typeTranslations["GIMP_PDB_SELECTION"]  = "GimpParamSelection"
+  typeTranslations["GIMP_PDB_DISPLAY"]    = "GimpParamDisplay"
+}
+
+function translateType(type) {
+  # assert type is stripQuotes, no leading or trailing whitespace
+
+  # since type is a string, this should print: -GIMP_PDB_STRING-
+  #print "-" type "-"
+
+  if (type in typeTranslations ) {
+    translatedType = typeTranslations[type]
+    # print type "translated to" translatedType
+    return translatedType
+    }
+  else {
+     #print "not translated:" type
+     return type
+     }
+}
 
 
 
@@ -29,17 +121,16 @@
 # captures signature in associative array <signatures>
 
 function captureTypeSig(type) {
-  signatures[currentProc] = signatures[currentProc]  " " type
+  translatedType = translateType(stripQuotes(type))
+  signatures[currentProc] = signatures[currentProc]  " " translatedType
 }
 
 function appendToSignature(text) {
-  signatures[currentProc] = signatures[currentProc]  text
+  # text must have spaces, else string concatenation will run them together.
+  signatures[currentProc] = signatures[currentProc] text
 }
 
-function stripQuotes(text) {
-  gsub("\"", " ", text)
-  return text
-}
+
 
 function captureProcNameSig(name) {
   name = stripQuotes(name)
@@ -78,12 +169,15 @@ function closeProcJSON() {
 # JSON does not allow trailing commas, JSON5 does
 function captureTypeJSON(type, shouldPrefixComma) {
   # TODO these are formal param types
+
+  translatedType = translateType(stripQuotes(type))
+
   # types are in a comma delimited list
   if (shouldPrefixComma == "true") {
-    print indent indent ", " type
+    print indent indent ", " translatedType
   }
   else {
-    print indent indent type
+    print indent indent translatedType
   }
 }
 
@@ -155,6 +249,10 @@ function captureType(shouldPrefixComma) {
 
 
 BEGIN {
+  print "begin"
+  initTypeTranslations()
+  print typeTranslations["GIMP_PDB_STRING"]
+
   state = "null"
   openProcSet()
   indent = "   "
@@ -163,8 +261,8 @@ BEGIN {
 END {
   closeProcSet()
 
-  # append signatures to JSON file
-  #for (key in signatures) { print signatures[key] }
+  # write signatures to separate file
+  for (key in signatures) { print signatures[key] > "gimpPDBSignatures.txt" }
 }
 
 /\(register-procedure / {
