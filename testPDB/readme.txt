@@ -1,5 +1,17 @@
-This directory contains a nawk script to convert a pdb dump (pdb.txt) to json (pdb.json).
-And examples of said data files, which should be refreshed as gimp repository changes.
+This directory contains various files about the GIMP PDB.
+
+A nawk script to convert a pdb dump (pdb.txt) to json (pdb.json) and a signature file .txt
+
+
+The process is:
+GIMP pdb dump => pdb<foo>.txt  (use the GIMP app interactively)
+nawk the above => .json
+               => .txt.sig
+
+So all .txt and .json and .txt.sig files are ephemeral artifacts,
+should be refreshed as gimp repository changes.
+
+Often files are in pairs, for different versions of GIMP.
 
 pdb.json is used as the input to plug-ins/testGimpPDB.
 testGimpPDB is data-driven (pdb.json), automated test of PDB.
