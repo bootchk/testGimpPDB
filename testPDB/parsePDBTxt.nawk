@@ -19,8 +19,14 @@
 # 1) a JSON file (many lines per PDB procedure)  to stdout
 # 2) a plain text file  (each line a type signature for a PDB procedure), to gimpPDBSignatures.txt
 
+# Signature format
+# Fields separated by OFS i.e. space
+# I.E. somewhat lisp-like, no commas
+# name ( type ... ) => type ...
+# name, open paren, one or more types, close paren, "=>", one or more types
+
 # Unification/translation:
-# unifies the results into canonical terms
+# For signatures, unifies type terms into canonical type terms
 # I.E. translates GIMP v2 terms into v3 terms
 # (or even some more unified terms)
 
@@ -247,8 +253,9 @@ function captureTypeSig(type) {
 
   unifiedType = unifyType(translatedType)
 
-  # append, suffix with comma.  Thats conventional notation.
-  signatures[currentProc] = signatures[currentProc] unifiedType ", "
+  # append
+  # NOT suffix with comma.  Thats conventional notation.  OFS ","
+  signatures[currentProc] = signatures[currentProc] OFS unifiedType
 }
 
 function appendToSignature(text) {
@@ -259,8 +266,16 @@ function appendToSignature(text) {
 function captureProcNameSig(name) {
   name = stripQuotes(name)
   # Use conventional notation: parens
-  signatures[name] = name "("
+  signatures[name] = name OFS "("
 }
+
+function closeParamsSig() {
+  signatures[currentProc] = signatures[currentProc] OFS ")" OFS "=>"
+}
+# signature
+#if (shouldAddComma == "true") {
+#appendToSignature(") => ")
+#}
 
 
 # !!! If you use @ind_str_asc, the sorted order does not quite agree
@@ -370,10 +385,10 @@ function openParamSet(inOut) {
 }
 
 function closeParamSet(shouldAddComma) {
-   # signature
-   if (shouldAddComma == "true") {
-    appendToSignature(") => ")
-   }
+  # shouldAddComma means the param set is not empty
+  if (shouldAddComma == "true") {
+    closeParamsSig()
+  }
 
    # JSON
    # close list
