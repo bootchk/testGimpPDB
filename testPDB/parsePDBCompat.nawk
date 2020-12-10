@@ -3,7 +3,7 @@
 
 # Output of form "foo => bar zed"
 # where foo and bar are PDB procedure names and zed is a version of Gimp or "forever".
-# Not sorted on name, use >sort -i deprecations.txt > deprecations.txt
+# Not sorted on name, use >sort -o deprecations.txt deprecations.txt
 
 # Input should be always app/pdb/gimp-pdb-compat.c
 
