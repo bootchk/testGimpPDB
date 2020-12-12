@@ -3,14 +3,14 @@
 
 # Output of form "foo => bar zed"
 # where foo and bar are PDB procedure names and zed is a version of Gimp or "forever".
-# Not sorted on name, use >sort -o deprecations.txt deprecations.txt
+# !!!! Not sorted on name, use >sort -o known.deprecations known.deprecations
 
 # Input should be always app/pdb/gimp-pdb-compat.c
 
 # lloyd konneker May 2020
 
 # Invoke:
-# gawk -f parsePDBCompat.nawk <some prefix>app/pdb/gimp-pdb-compat.c > deprecations.txt
+# gawk -f parsePDBCompat.nawk <some prefix>app/pdb/gimp-pdb-compat.c > known.deprecations
 
 
 # !!! strip, not replace with space

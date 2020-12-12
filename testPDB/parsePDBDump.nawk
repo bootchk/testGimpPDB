@@ -2,7 +2,7 @@
 
 # lloyd konneker May 2020
 
-# invoke   nawk -f parsePDBTxt.nawk pdb.txt >pdb.json
+# invoke   nawk -f parsePDBDump.nawk pdb.txt >pdb.json
 # (or gawk: nawk is a synonym usually.  But not the original awk.)
 
 # Input
@@ -17,7 +17,7 @@
 
 # Output:
 # 1) a JSON file (many lines per PDB procedure)  to stdout
-# 2) a plain text file  (each line a type signature for a PDB procedure), to gimpPDBSignatures.txt
+# 2) a plain text file  (each line a type signature for a PDB procedure), to gimpPDBSignatures.signatures
 
 # Signature format
 # Fields separated by OFS i.e. space
@@ -285,8 +285,7 @@ function closeParamsSig() {
 # ??? Why don't the sort orders agree ???
 
 function writeSignatureFile() {
-  # filename = "gimpPDBSignatures.txt"
-  filename = FILENAME ".sig"
+  filename = FILENAME ".signatures"
 
   # traverse sorted by key
   # use predefined scanning order function

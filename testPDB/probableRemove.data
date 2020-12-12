@@ -1,0 +1,6 @@
+gimp-drawable-transform-2d-default  =>     gimp-item-transform-2d-default
+gimp-drawable-transform-flip-default =>    gimp-item-transform-flip-default
+gimp-drawable-transform-matrix-default =>  gimp-item-transform-matrix-default
+gimp-drawable-transform-rotate-default  => gimp-item-transform-rotate-default
+gimp-drawable-transform-scale-default  =>  gimp-item-transform-scale-default
+gimp-drawable-transform-perspective-default => gimp-item-transform-perspective-default
