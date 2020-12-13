@@ -1,9 +1,11 @@
 
 # Creates list of deprecations of PDB procedures.
 
-# Output of form "foo => bar zed"
-# where foo and bar are PDB procedure names and zed is a version of Gimp or "forever".
+# Output of form "foo => bar
+# where foo and bar are PDB procedure names
 # !!!! Not sorted on name, use >sort -o known.deprecations known.deprecations
+
+# Optionally: "foo => bar zed" where zed is a version of Gimp or "forever".
 
 # Input should be always app/pdb/gimp-pdb-compat.c
 
@@ -45,5 +47,8 @@ BEGIN {
 # a line {gimp-.*, gimp-.*} is a deprecation
 /gimp-.*gimp-/ {
 
-   print stripTrailingComma(stripQuotes($2)), "=>", stripQuotes($3), Since
+   # Option: print Since
+   # print stripTrailingComma(stripQuotes($2)), "=>", stripQuotes($3), Since
+
+   print stripTrailingComma(stripQuotes($2)), "=>", stripQuotes($3)
 }

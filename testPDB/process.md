@@ -134,21 +134,12 @@ This is the basis for following steps
 
 
 
-Known deprecations
-==================
+List signature signature changes
+================================
 
-generateKnownDeprecations.sh
-
-1. Parse the source doc  !!! Unsorted
-gawk -f parsePDBCompat.nawk ~/v*G*/gimp/app/pdb/gimp-pdb-compat.c > known.deprecations
-Fields: foo => bar
-
-2. Sort in place
-sort -o known.deprecations known.deprecations
-
-2. List of know deprecated
-gawk '{ print $1}' known.deprecations > knownDeprecated
-Fields: foo
+1.List signature changed procedure names.
+comm -3 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk -f parseSignatureChanges.nawk >signatureChanged
+Fields:  foo
 
 
 
@@ -158,10 +149,6 @@ To generate a list of possible undocumented/new deprecations
 (includes undocumentedDeprecations)
 
 This documents generateNewDeprecations.sh
-
-1.List signature changed procedure names.
-comm -3 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk -f parseSignatureChanges.nawk >signatureChanged
-Fields:  foo
 
 2.List names (not in earlyVersion) or (in earlyVersion but changed signature from earlyVersion)
 comm -23 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk '{ print $1}' > removedOrSignatureChanged
@@ -181,6 +168,7 @@ Fields: foo
 
 
 
+??? Abandoned
 To generate removed
 ===================
 generateRemoved.sh
@@ -207,85 +195,68 @@ nawk '{ print $1}' pdb2_99.dump.signatures > namesInLateVersion
 
 
 
-To check the validity of newDeprecations or undocumentedDeprecations.
-============================================
-Insure each deprecated name in earlyVersion
-Insure each deprecated name in lateVersion
-Insure each deprecated not already in deprecations
-etc.
+Deprecations
+============
 
-Requires namesInEarlyVersion
-
-2. Produce allDeprecated
-cat knownDeprecated newDeprecated | sort > allDeprecated
-
-3. Compare: col1 should be empty.  col2 is not deprecated.  col3 is deprecated
-comm -23 knownDeprecated namesInEarlyVersion
-comm allDeprecated namesInEarlyVersion
-
-Any in col1 are knownDeprecations that actually have already been removed from earlyVersion.
-OR an error in the scripts
+Kinds:
+1. hidden (in the dump)
+2. known (in gimp-pdb-compat.c)
+3. undocumented (in undocumentedDeprecations.data)
 
 
-
-To generate a list of added
-===========================
-(!!! Or undocumented deprecatees)
-generateAdded.sh
-
-Requires from above:
-signatureChanged
-deprecations
-
-1.List (names not in earlyVersion) or (name in signatureChanged but changed signature from signatureChanged to lateVersion)
-comm -13 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk '{ print $1}' > addedOrSignatureChanged
-Fields:  foo
-
-2. Subtract signature changes
-comm -23 addedOrSignatureChanged signatureChanged > added
-Fields: foo
-It includes totally new and undocumented deprecatees
-
-
-To generated undocumented deprecatees
-=====================================
-see below
-
-
-To generate a list of new
+Undocumented deprecations
 =========================
 
-generateNew.sh
-
-1. Create sorted list of undocumented deprecatees
-Its the third word of undocumentedDeprecations
-gawk '{ print $3}' undocumentedDeprecations.data > undocumentedDeprecatees
-sort -o undocumentedDeprecatees undocumentedDeprecatees
-Fields:  foo
-
-2. Subtract undocumented deprecatees
-
-comm -23 added undocumentedDeprecatees > new
-
-
-
-To produce undocumented deprecated and deprecatee
-=======================
+Requires undocumentedDeprecations.data
 
 1. Produce undocumentedDeprecated
-gawk '{ print $1}' undocumentedDeprecations.data > undocumentedDeprecated
-sort -o undocumentedDeprecated undocumentedDeprecated
+gawk '{ print $1}' undocumentedDeprecations.data | sort > undocumentedDeprecated
 
 2. Produce undocumentedDeprecatee without duplicates
 Since many-to-one deprecated to deprecatee, eliminate duplicates.
 Also assert is sorted.
-
-gawk '{ print $3}' undocumentedDeprecations.data | sort | uniq -u > undocumentedDeprecatee
-
+gawk '{ print $3}' undocumentedDeprecations.data | sort | uniq > undocumentedDeprecatee
 
 
-To check undocumentedDeprecations
-=================================
+Known deprecations
+==================
+
+generateKnownDeprecations.sh
+
+1. Parse the source doc  !!! Unsorted
+gawk -f parsePDBCompat.nawk ~/v*G*/gimp/app/pdb/gimp-pdb-compat.c | sort > known.deprecations
+Fields: foo => bar
+
+gawk '{ print $1}' known.deprecations > knownDeprecated
+gawk '{ print $3}' known.deprecations | sort | uniq > knownDeprecatees
+
+
+Hidden deprecations
+===================
+
+requires a .dump
+
+nawk -f parseHiddenDeprecations.nawk pdb2_99.dump | sort > hidden.deprecations
+gawk '{ print $1}' hidden.deprecations > hiddenDeprecated
+gawk '{ print $3}' hidden.deprecations | sort | uniq > hiddenDeprecatees
+
+
+All Deprecations
+================
+
+generateAllDeprecations.sh
+
+cat known.deprecations hidden.deprecations undocumentedDeprecations.data | sort | uniq > all.deprecations
+gawk '{ print $1}' all.deprecations | uniq -> allDeprecated
+gawk '{ print $3}' all.deprecations | sort | uniq > allDeprecatees
+
+
+
+To check any .deprecations
+==========================
+
+Requires namesInEarlyVersion, namesInLateVersion
+
 Insure each deprecated name in earlyVersion
 Insure each deprecatee name in lateVersion
 TODO
@@ -295,8 +266,62 @@ Insure each deprecatee not already in documented.deprecations
 1. Insure each deprecated name in earlyVersion
 Compare: col1 should be empty.
 comm -23 undocumentedDeprecated namesInEarlyVersion
-Any in col1 are undocumentedDeprecated FAIL to be in earlyVersion
+Any in col1 are fooDeprecated FAIL to be in earlyVersion
 
 2. Insure each deprecatee name in lateVersion
 comm -23 undocumentedDeprecatee namesInLateVersion
 Any in col1 are undocumentedDeprecatee FAIL to be in lateVersion
+
+!!! Some will be transitive deprecations that are OK.
+e.g. gimp-blend => gimp-edit-blend
+gimp-edit-blend => gimp-drawable-edit-gradient-fill
+Results in gimp-edit-blend a deprecatee not in lateVersion
+
+
+
+
+To generate a list of added
+===========================
+(!!! Includes new and deprecatees)
+generateAdded.sh
+
+Requires from above:
+signatureChanged
+
+1.List (names not in earlyVersion) or (name in signatureChanged but changed signature from signatureChanged to lateVersion)
+comm -13 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk '{ print $1}' > addedOrSignatureChanged
+Fields:  foo
+
+2. Subtract signature changes
+comm -23 addedOrSignatureChanged signatureChanged > added
+Fields: foo
+It includes totally new and deprecatees
+
+
+
+
+List new
+========
+
+generateNew.sh
+
+requires undocumentedDeprecatees
+
+1. Added minus undocumented deprecatees
+comm -23 added undocumentedDeprecatees > new
+
+
+
+
+List removed
+============
+
+aka "Deprecated: not replaced"
+
+generateRemovedNotDeprecated.sh
+
+1.  Names in early but not late version
+comm -23 namesInEarlyVersion namesInLateVersion > namesRemovedOrDeprecated
+
+2.  subtract deprecated
+comm -23 namesRemoved allDeprecated > removed

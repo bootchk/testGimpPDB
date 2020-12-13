@@ -1,5 +1,7 @@
 This directory contains various files about the GIMP PDB.
 
+See also process.md
+
 A nawk script to convert a pdb dump (pdb.txt) to json (pdb.json) and a signature file .txt.sig
 
 A nawk script to convert gimp/pdb/gimp-pdb-compat.c to a readable text file
