@@ -18,7 +18,7 @@ class ProceduresDB:
         from pathlib import Path
 
         # relative to this .py file
-        path = Path(__file__).parent / "./testPDB/pdb.json"
+        path = Path(__file__).parent / "./testPDB/pdb2_99.json"
 
         # path = "/work/testGimpPDB/testPDB/pdb.json"
         return path
