@@ -1,7 +1,3 @@
-begin
-initTypeTranslations
-initTypeUnifications
-GParamString
 {
 "gimp-image-set-colormap":
    {
@@ -13223,5 +13219,5 @@ GParamString
       ],
    "out": [
       ]
-   },
+   }
 }

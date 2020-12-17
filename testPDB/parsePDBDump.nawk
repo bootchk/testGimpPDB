@@ -2,7 +2,7 @@
 
 # lloyd konneker May 2020
 
-# invoke   nawk -f parsePDBDump.nawk pdb.txt >pdb.json
+# invoke   nawk -f parsePDBDump.nawk pdb2_99.dump >pdb2_99.json
 # (or gawk: nawk is a synonym usually.  But not the original awk.)
 
 # Input
@@ -80,7 +80,7 @@ function stripQuotes(text) {
 
 
 function initTypeTranslations() {
-  print "initTypeTranslations"
+  #print "initTypeTranslations"
 
   # Single use GIMP_PDB_COLORARRAY only gimp-palette-get-colors
 
@@ -132,7 +132,7 @@ function initTypeTranslations() {
 
 # OLD not used
 function initTypeUnifications() {
-  print "initTypeUnifications"
+  #print "initTypeUnifications"
   typeUnifications["GParamInt"]      = "Int"
   typeUnifications["GParamFloat"]    = "Float"
   typeUnifications["GParamString"]   = "String"
@@ -409,10 +409,10 @@ function closeParamSet(shouldAddComma) {
 
 
 BEGIN {
-  print "begin"
+  # print "begin"
   initTypeTranslations()
   initTypeUnifications()
-  print typeTranslations["GIMP_PDB_STRING"]
+  # print typeTranslations["GIMP_PDB_STRING"]
 
   state = "null"
   openProcSet()
