@@ -61,6 +61,7 @@ from procedureCategory import ProcedureCategory
 from userFilter import UserFilter
 from testHarness import *
 from params import generateParamString
+from drawables import generateDrawableAproposToProc
 from testLog import TestLog
 from stats import TestStats
 
@@ -227,7 +228,8 @@ def testSingleProc(procName, image, drawable):
     Alternatively, use the same image over and over, but errors will be different?
     """
     testImage = pdb.gimp_image_duplicate(image)
-    testDrawable = pdb.gimp_image_get_active_drawable(testImage)
+
+    testDrawable = generateDrawableAproposToProc(procName, testImage)
 
     # Not testing undo. Disable it for speed.
     pdb.gimp_image_undo_disable(testImage)
@@ -266,6 +268,7 @@ def testProcs(image, drawable):
 
             # Exclude certain procs
             if not shouldTestProcedure(procName):
+                TestLog.say(f"Excluded procedure: {procName}")
                 TestStats.sample("excluded")
             else:
                 TestStats.sample("unexcluded")
@@ -313,7 +316,7 @@ def plugin_main(image, drawable,
          shouldTestExportImport, shouldTestTemporary, shouldTestOther)
 
     if oneToTest :
-        logger.debug(f"Testing single procedure: {oneToTest}")
+        TestLog.say(f"Testing single procedure: {oneToTest}")
         testSingleProc(oneToTest, image, drawable)
         # to allow for possible GUI to be seen, short delay
         time.sleep(5)  # seconds

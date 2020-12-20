@@ -5,46 +5,78 @@ for various reasons.
 from procedureCategory import ProcedureCategory
 
 
+def isProcedureInteractivePopup(procName):
+    """
+    Open windows, enter event loop, impeding lights-out testing.
+
+    e.g. gimp-brushes-popup
+    """
+    # TODO this might be too loose, could omit some procedures that should be tested
+    return procName.find("popup") > -1
+
+
+
+def isProcedureInteractive(procName):
+    """
+    Open windows, enter event loop, impeding lights-out testing.
+
+    TODO We *can* test them interactively, optionally.
+    """
+    return procName in (
+        """
+        Plugins take a parameter runmode, they should respect NONINTERACTIVE.
+        But some don't seem to.
+        So exclude any that we know open windows.
+
+        TODO not respecting runmode is a bug?
+        """
+        "plug-in-animationplay",
+
+        "python-fu-console",
+        "plug-in-script-fu-console",
+        "plug-in-script-fu-text-console",
+        "plug-in-unit-editor",
+        "plug-in-screenshot",
+        "plug-in-metadata-viewer",
+        # Hang, with many Gtk errors
+        "plug-in-metadata-editor",
+        "plug-in-plug-in-details",
+        # Hang, without error messages
+        "script-fu-ripply-anim",
+        # Don't call the script-fu interpreter.  It has no documented params?
+        "extension-script-fu",
+        # temporary, crashes in gimp-display-new ???
+        "script-fu-font-map",
+        # opens a dialog that locks GUI
+        "plug-in-busy-dialog",
+
+        """
+        Open dialogs to return a user choice.
+        """
+       )
+
+
 def isProcedureSpecialCase(procName):
     """
     Special cases.
-    Some open windows, impeding lights-out testing.
-    We *can* test them interactively, optionally.  TODO
-
-    Others are known bad actors, usually they hang or take too long.
+    Known bad actors, usually they hang or take too long.
     """
     return procName in (
-       # TODO why are these excluded?
-       "plug-in-animationplay",
-       "python-fu-console",
-       # ??? These are opening windows despite run mode NONINTERACTIVE ???
-       # TODO explore whether that is a bug
-       "plug-in-script-fu-console",
-       "plug-in-script-fu-text-console",
-       "plug-in-unit-editor",
-       "plug-in-screenshot",
-       "plug-in-metadata-viewer",
-       # Hang, with many Gtk errors
-       "plug-in-metadata-editor",
-       "plug-in-plug-in-details",
-       # Hang, without error messages
-       "script-fu-ripply-anim",
-       # Don't call the script-fu interpreter.  It has no documented params?
-       "extension-script-fu",
-       # temporary, crashes in gimp-display-new ???
-       "script-fu-font-map",
+
        # don't test example plugins
        # TODO goat-exercise-python is not canonically named python-fu-goat..
        "goat-exercise-lua",
        "goat-exercise-python",
        "plug-in-goat-exercise-vala",
        "plug-in-goat-exercise-c",
+
        # temporary procedures, author Itkin
        "gimp-palette-export-text",
        "gimp-palette-export-css",
        "gimp-palette-export-java",
        "gimp-palette-export-php",
        "gimp-palette-export-python",
+
        # TODO why excluding this?
        "file-print-gtk",
        # help, author ???
@@ -60,6 +92,7 @@ def isProcedureSpecialCase(procName):
        # This one takes a URL parameter, but also throws missing run-mode
        # since we pass runmode to every 'plug-in-'
        "plug-in-web-browser",
+
        # Bookmarks.  Authors Henrik Brix Andersen or Roman Joost or A. Prokoudine
        # These all use plug-in-web-browser, and Gimp throws "operation not supported"
        # meaning they cannot be called procedurally
@@ -121,9 +154,8 @@ def shouldTestProcedure(procName):
        or (procName in ("python-fu-test-gimp-pdb"))
        # counterproductive to abort gimp
        or (procName in ("gimp-quit"))
-       # opens a dialog that locks GUI
-       or (procName in ("plug-in-busy-dialog"))
-       # more special cases
+       or (isProcedureInteractive(procName))
+       or (isProcedureInteractivePopup(procName))
        or (isProcedureSpecialCase(procName))
     )
     return not isExcluded
