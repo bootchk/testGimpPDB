@@ -11,6 +11,7 @@ functions to generate paramstrings for PDB procedures
 param strings will be eval'ed
 """
 
+flip = True
 
 def appendParameter(paramString, parameter):
     # trailing comma will be OK to Python
@@ -25,6 +26,20 @@ def generateQuotedIntegerLiteral():
     1 tests the least
     """
     return '1'
+
+
+def generateStochasticFloat():
+    """ Alternately generate float string [0,1] or [1,infinity]
+    These are the two most common ranges that PDB procedures allow.
+    """
+    global flip
+    if flip:
+        result = "1.5"
+        flip = False
+    else:
+        result = "0.5"
+        flip = True
+    return result
 
 
 def generateParamString(procName, inParamList,  image, drawable):
@@ -48,7 +63,7 @@ def generateParamString(procName, inParamList,  image, drawable):
             # TODO this does not suffice.  Change gimpfu to cast to GParamUint
             result = appendParameter(result, generateQuotedIntegerLiteral())
         elif aType == "GParamDouble" :
-            result = appendParameter(result, '1.0003')
+            result = appendParameter(result, generateStochasticFloat())
         elif aType == "GParamBoolean" :
             # bool is int ??
             result = appendParameter(result, generateQuotedIntegerLiteral())

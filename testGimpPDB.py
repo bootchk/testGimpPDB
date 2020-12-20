@@ -115,21 +115,13 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
         """
         TestStats.sample("GimpFu exception", str(err) )
         TestLog.say(f"exception in Gimpfu code: {err} for test: {testStmt}")
-        return
+        return "Exception"
 
-    # Log end of test, with weak result.
     # get the pdb status, it is a weak form of pass/fail
+    # is "success" or something else
     error_str = Gimp.get_pdb().get_last_error()
-    TestLog.say(f"End test, PDB status: {error_str}")
-    if error_str != "success":
-        TestStats.sample("fail", error_str)
-        TestLog.sayFail(f"Fail: {testStmt}, PDB status: {error_str}")
-    else:
-        TestStats.sample("pass")
-
-    # TODO stronger form of pass, test effects are as expected
-
-
+    TestLog.say(f"End call, PDB status: {error_str}")
+    return error_str
 
 '''
 OLD
@@ -170,19 +162,42 @@ def testProcThatIsPlugin(procName, inParamList, image, drawable):
 
 
 
+def callProcWithParams(procName, paramString, image, drawable):
+    TestStats.sample("called")
+    return evalCatchingExceptions(procName, paramString, image, drawable)
+
+
+
 def testGeneralProc(procName, inParamList,  image, drawable):
     """
-    Call a proc
-    """
+    Iterate, generating params and calling until it succeeds.
+    Some param generators can return a stochastic value.
 
-    paramString = generateParamString(procName, inParamList,  image, drawable)
-    if paramString:
-        TestStats.sample("called")
-        evalCatchingExceptions(procName, paramString, image, drawable)
-    else:
-        # could not generate param string
-        TestLog.say(f"Not call, could not improvise params: {procName}")
-        TestStats.sample("uncalled")
+    Log the result
+    """
+    for i in range(2): # TODO magic
+        paramString = generateParamString(procName, inParamList,  image, drawable)
+        if not paramString:
+            TestLog.say(f"Not call, could not improvise params: {procName}")
+            TestStats.sample("uncalled")
+            break
+        call_result = callProcWithParams(procName, paramString, image, drawable)
+        if call_result == "success":
+            TestStats.sample("pass")
+            break
+        elif call_result == "exception":
+            # could be exception in GimpFu, not always in GIMP
+            TestStats.sample("exception")
+            break
+        else:
+            # Failed, but not exception.
+            # Brute force: if "out of range" try again  with different parameters
+            if call_result.find("out of range") > -1:
+                pass
+            else:
+                TestStats.sample("fail", call_result)
+                TestLog.sayFail(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
+                break
 
 
 

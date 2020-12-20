@@ -7,7 +7,7 @@ from procedureCategory import ProcedureCategory
 
 def isProcedureInteractivePopup(procName):
     """
-    Open windows, enter event loop, impeding lights-out testing.
+    Open dialogs to return a user choice, enter event loop, impeding lights-out testing.
 
     e.g. gimp-brushes-popup
     """
@@ -49,10 +49,8 @@ def isProcedureInteractive(procName):
         "script-fu-font-map",
         # opens a dialog that locks GUI
         "plug-in-busy-dialog",
-
-        """
-        Open dialogs to return a user choice.
-        """
+        # same as gimp_clone, but tries to open a dialog?
+        "gimp-clone-default",
        )
 
 
