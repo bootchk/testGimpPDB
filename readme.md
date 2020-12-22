@@ -16,10 +16,15 @@ Not totally automated, a human must read and interpret a log.
 
 A user interface lets you choose subsets of PDB procedures.
 
-Mostly "sanity" tests.  Only the PDB status result is compared to an expected value.
+Mostly "sanity" tests.  
+Only the PDB status result is compared to an expected value.
+Other returned values from a procedure are not examined.
+Side effects on other resource (e.g. the current image) are not examined.
 
 Not all PDB procedures will pass since it dumbly improvises parameters to plugins.
 Parameter values are of the correct type, not necessarily in range, nor semantically meaningful.
+
+To some extent it can do fuzzy testing, generating stochastic improvised parameters.
 
 ## Why test the PDB?
 
@@ -119,8 +124,8 @@ Some procedures expect certain qualities of the image:
 
 Thus you can repeat testing with different starting images.
 
-Most other improvised data is canned (hard coded) and arbitrary,
-but not randomly chosen.
+Some improvised data is canned (hard coded) and arbitrary.
+Some can be stochastically chosen.
 
 ## Installation
 
@@ -154,9 +159,14 @@ Then run the nawk script testPDBTxt.nawk to convert to JSON.
 
   - you must open an image before you can invoke the plugin
   - read the procedure metadata from the PDB instead of a .json file
-  - Better improvisation: on "error parameter out of range" iteratively improvise values from a set,
-    where at least one element of the set
-    typically would be in range.
+
   - capture test results and compare to known/previous results
   - allow the subset of interactive plugins to be tested (currently excluded)
   - certain rare parameter types not yet improvised
+
+
+## Recent changes
+
+- Better improvisation: on error "out of range" iteratively improvise values from a set,
+  where at least one element of the set
+  typically would be in range.

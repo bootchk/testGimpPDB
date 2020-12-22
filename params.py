@@ -2,6 +2,7 @@
 
 from testLog import TestLog
 from stats import TestStats
+from permute import Permute
 
 
 
@@ -11,7 +12,7 @@ functions to generate paramstrings for PDB procedures
 param strings will be eval'ed
 """
 
-flip = True
+
 
 def appendParameter(paramString, parameter):
     # trailing comma will be OK to Python
@@ -19,27 +20,8 @@ def appendParameter(paramString, parameter):
     return result
 
 
-def generateQuotedIntegerLiteral():
-    """ Choose an integer with certain testing goals e.g. stress test or not.
-
-    0 is out of range for many tested procedures
-    1 tests the least
-    """
-    return '1'
 
 
-def generateStochasticFloat():
-    """ Alternately generate float string [0,1] or [1,infinity]
-    These are the two most common ranges that PDB procedures allow.
-    """
-    global flip
-    if flip:
-        result = "1.5"
-        flip = False
-    else:
-        result = "0.5"
-        flip = True
-    return result
 
 
 def generateParamString(procName, inParamList,  image, drawable):
@@ -54,19 +36,19 @@ def generateParamString(procName, inParamList,  image, drawable):
             # often the name of an item
             result = appendParameter(result, '"foo"')
         elif aType == "GParamInt" :
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GParamUInt" :
             # TODO this does not suffice.  Change gimpfu to cast to GParamUint
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GParamUChar" :
             # GParamUChar usually used as an int-valued enum, often True/False
             # TODO this does not suffice.  Change gimpfu to cast to GParamUint
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GParamDouble" :
-            result = appendParameter(result, generateStochasticFloat())
+            result = appendParameter(result, Permute.float())
         elif aType == "GParamBoolean" :
             # bool is int ??
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GimpParamItem" :
             # Item is superclass of Drawable, etc.
             # Use a convenient one
@@ -74,7 +56,7 @@ def generateParamString(procName, inParamList,  image, drawable):
         elif aType == "GParamEnum" or aType == "GimpParamEnum" :
             # Sometimes run_mode e.g. for Internal  gimp-file-load-layers
             # enums are ints
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GimpParamImage" :
             # reference a symbol in Python context at time of eval
             result = appendParameter(result, 'image')
@@ -92,7 +74,7 @@ def generateParamString(procName, inParamList,  image, drawable):
             # call out to Gimp for a defined constant
             # result = appendParameter(result, 'Gimp.Unit.UNIT_PIXEL')
             # int works?
-            result = appendParameter(result, generateQuotedIntegerLiteral())
+            result = appendParameter(result, Permute.int())
         elif aType == "GimpParamFloatArray" :
             # a 4-tuple often suffices
             # TODO  prefixed with len ?? result = appendParameter(result, '4, (1.0, 1.0, 5.0, 5.0)')

@@ -86,6 +86,7 @@ def testProcHavingNoParams(procName):
      evalCatchingExceptions(procName, "()")
 """
 
+# TODO form a statement that assigns results, and print results
 
 def evalCatchingExceptions(procName, params, image=None, drawable=None):
     # not all pdb procedures use the current image and Drawable
@@ -163,41 +164,50 @@ def testProcThatIsPlugin(procName, inParamList, image, drawable):
 
 
 def callProcWithParams(procName, paramString, image, drawable):
-    TestStats.sample("called")
     return evalCatchingExceptions(procName, paramString, image, drawable)
 
 
 
 def testGeneralProc(procName, inParamList,  image, drawable):
     """
-    Iterate, generating params and calling until it succeeds.
-    Some param generators can return a stochastic value.
+    Iterate, generating permutations of param values and calling until it succeeds.
 
     Log the result
     """
-    for i in range(2): # TODO magic
+    for i in range(3): # TODO magic
         paramString = generateParamString(procName, inParamList,  image, drawable)
         if not paramString:
             TestLog.say(f"Not call, could not improvise params: {procName}")
             TestStats.sample("uncalled")
-            break
+            return
         call_result = callProcWithParams(procName, paramString, image, drawable)
+        TestStats.sample("calls")
+
         if call_result == "success":
             TestStats.sample("pass")
-            break
+            return
         elif call_result == "exception":
             # could be exception in GimpFu, not always in GIMP
             TestStats.sample("exception")
-            break
+            return
         else:
             # Failed, but not exception.
-            # Brute force: if "out of range" try again  with different parameters
+            # Brute force: for various error messages, try again  with permuted parameters
             if call_result.find("out of range") > -1:
                 pass
+            elif call_result.find("execution error") > -1:
+                # often a poor error message that means: out of range
+                pass
             else:
-                TestStats.sample("fail", call_result)
-                TestLog.sayFail(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
+                # a call_result that we don't iterate on
+                # Usually one of the parameters that we don't permute is not valid.
                 break
+
+    # Exhausted attempts without passing, or a call_result that we don't iterate on
+    TestStats.sample("fail", call_result)
+    TestLog.sayFail(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
+    
+
 
 
 
