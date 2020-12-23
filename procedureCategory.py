@@ -12,13 +12,14 @@ class ProcedureCategory:
        "Internal GIMP procedure",
        "Temporary Procedure"
 
-    We further divide the "GIMP Plug-in catetory" by parsing
+    We further divide the "GIMP Plug-in category" by parsing
     procedure names which should follow naming convention.
 
     Only two Extension? extension-script-fu and extension-gimp-help
     """
 
     def isScriptFu(procName):
+        # ScriptFu is also Temporary Procedure
         return procName.find("script-fu-")==0
 
     def isPythonFu(procName):
@@ -62,3 +63,7 @@ class ProcedureCategory:
         if (procName.startswith('file')):
             return True
         return False
+
+    def doesGimpFuHideRunMode(procName):
+        # TODO keep in correspondence with gimpfu/gimpprocedure.py should_insert_runmode_arg()
+        return ProcedureCategory.isPythonFu(procName)

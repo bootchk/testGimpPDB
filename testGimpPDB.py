@@ -1,6 +1,4 @@
 
-
-
 """
 Plugin that tests procedures in Gimp PDB.
 By calling them with improvised parameters.
@@ -81,24 +79,29 @@ def omit(procName):
     TestStats.sample("omit")
 
 
-"""
-def testProcHavingNoParams(procName):
-     evalCatchingExceptions(procName, "()")
-"""
+
 
 # TODO form a statement that assigns results, and print results
+def formGimpFuStatement(procName, paramString):
+    """
+    Since this is GimpFu plugin,
+    and GimpFu hides runmode,
+    any calls to other plugins using the "pdb.name(args)" form will be run-mode noninteractive.
+    We have already omitted run mode arg from paramString.
+
+    Alternatively, we can execute using Gimp.get_pdb().run_procedure(),
+    and then pass the run mode, e.g. to test interactively
+    """
+    newName = procName.replace("-", "_")
+    result = "pdb." + newName + paramString
+    return result
+
 
 def evalCatchingExceptions(procName, params, image=None, drawable=None):
     # not all pdb procedures use the current image and Drawable
     # They are passed so they are in scope when we eval
 
-    """
-    form a GimpFu statement.
-    Since this is GimpFu plugin, any calls to other plugins
-    will be run-mode noninteractive.
-    """
-    newName = procName.replace("-", "_")
-    testStmt = "pdb." + newName + params
+    testStmt = formGimpFuStatement(procName, params)
 
     # Log start of test so we know what test hangs (takes too long time)
     TestLog.say(f"Begin test: {testStmt}")
@@ -174,8 +177,12 @@ def testGeneralProc(procName, inParamList,  image, drawable):
 
     Log the result
     """
-    for i in range(3): # TODO magic
+    # We can start each test with the same permutation
+    # Permute.reset()
+    for iteration in range(3): # TODO magic
         paramString = generateParamString(procName, inParamList,  image, drawable)
+        # Tell Permute to advance
+        # Permute.advance()
         if not paramString:
             TestLog.say(f"Not call, could not improvise params: {procName}")
             TestStats.sample("uncalled")
@@ -192,7 +199,7 @@ def testGeneralProc(procName, inParamList,  image, drawable):
             return
         else:
             # Failed, but not exception.
-            # Brute force: for various error messages, try again  with permuted parameters
+            # Brute force fuzz: for various error messages, try again  with permuted parameters
             if call_result.find("out of range") > -1:
                 pass
             elif call_result.find("execution error") > -1:
@@ -206,7 +213,7 @@ def testGeneralProc(procName, inParamList,  image, drawable):
     # Exhausted attempts without passing, or a call_result that we don't iterate on
     TestStats.sample("fail", call_result)
     TestLog.sayFail(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
-    
+
 
 
 

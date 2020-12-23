@@ -150,6 +150,10 @@ def shouldTestProcedure(procName):
        ProcedureCategory.isDeleting(procName)
        # self, infinite recursion
        or (procName in ("python-fu-test-gimp-pdb"))
+       # another plugin that tests Gimp, should be called separately
+       or (procName in ("python-fu-test-export-import"))
+       # is type "PLUGIN" but takes no run mode, a very special case
+       or (procName in ("python-fu-eval"))
        # counterproductive to abort gimp
        or (procName in ("gimp-quit"))
        or (isProcedureInteractive(procName))

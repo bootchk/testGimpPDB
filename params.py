@@ -3,11 +3,13 @@
 from testLog import TestLog
 from stats import TestStats
 from permute import Permute
+from procedureCategory import ProcedureCategory
+
 
 
 
 """
-functions to generate paramstrings for PDB procedures
+functions to generate param strings for PDB procedures
 
 param strings will be eval'ed
 """
@@ -31,7 +33,15 @@ def generateParamString(procName, inParamList,  image, drawable):
     """
     # TODO why GParam and GimpParam ??
     result = "("
-    for aType in inParamList:
+
+    # If we are eval'ing in GimpFu context (see elsewhere)
+    # omit the first parameter, the run mode
+    if ProcedureCategory.doesGimpFuHideRunMode(procName):
+        startParam = 1
+    else:
+        startParam = 0
+
+    for aType in inParamList[startParam:]:
         if aType == "GimpParamString" or aType == "GParamString" :
             # often the name of an item
             result = appendParameter(result, '"foo"')
@@ -56,7 +66,9 @@ def generateParamString(procName, inParamList,  image, drawable):
         elif aType == "GParamEnum" or aType == "GimpParamEnum" :
             # Sometimes run_mode e.g. for Internal  gimp-file-load-layers
             # enums are ints
-            result = appendParameter(result, Permute.int())
+            # TODO an interactive mode of testing
+            # 1 is NONINTERACTIVE
+            result = appendParameter(result, '1')
         elif aType == "GimpParamImage" :
             # reference a symbol in Python context at time of eval
             result = appendParameter(result, 'image')
@@ -74,6 +86,7 @@ def generateParamString(procName, inParamList,  image, drawable):
             # call out to Gimp for a defined constant
             # result = appendParameter(result, 'Gimp.Unit.UNIT_PIXEL')
             # int works?
+            # TODO should we permute out of the range of the enum type?
             result = appendParameter(result, Permute.int())
         elif aType == "GimpParamFloatArray" :
             # a 4-tuple often suffices
@@ -97,7 +110,7 @@ def generateParamString(procName, inParamList,  image, drawable):
             However, this depends on the int for n_drawables being 1.
             """
             # assert drawable is a wrapped GimpFu Adapter
-            print(f"Drawable: {drawable}")  # DEBUG unwrapped
+            #print(f"Drawable: {drawable}")  # DEBUG unwrapped
             result = appendParameter(result, 'drawable')
 
         # TODO more types
