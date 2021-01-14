@@ -23,12 +23,25 @@ from itertools import cycle
 
 class Permute():
 
-    # shared by many generators
-    # generally only one generator is used at a time?
-    # else this will not be truly stochastic, a generator would repeat a single value
-    flip = True
+    """
+    Iterators of kind 'cycle'
 
-    intIter = cycle(['1', '0', '256'])
+    Shared by many generators.
+    Generally only one generator is used at a time?
+    Else this will not be truly stochastic, a generator would repeat a single value.
+
+    !!! The design of the finite sequence is important.
+    It CAN include large values to cover edge cases.
+
+    But large values for parameters CAN affect duration of a test.
+    For example, if 256 is passed as "number of rows" to script-fu-erase-rows,
+    it executes a long time.
+    So the sequence should start with many small values so that
+    a test is more likely to pass args of small values that succeed,
+    before passing large values that might  take a long time.
+    """
+
+    intIter = cycle(['1', '0', '2', '3', '4', '256'])
     floatIter = cycle(['1.5', '0.5'])
 
 
@@ -48,7 +61,6 @@ class Permute():
         """
         result = next(cls.intIter)
         #print(result)
-        #cls.flip = not cls.flip
         return result
 
 
