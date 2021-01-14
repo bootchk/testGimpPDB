@@ -2,6 +2,17 @@ This directory contains various files about the GIMP PDB.
 
 See also process.md
 
+About the contents:
+ /sourceData   sources for scripts.  Some are manually entered, some generated from the PDB (.dump)
+ /scripts      scripts to manipulate the data.  Scripts for tools: shell and nawk
+ Everything else: generated artifact files, distinguished by suffix
+    simpleName   list of PDB procedure names
+    name.signatures list of signatures of PDB procedure names
+    name.deprecations list of "foo => bar" i.e. a mapping from procedure name to procedure name (signatures same)
+    name .json    in json format
+
+
+
 A nawk script to convert a pdb dump (pdb.txt) to json (pdb.json) and a signature file .txt.sig
 
 A nawk script to convert gimp/pdb/gimp-pdb-compat.c to a readable text file

@@ -65,5 +65,5 @@ class ProcedureCategory:
         return False
 
     def doesGimpFuHideRunMode(procName):
-        # TODO keep in correspondence with gimpfu/gimpprocedure.py should_insert_runmode_arg()
+        # TODO keep in correspondence with gimpfu/gimpprocedure.py _takes_runmode_arg()
         return ProcedureCategory.isPythonFu(procName)

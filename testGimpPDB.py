@@ -260,6 +260,7 @@ def testSingleProc(procName, image, drawable):
     Alternatively, use the same image over and over, but errors will be different?
     """
     testImage = pdb.gimp_image_duplicate(image)
+    #print(f"Image: {testImage}")
 
     testDrawable = generateDrawableAproposToProc(procName, testImage)
 
