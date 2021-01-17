@@ -129,6 +129,12 @@ def isProcedureSpecialCase(procName):
        "gimp-pdb-set-file-proc-priority",
        "gimp-pdb-set-file-proc-save-handler",
        "gimp-pdb-set-file-proc-load-handler",
+
+        """
+        Procedures that take a long time.
+        """
+        "script-fu-erase-rows",
+        "script-fu-erase-nth-rows",
         )
 
 
