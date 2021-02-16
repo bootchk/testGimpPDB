@@ -1,4 +1,7 @@
 
+import gi
+from gi.repository import Gio
+
 from gimpfu import *
 
 import logging
