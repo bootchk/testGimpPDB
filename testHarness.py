@@ -85,11 +85,12 @@ def generateFooGimpData(drawable):
 
     # FAIL: gone in v3?  buffer = pdb.gimp_drawable_get_buffer(drawable)
 
-    # FAIL: result = pdb.gimp_edit_copy(drawable)   # buffer from selection
-    # GimpFu should accept a single item where a list is required ???
-    # For now, use the exact signature
+    '''
+    Use the v2 signature, which GimpFu will adapt to v3.
+    v3: did_copy = pdb.gimp_edit_copy(1, [drawable,])
+    '''
 
-    did_copy = pdb.gimp_edit_copy(1, [drawable,])
+    did_copy = pdb.gimp_edit_copy(drawable)
     if not did_copy:
         logger.debug(f"Failed to create buffers")
 
