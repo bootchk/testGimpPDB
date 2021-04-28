@@ -271,7 +271,8 @@ def testSingleProc(procName, image, drawable):
     try:
         testAProc(procName, ProceduresDB.attributeDictionary(procName),  testImage, testDrawable)
     except KeyError:
-        message = f"Failed to find procedure in PDB: {procName}, use hyphens?"
+        # !!! Remember we are using a dump of the PDB, not the real time PDB
+        message = f"Failed to find procedure in local copy of PDB: {procName}, use hyphens?"
         TestLog.say(message)
         pdb.gimp_message(message)
 
@@ -353,6 +354,7 @@ def plugin_main(image, drawable,
         testSingleProc(oneToTest, image, drawable)
         # to allow for possible GUI to be seen, short delay
         time.sleep(5)  # seconds
+        TestLog.summarize()
     else:
         # run set of tests
         testProcs(image, drawable)
