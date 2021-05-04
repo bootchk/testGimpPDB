@@ -1,156 +1,312 @@
-file-bmp-load
-file-bmp-save
-file-bz2-load
-file-bz2-save
-file-cel-load
-file-cel-save
-file-colorxhtml-save
-file-csource-save
-file-dds-load
-file-dds-save
-file-desktop-link-load
-file-dicom-load
-file-dicom-save
-file-exr-save
-file-faxg3-load
-file-fits-load
-file-fits-save
-file-fli-info
-file-fli-load
-file-fli-save
-file-gbr-load
-file-gbr-save
-file-gbr-save-internal
-file-gif-load
-file-gif-load-thumb
-file-gif-save
-file-gih-load
-file-gih-save
-file-gih-save-internal
-file-gz-load
-file-gz-save
-file-header-save
-file-hgt-load
-file-ico-load
-file-ico-load-thumb
-file-ico-save
-file-jpeg-load
-file-jpeg-load-thumb
-file-jpeg-save
-file-load-rgbe
-file-openraster-load
-file-openraster-load-thumb
-file-openraster-save
-file-pat-load
-file-pat-save
-file-pat-save-internal
-file-pbm-save
-file-pcx-load
-file-pcx-save
-file-pdf-load
-file-pdf-load-thumb
-file-pdf-save
-file-pdf-save-multi
-file-pfm-save
-file-pgm-save
-file-pix-load
-file-pix-save
-file-png-load
-file-png-save
-file-pnm-load
-file-pnm-save
-file-ppm-save
-file-print-gtk
-file-psd-load
-file-psd-load-merged
-file-psd-load-thumb
-file-psd-save
-file-psp-load
-file-raw-load
-file-raw-placeholder-ari-load
-file-raw-placeholder-bay-load
-file-raw-placeholder-canon-load
-file-raw-placeholder-cine-load
-file-raw-placeholder-dng-load
-file-raw-placeholder-erf-load
-file-raw-placeholder-hasselblad-load
-file-raw-placeholder-kodak-load
-file-raw-placeholder-mef-load
-file-raw-placeholder-minolta-load
-file-raw-placeholder-mos-load
-file-raw-placeholder-nikon-load
-file-raw-placeholder-orf-load
-file-raw-placeholder-panasonic-load
-file-raw-placeholder-pef-load
-file-raw-placeholder-phaseone-load
-file-raw-placeholder-pxn-load
-file-raw-placeholder-qtk-load
-file-raw-placeholder-raf-load
-file-raw-placeholder-rdc-load
-file-raw-placeholder-rwl-load
-file-raw-placeholder-sinar-load
-file-raw-placeholder-sony-load
-file-raw-placeholder-srw-load
-file-raw-placeholder-x3f-load
-file-raw-save
-file-save-rgbe
-file-sgi-load
-file-sgi-save
-file-sunras-load
-file-sunras-save
-file-svg-load
-file-svg-load-thumb
-file-tga-load
-file-tga-save
-file-tiff-load
-file-tiff-save
-file-xbm-load
-file-xbm-save
-file-xmc-load
-file-xmc-load-thumb
-file-xmc-save
-file-xwd-load
-file-xwd-save
-file-xz-load
-file-xz-save
-gimp-color-picker
-gimp-edit-copy
-gimp-edit-cut
-gimp-edit-named-copy
-gimp-edit-named-cut
-gimp-file-load
-gimp-file-load-layer
-gimp-file-load-layers
-gimp-file-load-thumbnail
-gimp-file-save
-gimp-file-save-thumbnail
-gimp-image-convert-color-profile-from-file
-gimp-image-get-channels
-gimp-image-get-layers
-gimp-image-get-vectors
-gimp-image-pick-color
-gimp-image-set-color-profile-from-file
-gimp-item-get-children
-gimp-layer-add-mask
-gimp-layer-create-mask
-gimp-layer-from-mask
-gimp-layer-get-mask
-gimp-layer-mask
-gimp-selection-float
-gimp-vectors-export-to-file
-gimp-vectors-import-from-file
-gimp-vectors-import-from-string
-gimp-xcf-load
-gimp-xcf-save
-plug-in-align-layers
-plug-in-decompose
-plug-in-film
-plug-in-gfig
-plug-in-grid
-plug-in-guillotine
-plug-in-screenshot
-plug-in-sel2path
-plug-in-warp
-python-fu-eval
-python-fu-foggify
-python-fu-palette-sort
+file-bmp-load ( Int Object ) => Image
+file-bmp-load ( Int String String ) => Image
+file-bmp-save ( Int Image Drawable String String ) =>
+file-bmp-save ( Int Image Int ObjectArray Object ) =>
+file-bz2-load ( Int Object ) => Image
+file-bz2-load ( Int String String ) => Image
+file-bz2-save ( Int Image Drawable String String ) =>
+file-bz2-save ( Int Image Int ObjectArray Object ) =>
+file-cel-load ( Int Object String ) => Image
+file-cel-load ( Int String String String ) => Image
+file-cel-save ( Int Image Drawable String String String ) =>
+file-cel-save ( Int Image Int ObjectArray Object String ) =>
+file-colorxhtml-save ( Int Image Drawable String String String String Int Int ) =>
+file-colorxhtml-save ( Int Image Int ObjectArray Object Int String Int Int ) =>
+file-csource-save ( Int Image Drawable String String ) =>
+file-csource-save ( Int Image Int ObjectArray Object ) =>
+file-dds-load ( Int Object Int Int ) => Image
+file-dds-load ( Int String String Int Int ) => Image
+file-dds-save ( Int Image Drawable String String Int Int Int Int Int Int Int Int Int Float Int Int Float ) =>
+file-dds-save ( Int Image Int ObjectArray Object Int Int Int Int Int Int Int Int Int Int Float Int Int Float ) =>
+file-desktop-link-load ( Int Object ) => Image
+file-desktop-link-load ( Int String String ) => Image
+file-dicom-load ( Int Object ) => Image
+file-dicom-load ( Int String String ) => Image
+file-dicom-save ( Int Image Drawable String String ) =>
+file-dicom-save ( Int Image Int ObjectArray Object ) =>
+file-exr-save ( Int Image Drawable String String ) =>
+file-exr-save ( Int Image Int ObjectArray Object ) =>
+file-faxg3-load ( Int Object ) => Image
+file-faxg3-load ( Int String String ) => Image
+file-fits-load ( Int Object ) => Image
+file-fits-load ( Int String String ) => Image
+file-fits-save ( Int Image Drawable String String ) =>
+file-fits-save ( Int Image Int ObjectArray Object ) =>
+file-fli-info ( Object ) => Int Int Int
+file-fli-info ( String ) => Int Int Int
+file-fli-load ( Int Object Int Int ) => Image
+file-fli-load ( Int String String ) => Image
+file-fli-save ( Int Image Drawable String String Int Int ) =>
+file-fli-save ( Int Image Int ObjectArray Object Int Int ) =>
+file-gbr-load ( Int Object ) => Image
+file-gbr-load ( Int String String ) => Image
+file-gbr-save-internal ( Int Image Drawable Object Int String ) =>
+file-gbr-save-internal ( Int Image Drawable String String Int String ) =>
+file-gbr-save ( Int Image Drawable String String Int String ) =>
+file-gbr-save ( Int Image Int ObjectArray Object Int String ) =>
+file-gif-load ( Int Object ) => Image
+file-gif-load ( Int String String ) => Image
+file-gif-load-thumb ( Object Int ) => Image Int Int Int Int
+file-gif-load-thumb ( String Int ) => Image Int Int
+file-gif-save ( Int Image Drawable String String Int Int Int Int ) =>
+file-gif-save ( Int Image Int ObjectArray Object Int Int Int Int Int Int Int ) =>
+file-gih-load ( Int Object ) => Image
+file-gih-load ( Int String String ) => Image
+file-gih-save-internal ( Int Image Drawable String String Int String String ) =>
+file-gih-save-internal ( Int Image Int ObjectArray Object Int String String ) =>
+file-gih-save ( Int Image Drawable String String Int String Int Int Int Int Int Int8Array Int StringArray ) =>
+file-gih-save ( Int Image Int ObjectArray Object Int String Int Int Int Int Int Int8Array Int StringArray ) =>
+file-gz-load ( Int Object ) => Image
+file-gz-load ( Int String String ) => Image
+file-gz-save ( Int Image Drawable String String ) =>
+file-gz-save ( Int Image Int ObjectArray Object ) =>
+file-header-save ( Int Image Drawable String String ) =>
+file-header-save ( Int Image Int ObjectArray Object ) =>
+file-hgt-load ( Int Object Int ) => Image
+file-hgt-load ( Int String String Int ) => Image
+file-ico-load ( Int Object ) => Image
+file-ico-load ( Int String String ) => Image
+file-ico-load-thumb ( Object Int ) => Image Int Int Int Int
+file-ico-load-thumb ( String Int ) => Image Int Int
+file-ico-save ( Int Image Drawable String String ) =>
+file-ico-save ( Int Image Int ObjectArray Object ) =>
+file-jpeg-load ( Int Object ) => Image
+file-jpeg-load ( Int String String ) => Image
+file-jpeg-load-thumb ( Object Int ) => Image Int Int Int Int
+file-jpeg-load-thumb ( String Int ) => Image Int Int
+file-jpeg-save ( Int Image Drawable String String Float Float Int Int String Int Int Int Int ) =>
+file-jpeg-save ( Int Image Int ObjectArray Object Float Float Int Int Int Int Int Int ) =>
+file-load-rgbe ( Int Object ) => Image
+file-load-rgbe ( Int String String ) => Image
+file-openraster-load ( Int Object ) => Image
+file-openraster-load ( Int String String ) => Image
+file-openraster-load-thumb ( Int String Int ) => Image Int Int
+file-openraster-load-thumb ( Object Int ) => Image Int Int Int Int
+file-openraster-save ( Int Image Drawable String String ) =>
+file-openraster-save ( Int Image Int ObjectArray Object ) =>
+file-pat-load ( Int Object ) => Image
+file-pat-load ( Int String String ) => Image
+file-pat-save-internal ( Int Image Drawable Object String ) =>
+file-pat-save-internal ( Int Image Drawable String String String ) =>
+file-pat-save ( Int Image Drawable String String String ) =>
+file-pat-save ( Int Image Int ObjectArray Object String ) =>
+file-pbm-save ( Int Image Drawable String String Int ) =>
+file-pbm-save ( Int Image Int ObjectArray Object Int ) =>
+file-pcx-load ( Int Object ) => Image
+file-pcx-load ( Int String String ) => Image
+file-pcx-save ( Int Image Drawable String String ) =>
+file-pcx-save ( Int Image Int ObjectArray Object ) =>
+file-pdf-load ( Int Object String Int Int32Array ) => Image
+file-pdf-load ( Int String String ) => Image
+file-pdf-load-thumb ( Object Int ) => Image Int Int Int Int
+file-pdf-load-thumb ( String Int ) => Image Int Int Int Int
+file-pdf-save ( Int Image Drawable String String Int Int Int ) =>
+file-pdf-save ( Int Image Int ObjectArray Object Int Int Int Int Int Int ) =>
+file-pdf-save-multi ( Int Int Int32Array Int Int Int String ) =>
+file-pdf-save-multi ( Int Int Int32Array Int Int Int String String ) =>
+file-pfm-save ( Int Image Drawable String String ) =>
+file-pfm-save ( Int Image Int ObjectArray Object ) =>
+file-pgm-save ( Int Image Drawable String String Int ) =>
+file-pgm-save ( Int Image Int ObjectArray Object Int ) =>
+file-pix-load ( Int Object ) => Image
+file-pix-load ( Int String String ) => Image
+file-pix-save ( Int Image Drawable String String ) =>
+file-pix-save ( Int Image Int ObjectArray Object ) =>
+file-png-load ( Int Object ) => Image
+file-png-load ( Int String String ) => Image
+file-png-save ( Int Image Drawable String String Int Int Int Int Int Int Int ) =>
+file-png-save ( Int Image Int ObjectArray Object Int Int Int Int Int Int Int Int ) =>
+file-pnm-load ( Int Object ) => Image
+file-pnm-load ( Int String String ) => Image
+file-pnm-save ( Int Image Drawable String String Int ) =>
+file-pnm-save ( Int Image Int ObjectArray Object Int ) =>
+file-ppm-save ( Int Image Drawable String String Int ) =>
+file-ppm-save ( Int Image Int ObjectArray Object Int ) =>
+file-print-gtk ( Int Image ) =>
+file-print-gtk ( Int Image Drawable ) =>
+file-psd-load ( Int Object ) => Image
+file-psd-load ( Int String String ) => Image
+file-psd-load-merged ( Int Object ) => Image
+file-psd-load-merged ( Int String String ) => Image
+file-psd-load-thumb ( Object Int ) => Image Int Int Int Int
+file-psd-load-thumb ( String Int ) => Image Int Int
+file-psd-save ( Int Image Drawable String String Int Int ) =>
+file-psd-save ( Int Image Int ObjectArray Object ) =>
+file-psp-load ( Int Object ) => Image
+file-psp-load ( Int String String ) => Image
+file-raw-load ( Int Object ) => Image
+file-raw-load ( Int String String ) => Image
+file-raw-placeholder-ari-load ( Int Object ) => Image
+file-raw-placeholder-ari-load ( Int String String ) => Image
+file-raw-placeholder-bay-load ( Int Object ) => Image
+file-raw-placeholder-bay-load ( Int String String ) => Image
+file-raw-placeholder-canon-load ( Int Object ) => Image
+file-raw-placeholder-canon-load ( Int String String ) => Image
+file-raw-placeholder-cine-load ( Int Object ) => Image
+file-raw-placeholder-cine-load ( Int String String ) => Image
+file-raw-placeholder-dng-load ( Int Object ) => Image
+file-raw-placeholder-dng-load ( Int String String ) => Image
+file-raw-placeholder-erf-load ( Int Object ) => Image
+file-raw-placeholder-erf-load ( Int String String ) => Image
+file-raw-placeholder-hasselblad-load ( Int Object ) => Image
+file-raw-placeholder-hasselblad-load ( Int String String ) => Image
+file-raw-placeholder-kodak-load ( Int Object ) => Image
+file-raw-placeholder-kodak-load ( Int String String ) => Image
+file-raw-placeholder-mef-load ( Int Object ) => Image
+file-raw-placeholder-mef-load ( Int String String ) => Image
+file-raw-placeholder-minolta-load ( Int Object ) => Image
+file-raw-placeholder-minolta-load ( Int String String ) => Image
+file-raw-placeholder-mos-load ( Int Object ) => Image
+file-raw-placeholder-mos-load ( Int String String ) => Image
+file-raw-placeholder-nikon-load ( Int Object ) => Image
+file-raw-placeholder-nikon-load ( Int String String ) => Image
+file-raw-placeholder-orf-load ( Int Object ) => Image
+file-raw-placeholder-orf-load ( Int String String ) => Image
+file-raw-placeholder-panasonic-load ( Int Object ) => Image
+file-raw-placeholder-panasonic-load ( Int String String ) => Image
+file-raw-placeholder-pef-load ( Int Object ) => Image
+file-raw-placeholder-pef-load ( Int String String ) => Image
+file-raw-placeholder-phaseone-load ( Int Object ) => Image
+file-raw-placeholder-phaseone-load ( Int String String ) => Image
+file-raw-placeholder-pxn-load ( Int Object ) => Image
+file-raw-placeholder-pxn-load ( Int String String ) => Image
+file-raw-placeholder-qtk-load ( Int Object ) => Image
+file-raw-placeholder-qtk-load ( Int String String ) => Image
+file-raw-placeholder-raf-load ( Int Object ) => Image
+file-raw-placeholder-raf-load ( Int String String ) => Image
+file-raw-placeholder-rdc-load ( Int Object ) => Image
+file-raw-placeholder-rdc-load ( Int String String ) => Image
+file-raw-placeholder-rwl-load ( Int Object ) => Image
+file-raw-placeholder-rwl-load ( Int String String ) => Image
+file-raw-placeholder-sinar-load ( Int Object ) => Image
+file-raw-placeholder-sinar-load ( Int String String ) => Image
+file-raw-placeholder-sony-load ( Int Object ) => Image
+file-raw-placeholder-sony-load ( Int String String ) => Image
+file-raw-placeholder-srw-load ( Int Object ) => Image
+file-raw-placeholder-srw-load ( Int String String ) => Image
+file-raw-placeholder-x3f-load ( Int Object ) => Image
+file-raw-placeholder-x3f-load ( Int String String ) => Image
+file-raw-save ( Int Image Drawable String String ) =>
+file-raw-save ( Int Image Int ObjectArray Object Int Int ) =>
+file-save-rgbe ( Int Image Drawable String String ) =>
+file-save-rgbe ( Int Image Int ObjectArray Object ) =>
+file-sgi-load ( Int Object ) => Image
+file-sgi-load ( Int String String ) => Image
+file-sgi-save ( Int Image Drawable String String Int ) =>
+file-sgi-save ( Int Image Int ObjectArray Object Int ) =>
+file-sunras-load ( Int Object ) => Image
+file-sunras-load ( Int String String ) => Image
+file-sunras-save ( Int Image Drawable String String Int ) =>
+file-sunras-save ( Int Image Int ObjectArray Object Int ) =>
+file-svg-load ( Int Object Float Int Int Int ) => Image
+file-svg-load ( Int String String Float Int Int Int ) => Image
+file-svg-load-thumb ( Object Int ) => Image Int Int Int Int
+file-svg-load-thumb ( String Int ) => Image Int Int
+file-tga-load ( Int Object ) => Image
+file-tga-load ( Int String String ) => Image
+file-tga-save ( Int Image Drawable String String Int Int ) =>
+file-tga-save ( Int Image Int ObjectArray Object Int Int ) =>
+file-tiff-load ( Int Object ) => Image
+file-tiff-load ( Int String String ) => Image
+file-tiff-save ( Int Image Drawable String String Int ) =>
+file-tiff-save ( Int Image Int ObjectArray Object Int Int ) =>
+file-xbm-load ( Int Object ) => Image
+file-xbm-load ( Int String String ) => Image
+file-xbm-save ( Int Image Drawable String String String Int Int Int String Int String ) =>
+file-xbm-save ( Int Image Int ObjectArray Object Int String Int Int Int Int String Int String ) =>
+file-xmc-load ( Int Object ) => Image
+file-xmc-load ( Int String String ) => Image
+file-xmc-load-thumb ( Object Int ) => Image Int Int Int Int
+file-xmc-load-thumb ( String Int ) => Image Int Int Int Int
+file-xmc-save ( Int Image Drawable String String Int Int Int Int Int Int Int String String String ) =>
+file-xmc-save ( Int Image Int ObjectArray Object Int Int Int Int Int Int Int String String String ) =>
+file-xwd-load ( Int Object ) => Image
+file-xwd-load ( Int String String ) => Image
+file-xwd-save ( Int Image Drawable String String ) =>
+file-xwd-save ( Int Image Int ObjectArray Object ) =>
+file-xz-load ( Int Object ) => Image
+file-xz-load ( Int String String ) => Image
+file-xz-save ( Int Image Drawable String String ) =>
+file-xz-save ( Int Image Int ObjectArray Object ) =>
+gimp-color-picker ( Image Drawable Float Float Int Int Float ) => RGB
+gimp-color-picker ( Image Int ObjectArray Float Float Int Int Float ) => RGB
+gimp-edit-copy ( Drawable ) => Int
+gimp-edit-copy ( Int ObjectArray ) => Int
+gimp-edit-cut ( Drawable ) => Int
+gimp-edit-cut ( Int ObjectArray ) => Int
+gimp-edit-named-copy ( Drawable String ) => String
+gimp-edit-named-copy ( Int ObjectArray String ) => String
+gimp-edit-named-cut ( Drawable String ) => String
+gimp-edit-named-cut ( Int ObjectArray String ) => String
+gimp-file-load ( Int Object ) => Image
+gimp-file-load ( Int String String ) => Image
+gimp-file-load-layer ( Int Image Object ) => Layer
+gimp-file-load-layer ( Int Image String ) => Layer
+gimp-file-load-layers ( Int Image Object ) => Int ObjectArray
+gimp-file-load-layers ( Int Image String ) => Int Int32Array
+gimp-file-load-thumbnail ( Object ) => Int Int Int Int8Array
+gimp-file-load-thumbnail ( String ) => Int Int Int Int8Array
+gimp-file-save ( Int Image Drawable String String ) =>
+gimp-file-save ( Int Image Int ObjectArray Object ) =>
+gimp-file-save-thumbnail ( Image Object ) =>
+gimp-file-save-thumbnail ( Image String ) =>
+gimp-image-convert-color-profile-from-file ( Image Object Int Int ) =>
+gimp-image-convert-color-profile-from-file ( Image String Int Int ) =>
+gimp-image-get-channels ( Image ) => Int Int32Array
+gimp-image-get-channels ( Image ) => Int ObjectArray
+gimp-image-get-layers ( Image ) => Int Int32Array
+gimp-image-get-layers ( Image ) => Int ObjectArray
+gimp-image-get-vectors ( Image ) => Int Int32Array
+gimp-image-get-vectors ( Image ) => Int ObjectArray
+gimp-image-pick-color ( Image Drawable Float Float Int Int Float ) => RGB
+gimp-image-pick-color ( Image Int ObjectArray Float Float Int Int Float ) => RGB
+gimp-image-set-color-profile-from-file ( Image Object ) =>
+gimp-image-set-color-profile-from-file ( Image String ) =>
+gimp-item-get-children ( Item ) => Int Int32Array
+gimp-item-get-children ( Item ) => Int ObjectArray
+gimp-layer-add-mask ( Layer Channel ) =>
+gimp-layer-add-mask ( Layer LayerMask ) =>
+gimp-layer-create-mask ( Layer Int ) => Channel
+gimp-layer-create-mask ( Layer Int ) => LayerMask
+gimp-layer-from-mask ( Channel ) => Layer
+gimp-layer-from-mask ( LayerMask ) => Layer
+gimp-layer-get-mask ( Layer ) => Channel
+gimp-layer-get-mask ( Layer ) => LayerMask
+gimp-layer-mask ( Layer ) => Channel
+gimp-layer-mask ( Layer ) => LayerMask
+gimp-selection-float ( Drawable Int Int ) => Layer
+gimp-selection-float ( Int ObjectArray Int Int ) => Layer
+gimp-vectors-export-to-file ( Image Object Vectors ) =>
+gimp-vectors-export-to-file ( Image String Vectors ) =>
+gimp-vectors-import-from-file ( Image Object Int Int ) => Int ObjectArray
+gimp-vectors-import-from-file ( Image String Int Int ) => Int Int32Array
+gimp-vectors-import-from-string ( Image String Int Int Int ) => Int Int32Array
+gimp-vectors-import-from-string ( Image String Int Int Int ) => Int ObjectArray
+gimp-xcf-load ( Int Object ) => Image
+gimp-xcf-load ( Int String String ) => Image
+gimp-xcf-save ( Int Image Drawable String String ) =>
+gimp-xcf-save ( Int Image Int ObjectArray Object ) =>
+plug-in-align-layers ( Int Image Drawable ) =>
+plug-in-align-layers ( Int Image Drawable Int Int ) =>
+plug-in-decompose ( Int Image Drawable String Int ) => Image Image Image Image
+plug-in-decompose ( Int Image Drawable String Int Int ) => Image Image Image Image
+plug-in-film ( Int Image Drawable Int RGB Int String RGB Int Int Int Int32Array ) => Image
+plug-in-film ( Int Image Drawable Int RGB Int String RGB Int Int Int ObjectArray ) => Image
+plug-in-gfig ( Int Image Drawable ) =>
+plug-in-gfig ( Int Image Drawable Int ) =>
+plug-in-grid ( Int Image Drawable Int Int Int RGB Int Int Int Int RGB Int Int Int Int RGB Int ) =>
+plug-in-grid ( Int Image Drawable Int Int Int RGB Int Int Int RGB Int Int Int RGB ) =>
+plug-in-guillotine ( Int Image Drawable ) => Int Int32Array
+plug-in-guillotine ( Int Image Drawable ) => Int ObjectArray
+plug-in-screenshot ( Int Int Int Int Int Int ) => Image
+plug-in-screenshot ( Int Int Int Int Int Int Int ) => Image
+plug-in-sel2path ( Int Image Drawable ) =>
+plug-in-sel2path ( Int Image Drawable Float Float Int Float Float Int Float Int Float Int Int Int Float Float Float Float Float Int Float Int ) =>
+plug-in-warp ( Int Image Drawable Float Drawable Int Float Float Int Drawable Int Int Drawable Float Drawable Float Float ) =>
+plug-in-warp ( Int Image Drawable Float Drawable Int Float Float Int Drawable Int Int Int Float Int Float Float ) =>
+python-fu-eval ( Int String ) =>
+python-fu-eval ( String ) =>
+python-fu-foggify ( Int Image Drawable String Float Float ) =>
+python-fu-foggify ( Int Image Drawable String RGB Float Float ) =>
+python-fu-palette-sort ( Int String Int String Int Int Int Int Float Int Float ) =>
+python-fu-palette-sort ( Int String Int String Int Int Int Int Float Int Float ) => String

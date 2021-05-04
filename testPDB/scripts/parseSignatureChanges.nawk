@@ -5,6 +5,10 @@
 # invoke   gawk -f parseSignatureChanges.nawk col12.txt >signaturesChanged.txt
 # as pipe: comm -3 pdb2_10.txt.sig  pdb2_99.txt.sig | gawk -f parseSignatureChanges.nawk >signaturesChanged.txt
 
+# From the top directory, as a pipe:
+# comm -3 pdb2_10.dump.signatures  pdb2_99.dump.signatures | gawk -f scripts/parseSignatureChanges.nawk
+# if comm complains not sorted, be sure to sort -o in place first
+
 # Input
 # A text file from running comm on two .txt.sig getting the first two columns
 # (the signatures that are in first version and not in second version, and vice versa,
@@ -42,7 +46,7 @@ function printBothLines(line1, line2) {
 function outputSignatureChange(line1, line2, line1NF, line2NF) {
   # TODO comment one of these out.
 
-  # printBothLines(line1, line2)
+  printBothLines(line1, line2)
 
   # print only the name, where count of args is different
   # This is deficient since it allows type changes that maintain count
@@ -51,7 +55,7 @@ function outputSignatureChange(line1, line2, line1NF, line2NF) {
   #}
 
   # print only the name
-  print $1
+  # print $1
 }
 
 # performed on every line
