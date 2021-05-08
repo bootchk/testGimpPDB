@@ -62,6 +62,7 @@ from params import generateParamString
 from drawables import generateDrawableAproposToProc
 from testLog import TestLog
 from stats import TestStats
+from cycle import Cycle
 
 
 
@@ -326,6 +327,12 @@ def plugin_main(image, drawable,
       oneToTest):
     """
     """
+
+    """
+    Uncomment this to test more stochastically.
+    You can also futz with the ranges in cycle.py to test even harder.
+    """
+    # Cycle.turnOnCycling()
 
     # Generate named resources in Gimp
     generateFooGimpData(drawable)

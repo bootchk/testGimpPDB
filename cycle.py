@@ -1,5 +1,5 @@
 """
-A singleton class that generate permutations of arguments.
+A singleton class that generate permutations, for arguments.
 
 Methods generate from a range.
 The range generally tests limits, aka edge cases.
@@ -21,10 +21,17 @@ from itertools import cycle
 
 
 
-class Permute():
+class Cycle():
 
     """
-    Iterators of kind 'cycle'
+    Iterators that return a different value from a range each call
+    and wrap around, cycling over the range.
+
+    Also behaviour is controlled globally.
+    Cycling can be on/off.
+    When off, always returns the first value of the range.
+
+    Python iterators of kind 'cycle' from itertools.
 
     Shared by many generators.
     Generally only one generator is used at a time?
@@ -41,10 +48,29 @@ class Permute():
     before passing large values that might  take a long time.
     """
 
-    intIter = cycle(['1', '0', '2', '3', '4', '256'])
-    floatIter = cycle(['1.5', '0.5'])
+    """
+    Ranges start with the least stressful value.
+    E.g. 0 is an edge case that test stresses hard.
+    """
+
+    # TODO negatives
+    # 256 are edge cases, hard
+    intRange = ['1', '0', '2', '3', '4', '256']
+    # "999.000001", "0" are edge cases, hard
+    # 999 seems to hang many scripts
+    # ['1.5', '0.5', "999.000001", "0"]
+    floatRange = ['1.5', '0.5', ]
+
+    intIter = cycle(intRange)
+    floatIter = cycle(floatRange)
+
+    isCycling = False
 
 
+
+    @classmethod
+    def turnOnCycling(cls):
+        cls.isCycling = True
 
     @classmethod
     def start(cls):
@@ -59,7 +85,10 @@ class Permute():
         1 most commonly succeeds, but sometimes is out of range (when only one item)
         0 is out of range for many tested procedures
         """
-        result = next(cls.intIter)
+        if cls.isCycling:
+            result = next(cls.intIter)
+        else:
+            result = cls.intRange[0]
         #print(result)
         return result
 
@@ -70,5 +99,8 @@ class Permute():
         Alternately generate quoted float [0,1] or [1,infinity]
         These are the two most common ranges that PDB procedures allow.
         """
-        result = next(cls.floatIter)
+        if cls.isCycling:
+            result = next(cls.floatIter)
+        else:
+            result = cls.floatRange[0]
         return result

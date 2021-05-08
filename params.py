@@ -2,7 +2,7 @@
 
 from testLog import TestLog
 from stats import TestStats
-from permute import Permute
+from cycle import Cycle
 from procedureCategory import ProcedureCategory
 
 
@@ -46,19 +46,19 @@ def generateParamString(procName, inParamList,  image, drawable):
             # often the name of an item
             result = appendParameter(result, '"foo"')
         elif aType == "GParamInt" :
-            result = appendParameter(result, Permute.int())
+            result = appendParameter(result, Cycle.int())
         elif aType == "GParamUInt" :
             # TODO this does not suffice.  Change gimpfu to cast to GParamUint
-            result = appendParameter(result, Permute.int())
+            result = appendParameter(result, Cycle.int())
         elif aType == "GParamUChar" :
             # GParamUChar usually used as an int-valued enum, often True/False
             # TODO this does not suffice.  Change gimpfu to cast to GParamUint
-            result = appendParameter(result, Permute.int())
+            result = appendParameter(result, Cycle.int())
         elif aType == "GParamDouble" :
-            result = appendParameter(result, Permute.float())
+            result = appendParameter(result, Cycle.float())
         elif aType == "GParamBoolean" :
             # bool is int ??
-            result = appendParameter(result, Permute.int())
+            result = appendParameter(result, Cycle.int())
         elif aType == "GimpParamItem" :
             # Item is superclass of Drawable, etc.
             # Use a convenient one
@@ -86,8 +86,8 @@ def generateParamString(procName, inParamList,  image, drawable):
             # call out to Gimp for a defined constant
             # result = appendParameter(result, 'Gimp.Unit.UNIT_PIXEL')
             # int works?
-            # TODO should we permute out of the range of the enum type?
-            result = appendParameter(result, Permute.int())
+            # TODO should we cycle out of the range of the enum type?
+            result = appendParameter(result, Cycle.int())
         elif aType == "GimpParamFloatArray" :
             # a 4-tuple often suffices
             # TODO  prefixed with len ?? result = appendParameter(result, '4, (1.0, 1.0, 5.0, 5.0)')
