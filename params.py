@@ -43,8 +43,9 @@ def generateParamString(procName, inParamList,  image, drawable):
 
     for aType in inParamList[startParam:]:
         if aType == "GimpParamString" or aType == "GParamString" :
-            # often the name of an item
-            result = appendParameter(result, '"foo"')
+            # often the name of an item but sometimes a filename or dirname
+            # and sometimes a quoted numeric like "1" which scriptfu strips of quotes?
+            result = appendParameter(result, Cycle.str())
         elif aType == "GParamInt" :
             result = appendParameter(result, Cycle.int())
         elif aType == "GParamUInt" :

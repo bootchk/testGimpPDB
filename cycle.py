@@ -53,16 +53,33 @@ class Cycle():
     E.g. 0 is an edge case that test stresses hard.
     """
 
-    # TODO negatives
-    # 256 are edge cases, hard
+    """
+    TODO negatives
+    0, 256 are edge cases, hard
+    1 most commonly succeeds, but sometimes is out of range (when only one item)
+    0 is out of range for many tested procedures
+    """
     intRange = ['1', '0', '2', '3', '4', '256']
-    # "999.000001", "0" are edge cases, hard
-    # 999 seems to hang many scripts
-    # ['1.5', '0.5', "999.000001", "0"]
+
+    """
+    Alternately generate quoted float [0,1] or [1,infinity]
+    These are the two most common ranges that PDB procedures allow.
+    "999.000001", "0" are edge cases, hard
+    999 seems to hang many scripts
+    ['1.5', '0.5', "999.000001", "0"]
+    """
     floatRange = ['1.5', '0.5', ]
+
+    """
+    For SF-VALUE, usually wants a quoted numeric.
+    Sometimes a filename or dirname.
+    Sometimes a name of a GimpItem.
+    """
+    strRange = ["1", "foo", "/tmp", ]
 
     intIter = cycle(intRange)
     floatIter = cycle(floatRange)
+    strIter = cycle(strRange)
 
     isCycling = False
 
@@ -81,10 +98,6 @@ class Cycle():
 
     @classmethod
     def int(cls):
-        """
-        1 most commonly succeeds, but sometimes is out of range (when only one item)
-        0 is out of range for many tested procedures
-        """
         if cls.isCycling:
             result = next(cls.intIter)
         else:
@@ -95,12 +108,16 @@ class Cycle():
 
     @classmethod
     def float(cls):
-        """
-        Alternately generate quoted float [0,1] or [1,infinity]
-        These are the two most common ranges that PDB procedures allow.
-        """
         if cls.isCycling:
             result = next(cls.floatIter)
         else:
             result = cls.floatRange[0]
+        return result
+
+    @classmethod
+    def str(cls):
+        if cls.isCycling:
+            result = next(cls.strIter)
+        else:
+            result = cls.strRange[0]
         return result
