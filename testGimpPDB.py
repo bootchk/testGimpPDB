@@ -251,34 +251,36 @@ def testAProc(procName, paramsDict,  image, drawable):
     testGeneralProc(procName, paramsDict["in"], image, drawable)
 
 
+def getImageCopy(image, drawable):
+    testImage = pdb.gimp_image_duplicate(image)
+    #print(f"Image: {testImage}")
+    testDrawable = generateDrawableAproposToProc(procName, testImage)
+    return testImage, testDrawable
+
+
 def testSingleProc(procName, image, drawable):
     """
-    Bracket test with creation of duplicate image, drawable.
+    Bracket test with disabling undo
     For a wild procName, i.e. possibly entered by user.
 
-    So testing is from a known base image, the one the user submitted.
+    Image, drawable should be a a copy of known base image, the one the user submitted.
     Note there is no undo() operation in the PDB, to undo the previous test.
     Alternatively, use the same image over and over, but errors will be different?
     """
-    testImage = pdb.gimp_image_duplicate(image)
-    #print(f"Image: {testImage}")
-
-    testDrawable = generateDrawableAproposToProc(procName, testImage)
 
     # Not testing undo. Disable it for speed.
-    pdb.gimp_image_undo_disable(testImage)
+    pdb.gimp_image_undo_disable(image)
 
     # pass procName, its dictionary of attributes
     try:
-        testAProc(procName, ProceduresDB.attributeDictionary(procName),  testImage, testDrawable)
+        testAProc(procName, ProceduresDB.attributeDictionary(procName),  image, drawable)
     except KeyError:
         # !!! Remember we are using a dump of the PDB, not the real time PDB
         message = f"Failed to find procedure in local copy of PDB: {procName}, use hyphens?"
         TestLog.say(message)
         pdb.gimp_message(message)
 
-    # delete test image or undo changes made by procedure
-    pdb.gimp_image_delete(testImage)
+    # Caller may delete test image or undo changes made by procedure
 
 
 
@@ -307,7 +309,12 @@ def testProcs(image, drawable):
                 TestStats.sample("excluded")
             else:
                 TestStats.sample("unexcluded")
-                testSingleProc(procName, image, drawable)
+                # Test a copy
+                testImage, testDrawable = getImageCopy(image, drawable)
+                testSingleProc(procName, testImage, testDrawable)
+                # Delete the copy
+                pdb.gimp_image_delete(testImage)
+
 
             # Temporary
             testedCount += 1
@@ -358,6 +365,7 @@ def plugin_main(image, drawable,
 
     if oneToTest :
         TestLog.say(f"Testing single procedure: {oneToTest}")
+        # !!! Note we are testing on the original image
         testSingleProc(oneToTest, image, drawable)
         # to allow for possible GUI to be seen, short delay
         time.sleep(5)  # seconds

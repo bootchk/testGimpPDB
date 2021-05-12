@@ -4,6 +4,7 @@ from testLog import TestLog
 from stats import TestStats
 from cycle import Cycle
 from procedureCategory import ProcedureCategory
+from specialParams import SpecialParams
 
 
 
@@ -31,6 +32,12 @@ def generateParamString(procName, inParamList,  image, drawable):
     Generate a string of the form '(foo,)' or '()'
     Returns None for unhandled types (an error)
     """
+
+    result = SpecialParams.get(procName)
+    if result:
+        return result
+    # else generate param string dynamically
+
     # TODO why GParam and GimpParam ??
     result = "("
 
