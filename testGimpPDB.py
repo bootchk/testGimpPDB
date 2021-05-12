@@ -251,10 +251,10 @@ def testAProc(procName, paramsDict,  image, drawable):
     testGeneralProc(procName, paramsDict["in"], image, drawable)
 
 
-def getImageCopy(image, drawable):
+def getImageCopy(image, drawable, procName):
     testImage = pdb.gimp_image_duplicate(image)
     #print(f"Image: {testImage}")
-    testDrawable = generateDrawableAproposToProc(procName, testImage)
+    testDrawable = generateDrawableAproposToProc(procName, image)
     return testImage, testDrawable
 
 
@@ -310,7 +310,7 @@ def testProcs(image, drawable):
             else:
                 TestStats.sample("unexcluded")
                 # Test a copy
-                testImage, testDrawable = getImageCopy(image, drawable)
+                testImage, testDrawable = getImageCopy(image, drawable, procName)
                 testSingleProc(procName, testImage, testDrawable)
                 # Delete the copy
                 pdb.gimp_image_delete(testImage)
