@@ -17,7 +17,9 @@
 
 # Output:
 # 1) a JSON file (many lines per PDB procedure)  to stdout
-# 2) a plain text file  (each line a type signature for a PDB procedure), to gimpPDBSignatures.signatures
+# 2) a plain text file  (each line a type signature for a PDB procedure),
+#   to <inputFilename>.signatures i.e. a file having same path and name as the input file,
+#   with suffix "signatures"
 
 # Signature format
 # Fields separated by OFS i.e. space
@@ -249,6 +251,14 @@ function unifyShortType(type) {
 function captureTypeSig(type) {
   # assert type is quoted string like "GimpParamInt" or "GIMP_PDB_INT"
 
+  # !!! Type translation and unification dates from when gimp-pdb-dump
+  # printed the type of the GParamSpec e.g. GParamInt.
+  # Since gimp-pdb-dump was changed to print the type of the GValue,
+  # e.g. gint or GimpDrawable
+  # translation and unification is no longer necessary, but doesn't seem to
+  # affect the output, i.e. this will now print
+  # and untranslated and ununified "gint"
+  # where formerly it printed "Int" (from GParamInt.)
   translatedType = translateTypeV2ToV3(type)
 
   unifiedType = unifyType(translatedType)
@@ -438,7 +448,7 @@ END {
      getline
      # while first word not starts with quote char
      # print $1
-     while ( ! match($1, /\"/) ) {
+     while ( ! match($1, /"/) ) {
        getline
      }
    }
