@@ -59,7 +59,7 @@ def isProcedureSpecialCase(procName):
     Special cases.
     Known bad actors, usually they hang or take too long.
     """
-    return procName in (
+    result = procName in (
 
        # don't test example plugins
        # TODO goat-exercise-python is not canonically named python-fu-goat..
@@ -130,12 +130,31 @@ def isProcedureSpecialCase(procName):
        "gimp-pdb-set-file-proc-save-handler",
        "gimp-pdb-set-file-proc-load-handler",
 
-        """
-        Procedures that take a long time.
-        """
+       # Cannot be called from any plugin, only from app, it crashes
+       "script-fu-refresh",
+
+        # Procedures that take a long time.
         "script-fu-erase-rows",
         "script-fu-erase-nth-rows",
+
+        # Procedures that are broken pending resolution of MR's and reported issues.
+        #
+        # These crash because they call gimp-edit-copy whose signature changed for multi-layer.
+        # or gimp-edit-cut
+        #"script-fu-weave",
+        #"script-fu-unsharp-mask",
+        #"script-fu-selection-to-pattern",
+        #"script-fu-tile-blur",
+        #"script-fu-carve-it",
+
+        # Crash gimp core assertion item_is_attached
+        # Not reproducible when run by itself? Only crashes when testing all SF scripts
+        "script-fu-drop-shadow",
+
+        # Don't use a """ """ above, it ends the tuple???
         )
+    print(f"Exclude {procName} {result}")
+    return result
 
 
 

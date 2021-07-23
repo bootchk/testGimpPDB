@@ -30,5 +30,5 @@ class SpecialParams:
             return cls.specialParamsMap[procName]
         else:
             print(f"Not special {procName}")
-            print(cls.specialParamsMap)
+            # print(cls.specialParamsMap)
             return None

@@ -106,6 +106,7 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
 
     # Log start of test so we know what test hangs (takes too long time)
     TestLog.say(f"Begin test: {testStmt}")
+    startTime = time.time()
     try:
         eval(testStmt)
 
@@ -125,7 +126,11 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
     # get the pdb status, it is a weak form of pass/fail
     # is "success" or something else
     error_str = Gimp.get_pdb().get_last_error()
-    TestLog.say(f"End call, PDB status: {error_str}")
+
+    # Elapsed time from wall clock.  Process time would only be for this plugin, not the unit under test
+    endTime = time.time()
+    
+    TestLog.say(f"End call, PDB status: {error_str}, elapsed time: {endTime - startTime}")
     return error_str
 
 '''
