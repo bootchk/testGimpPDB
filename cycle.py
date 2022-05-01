@@ -8,7 +8,11 @@ See elsewhere, we might be testing:
 - until a first success (shallow test that some normal Gimp code path succeeds )
 - the full range (for crashes)
 
-Methods return quoted strings.
+Methods return strings.
+When appended to the parameter string, strings become literals.
+E.G. '1' appended to the parameter string yields (..., 1, )
+To get a string literal in the parameter string, the returned string must be double quoted.
+E.G. "'foo'" appended to the parameter string yields (...,'1',)
 
 TODO make this generate permutations in order,
 instead of more or less random permutations.
@@ -74,8 +78,10 @@ class Cycle():
     For SF-VALUE, usually wants a quoted numeric.
     Sometimes a filename or dirname.
     Sometimes a name of a GimpItem.
+
+    !!! Double quoted.  One set of quotes will be removed when we append to a string.
     """
-    strRange = ["1", "foo", "/tmp", ]
+    strRange = ["'foo'", "'/tmp'", "'1'", ]
 
     intIter = cycle(intRange)
     floatIter = cycle(floatRange)

@@ -45,10 +45,15 @@ class TestLog:
 
     failSummary = []
 
+    @classmethod
+    def sayEnd(cls, message):
+        logger.info("End test: " + message)
+        # print white space or marker after a test
+        logger.info("^^^^^")
+
 
     @classmethod
-    def sayFail(cls, message):
-        ''' Accumulate failure messages. '''
+    def appendToFailSummary(cls, message):
         TestLog.failSummary.append(message)
 
 

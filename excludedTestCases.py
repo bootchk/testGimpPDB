@@ -45,6 +45,10 @@ def isProcedureInteractive(procName):
         "plug-in-plug-in-details",
         # Hang, without error messages
         "script-fu-ripply-anim",
+        # April 2020 crashing GIMP,
+        # scriptfu-WARNING **: 15:04:27.278: PDB procedure returned NULL GIMP object or non-GIMP object.
+        # TODO retest, may not be this procedure's fault
+        "script-fu-burn-in-anim",
         # Don't call the script-fu interpreter.  It has no documented params?
         "extension-script-fu",
         # temporary, crashes in gimp-display-new ???

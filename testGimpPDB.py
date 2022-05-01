@@ -45,6 +45,25 @@ Tests do NOT test semantics:
 FUTURE more fuzzy: pass edge case values
 """
 
+"""
+This is the help string:
+
+If you enter into "Test one" box, the other buttons are moot.
+Enter the name of a procedure with hyphens i.e. "script-fu-set-cmap"
+
+Repeated tests may clutter GIMP resources and lead to unexplained crashes.
+Occasionally delete ~/.config/GIMP/2.99, and restart GIMP (which will create it fresh.)
+
+You can test with iterated improvisation of parameters.
+Currently, not in the GUI, instead uncommment in the code:
+Cycle.turnOnCycling()
+
+Use a small image for faster testing.
+A new image (say all white) can be used.
+Other images may test harder?
+If you know a procedure has requirements on the image (rare?)
+you may start a test with a suitable image.
+"""
 import gi
 from gi.repository import GObject
 from gi.repository import Gio   # Gio.File
@@ -186,11 +205,13 @@ def testGeneralProc(procName, inParamList,  image, drawable):
     Log the result
     """
     # We can start each test with the same permutation
-    # Permute.reset()
+    # # ??? See cycle.py, we don't really have this: Permute.reset()
     for iteration in range(3): # TODO magic
+        TestLog.say(f"Iteration {iteration} of improvising params.")
+
         paramString = generateParamString(procName, inParamList,  image, drawable)
-        # Tell Permute to advance
-        # Permute.advance()
+        # ??? See cycle.py, we don't really have this: Permute.advance()
+
         if not paramString:
             TestLog.say(f"Not call, could not improvise params: {procName}")
             TestStats.sample("uncalled")
@@ -200,10 +221,12 @@ def testGeneralProc(procName, inParamList,  image, drawable):
 
         if call_result == "success":
             TestStats.sample("pass")
+            TestLog.sayEnd("Pass, procedure returned success.")
             return
         elif call_result == "exception":
             # could be exception in GimpFu, not always in GIMP
             TestStats.sample("exception")
+            TestLog.sayEnd("Exception")
             return
         else:
             # Failed, but not exception.
@@ -211,7 +234,7 @@ def testGeneralProc(procName, inParamList,  image, drawable):
             if call_result.find("out of range") > -1:
                 pass
             elif call_result.find("execution error") > -1:
-                # often a poor error message that means: out of range
+                # often a poor error message from the procedure itself that means: out of range
                 pass
             else:
                 # a call_result that we don't iterate on
@@ -220,7 +243,8 @@ def testGeneralProc(procName, inParamList,  image, drawable):
 
     # Exhausted attempts without passing, or a call_result that we don't iterate on
     TestStats.sample("fail", call_result)
-    TestLog.sayFail(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
+    TestLog.sayEnd("Fail, procedure returned an error.")
+    TestLog.appendToFailSummary(f"Call: {procName} params: {paramString}, PDB status: {call_result}")
 
 
 
