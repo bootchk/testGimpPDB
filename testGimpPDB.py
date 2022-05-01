@@ -66,8 +66,8 @@ from cycle import Cycle
 
 
 
-# Plugin is not i18n ???
-gettext.install("gimp30-python", gimp.locale_directory)
+# This plugin is not i18n ???
+# gettext.install("gimp30-python", gimp.locale_directory())
 
 # global improvised data assigned by improviseGlobalFooParameters()
 fooFile=None
@@ -129,7 +129,7 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
 
     # Elapsed time from wall clock.  Process time would only be for this plugin, not the unit under test
     endTime = time.time()
-    
+
     TestLog.say(f"End call, PDB status: {error_str}, elapsed time: {endTime - startTime}")
     return error_str
 
