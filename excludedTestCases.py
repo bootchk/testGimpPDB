@@ -4,6 +4,8 @@ for various reasons.
 """
 from procedureCategory import ProcedureCategory
 
+from testLog import TestLog
+
 
 def isProcedureInteractivePopup(procName):
     """
@@ -153,7 +155,7 @@ def isProcedureSpecialCase(procName):
 
         # Don't use a """ """ above, it ends the tuple???
         )
-    print(f"Exclude {procName} {result}")
+    TestLog.say(f"Exclude {procName} {result}")
     return result
 
 

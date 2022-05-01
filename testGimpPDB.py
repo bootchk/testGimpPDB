@@ -106,6 +106,8 @@ def evalCatchingExceptions(procName, params, image=None, drawable=None):
 
     # Log start of test so we know what test hangs (takes too long time)
     TestLog.say(f"Begin test: {testStmt}")
+    TestLog.say(f"Test image: {image.filename}")
+    TestLog.say(f"Test drawable: {drawable.name}")
     startTime = time.time()
     try:
         eval(testStmt)
@@ -255,11 +257,20 @@ def testAProc(procName, paramsDict,  image, drawable):
     # OLD testProcGivenInParams(procName, paramsDict["in"], image, drawable)
     testGeneralProc(procName, paramsDict["in"], image, drawable)
 
+"""
+Return an image and drawable suitable for the tested procedure.
+The original image is not touched.
+The tested image is a duplicate.
+However, the tested drawable may be added, when the tested procedure
+wants a type of layer that the original might not have.
 
-def getImageCopy(image, drawable, procName):
-    testImage = pdb.gimp_image_duplicate(image)
-    #print(f"Image: {testImage}")
-    testDrawable = generateDrawableAproposToProc(procName, image)
+!!! Note that the tested layer must be attached to the tested image.
+The tested image may have the same name i.e. "[Untitled]" when the original has not been saved.
+"""
+def getImageCopy(originalImage, procName):
+    testImage = pdb.gimp_image_duplicate(originalImage)
+    # print(f"Original: {originalImage.filename}, duplicated image: {testImage.filename}")
+    testDrawable = generateDrawableAproposToProc(procName, testImage)
     return testImage, testDrawable
 
 
@@ -315,9 +326,15 @@ def testProcs(image, drawable):
             else:
                 TestStats.sample("unexcluded")
                 # Test a copy
-                testImage, testDrawable = getImageCopy(image, drawable, procName)
+                testImage, testDrawable = getImageCopy(image, procName)
                 testSingleProc(procName, testImage, testDrawable)
-                # Delete the copy
+
+                """
+                Delete the copy.
+                testGimpPDB itself does not leave any images,
+                but the called procedures may create new images and resources (e.g. brush)
+                Also, testGimpPDB may leave generated test resources (e.g. brush.)
+                """
                 pdb.gimp_image_delete(testImage)
 
 
@@ -371,7 +388,11 @@ def plugin_main(image, drawable,
     if oneToTest :
         TestLog.say(f"Testing single procedure: {oneToTest}")
         # !!! Note we are testing on the original image
-        testSingleProc(oneToTest, image, drawable)
+        testImage, testDrawable = image, drawable
+        # Alternatively test a copy: testImage, testDrawable = getImageCopy(image, oneToTest)
+
+        testSingleProc(oneToTest, testImage, testDrawable)
+
         # to allow for possible GUI to be seen, short delay
         time.sleep(5)  # seconds
         TestLog.summarize()

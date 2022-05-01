@@ -1,3 +1,4 @@
+from testLog import TestLog
 
 
 class SpecialParams:
@@ -27,8 +28,9 @@ class SpecialParams:
     def get(cls, procName):
 
         if procName in cls.specialParamsMap:
+            TestLog.say(f"Special params for: {procName}")
             return cls.specialParamsMap[procName]
         else:
-            print(f"Not special {procName}")
+            TestLog.say(f"Not special, i.e. improvised params for: {procName}")
             # print(cls.specialParamsMap)
             return None
