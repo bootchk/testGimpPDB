@@ -43,16 +43,11 @@ def isProcedureInteractive(procName):
         # Hang, with many Gtk errors
         "plug-in-metadata-editor",
         "plug-in-plug-in-details",
-        # Hang, without error messages
-        "script-fu-ripply-anim",
-        # April 2020 crashing GIMP,
-        # scriptfu-WARNING **: 15:04:27.278: PDB procedure returned NULL GIMP object or non-GIMP object.
-        # TODO retest, may not be this procedure's fault
-        "script-fu-burn-in-anim",
-        # Don't call the script-fu interpreter.  It has no documented params?
+
+        # Don't call the script-fu interpreter.
+        # Not actually a GUI, but it is tested by calling scripts themselves
         "extension-script-fu",
-        # temporary, crashes in gimp-display-new ???
-        "script-fu-font-map",
+
         # opens a dialog that locks GUI
         "plug-in-busy-dialog",
         # same as gimp_clone, but tries to open a dialog?
@@ -139,23 +134,24 @@ def isProcedureSpecialCase(procName):
        # Cannot be called from any plugin, only from app, it crashes
        "script-fu-refresh",
 
+       # Excluded ordinary ScriptFu scripts
+       # Hangs, without error messages
+       "script-fu-ripply-anim",
+       # temporary, crashes in gimp-display-new ???
+       # Error: car: argument 1 must be: pair
+       "script-fu-font-map",
+       # April 2020 crashing GIMP,
+       # scriptfu-WARNING **: 15:04:27.278: PDB procedure returned NULL GIMP object or non-GIMP object.
+       # TODO retest, may not be this procedure's fault
+       "script-fu-burn-in-anim",
+       # Crash gimp core assertion item_is_attached
+       # Not reproducible when run by itself? Only crashes when testing all SF scripts
+       # ?? GIMP-CRITICAL: file ../gimp/app/gegl/gimp-babl.c: line 1091 (gimp_babl_format): should not be reached
+       "script-fu-drop-shadow",
+
         # Procedures that take a long time.
         "script-fu-erase-rows",
         "script-fu-erase-nth-rows",
-
-        # Procedures that are broken pending resolution of MR's and reported issues.
-        #
-        # These crash because they call gimp-edit-copy whose signature changed for multi-layer.
-        # or gimp-edit-cut
-        #"script-fu-weave",
-        #"script-fu-unsharp-mask",
-        #"script-fu-selection-to-pattern",
-        #"script-fu-tile-blur",
-        #"script-fu-carve-it",
-
-        # Crash gimp core assertion item_is_attached
-        # Not reproducible when run by itself? Only crashes when testing all SF scripts
-        "script-fu-drop-shadow",
 
         # Don't use a """ """ above, it ends the tuple???
         )

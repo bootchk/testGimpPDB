@@ -1,10 +1,9 @@
 
-
-
 """
 Logging for testGimpPDB
 """
 
+from stats import TestStats
 
 
 import logging
@@ -44,6 +43,7 @@ class TestLog:
     '''
 
     failSummary = []
+    excludedSummary = []
 
     @classmethod
     def sayEnd(cls, message):
@@ -55,6 +55,16 @@ class TestLog:
     @classmethod
     def appendToFailSummary(cls, message):
         TestLog.failSummary.append(message)
+
+    @classmethod
+    def sayExcluded(cls, didExclude, name, reason=None):
+        if didExclude:
+            TestStats.sample("excluded")
+            cls.say(f"Excluded {name}")
+            TestLog.excludedSummary.append(name)
+        else:
+            TestStats.sample("not excluded")
+            cls.say(f"Not excluded {name}")
 
 
     @classmethod
@@ -70,6 +80,12 @@ class TestLog:
 
     @classmethod
     def summarize(cls):
+        print("=================================")
+        print("testGimpPDB excluded procedures:")
+        for line in TestLog.excludedSummary:
+            print(line)
+        print("=================================")
+
         if not TestLog.failSummary:
             result = False
         else:

@@ -59,7 +59,9 @@ Currently, not in the GUI, instead uncommment in the code:
 Cycle.turnOnCycling()
 
 Use a small image for faster testing.
-A new image (say all white) can be used.
+However, that is an edge case: some scripts have meth bugs for small images.
+
+A new image (say all white) can be used, but might be harder to visually interpret results.
 Other images may test harder?
 If you know a procedure has requirements on the image (rare?)
 you may start a test with a suitable image.
@@ -345,10 +347,10 @@ def testProcs(image, drawable):
 
             # Exclude certain procs
             if not shouldTestProcedure(procName):
-                TestLog.say(f"Excluded procedure: {procName}")
-                TestStats.sample("excluded")
+                TestLog.sayExcluded(True, procName)
             else:
-                TestStats.sample("unexcluded")
+                TestLog.sayExcluded(False, procName)
+                #TestStats.sample("unexcluded")
                 # Test a copy
                 testImage, testDrawable = getImageCopy(image, procName)
                 testSingleProc(procName, testImage, testDrawable)
