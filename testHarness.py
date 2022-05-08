@@ -110,6 +110,54 @@ def generateFooGimpData(drawable):
     # script-fu-paste-as-pattern will allow create a named pattern
 
 
+
+
+def improviseFileParam():
+    '''
+    Create a parameter:
+       in the Python language
+       that designates a file
+       in a call to a GIMP PDB procedure
+
+    We only need a string that is a file name.
+    GimpFu itself will convert to what PDB procedures want (a GFile.)
+
+    When converting to GFile, a prefix path is added (to the current working directory.)
+    The string here is just a filename, and must not name directories that don't exist yet.
+    Although the filename doesn't need to exist as a file.
+    '''
+    filename = "fooFileName.tmp"
+    logger.debug(f"Improvised filename: {filename}")
+    return filename
+
+"""
+CRUFT : don't need to create a GFile here.
+
+Is it a GFile or a GLocalFile?
+Web says GLocalFile is an internal type?
+
+Probably need a patch to GimpFu to create a GValue of type GFile
+when it sees it is needed.
+
+    # create a named file
+    # fooFile = Gio.file_new_for_path("/work/foo")
+
+    # create a temporary file.  This creates a real file, does IO?
+    # fooFile, stream = Gio.file_new_tmp(None)
+    # Not used: stream
+
+    # create for a parse name
+    fooFile = Gio.file_parse_name("/work/foo")
+
+    assert fooFile is not None
+
+    # fooFile is-a GLocalFile, i.e. file doesn't exist yet if path is malformed
+    # create the file?
+    logger.debug(f"Created fooFile: {fooFile.get_parse_name()} types: {fooFile.__gtype__} ")
+    #raise Exception
+"""
+
+
 def improviseFooParameters(image, drawable):
     """
     Create instances of various Gimp types.
@@ -129,18 +177,7 @@ def improviseFooParameters(image, drawable):
         logger.warning(f"fooVectors is None, tests requiring vector args will fail.")
 
 
-    # create a GObject file descriptor
-
-    # create a named file
-    # fooFile = Gio.file_new_for_path("/work/foo")
-
-    fooFile, stream = Gio.file_new_tmp(None)
-    assert fooFile is not None
-
-    # fooFile is-a GLocalFile, i.e. file doesn't exist yet if path is malformed
-    # create the file?
-    logger.debug(f"Created fooFile: {fooFile.get_parse_name()} types: {fooFile.__gtype__} , {stream.__gtype__}")
-    #raise Exception
+    fooFile = improviseFileParam()
 
     """
     Many procedures take an array of drawables.

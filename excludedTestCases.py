@@ -44,6 +44,13 @@ def isProcedureInteractive(procName):
         "plug-in-metadata-editor",
         "plug-in-plug-in-details",
 
+        # Has a GUI.
+        # For complete testing of ScriptFu dialog.
+        # Best tested individually outside of testGimpPDB
+        # The only SF plugin that uses a GimpParamChannel parameter,
+        # which is not currently supported by testGimpPDB (or even by GIMP?)
+        "script-fu-test-sphere",
+
         # Don't call the script-fu interpreter.
         # Not actually a GUI, but it is tested by calling scripts themselves
         "extension-script-fu",
@@ -138,16 +145,19 @@ def isProcedureSpecialCase(procName):
        # Hangs, without error messages
        "script-fu-ripply-anim",
        # temporary, crashes in gimp-display-new ???
+
        # Error: car: argument 1 must be: pair
-       "script-fu-font-map",
+       # "script-fu-font-map",
+
        # April 2020 crashing GIMP,
        # scriptfu-WARNING **: 15:04:27.278: PDB procedure returned NULL GIMP object or non-GIMP object.
        # TODO retest, may not be this procedure's fault
-       "script-fu-burn-in-anim",
+       # April 2022, calls plug-in-tile with wrong arg types
+       #"script-fu-burn-in-anim",
        # Crash gimp core assertion item_is_attached
        # Not reproducible when run by itself? Only crashes when testing all SF scripts
        # ?? GIMP-CRITICAL: file ../gimp/app/gegl/gimp-babl.c: line 1091 (gimp_babl_format): should not be reached
-       "script-fu-drop-shadow",
+       # "script-fu-drop-shadow",
 
         # Procedures that take a long time.
         "script-fu-erase-rows",
