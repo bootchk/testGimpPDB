@@ -2,7 +2,24 @@
 
 import json
 
-# class data and methods, no instance
+from testLog import TestLog
+
+
+
+"""
+A class that mimics the GIMP PDB.
+
+Provides various dictionaries that act as key/value databases.
+
+A dictionary keyed by procedure name, yielding a dictionary of attributes of the procedure.
+IOW a dictionary of dictionary.
+
+TODO this could instead actually access the GIMP PDB.
+Then it would not suffer being out of date.
+See testPDB/process.md for the process of refreshing the JSON from GIMP PDB.
+
+class data and methods, no instance
+"""
 
 class ProceduresDB:
 
@@ -19,6 +36,8 @@ class ProceduresDB:
 
         # relative to this .py file
         path = Path(__file__).parent / "./testPDB/pdb2_99.json"
+
+        TestLog.say(f"Reading JSON file: {path}")
 
         # path = "/work/testGimpPDB/testPDB/pdb.json"
         return path
@@ -45,7 +64,9 @@ class ProceduresDB:
         return ProceduresDB.data.keys()
 
     def attributeDictionary(procName):
+        """ Return a dictionary of attributes for a PDB procedure. """
         return ProceduresDB.data[procName]
 
     def typeof(procName):
+        """ Return the PDBProcedureType for a PDB procedure. """
         return ProceduresDB.data[procName]["type"]

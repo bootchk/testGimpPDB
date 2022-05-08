@@ -19,9 +19,33 @@ A nawk script to convert gimp/pdb/gimp-pdb-compat.c to a readable text file
 of deprecated PDB procedures
 
 The process is:
-GIMP pdb dump => pdb<foo>.txt  (use the GIMP app interactively)
+
+GIMP pdb dump => pdb<foo>.dump
+This file is in a special format, with parens.
+Use the GIMP app interactively.
+Choose the plugin "Test>Dump PDB to /work/pdb.txt"
+(That plugin calls the PDB procedure gimp-pdb-dump.)
+That plugin is in the GimpFuv3 repo at TestPlugins/test/dump_pdb
+It creates a file "pdb.txt" at "/work"
+(which in a vagga container, is the project directory.)
+
+Move pdb.txt to testPDB/sourceData and rename it to say pdb2_99.dump.
+
+cd to testPDB
+
 nawk the above => .json
                => .txt.sig
+
+nawk -f scripts/parsePDBDump.nawk sourceData/pdb2_99.dump > pdb2_99.json
+
+Edit the JSON file to remove the last comma in the file
+(some JSON parsers don't allow a trailing comma in a list.)
+
+Since you altered the data for testGimpPDB project,
+reinstall it, so the data is installed in ~/.config/gimp/.../plug-ins/testGimpPDB
+
+Now should be able to run testGimpPDB plugin
+(it looks in this directory, testGimpPDB/testPDB/pdb2_99.json )
 
 So all .txt and .json and .txt.sig files are ephemeral artifacts,
 should be refreshed as gimp repository changes.

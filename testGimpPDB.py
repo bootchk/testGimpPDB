@@ -406,6 +406,9 @@ def plugin_main(image, drawable,
     # selection in image
     # strokes in image
 
+    TestLog.say(f"!!!! Reading the PDB from a JSON file, not from the GIMP PDB !!!!")
+    TestLog.say(f"!!!! If it is not current, expect tests to fail              !!!!")
+    TestLog.say(f"!!!! Please read testPDB/process.md and readme.md            !!!!")
     ProceduresDB.read()
 
     UserFilter.setChoices(shouldTestScriptFu, shouldTestPythonFu, shouldTestCPlugin,
