@@ -47,8 +47,10 @@ def improviseParmStringForType(aType):
         # and sometimes a quoted numeric like "1" which scriptfu strips of quotes?
         result = Cycle.str()
     elif aType == "gint" or aType == "guint":
-        # "GParamInt"  "GParamUInt"
-        # TODO this does not suffice.  Change gimpfu to cast to GParamUint
+        # "GParamInt"
+        """
+        Special case, to handle multilayer
+        """
         result = Cycle.int()
     elif aType == "guchar":
         # "GParamUChar" :
@@ -106,7 +108,7 @@ def improviseParmStringForType(aType):
         # a 4-tuple often suffices
         # TODO  prefixed with len ?? result = '4, (1.0, 1.0, 5.0, 5.0)')
         result = '(1.0, 1.0, 5.0, 5.0)'
-    elif aType == "GimpUInt8Array" :
+    elif aType == "GimpUint8Array" :
         # "GimpParamUInt8Array"
         # a 4-tuple often suffices e.g. gimp-image-set-colormap
         result = '(1, 2, 3, 4)'
@@ -137,6 +139,9 @@ def improviseParmStringForType(aType):
         # assert drawable is a wrapped GimpFu Adapter
         #print(f"Drawable: {drawable}")  # DEBUG unwrapped
         result = 'drawable'
+    elif aType == "GimpOrientationType" :
+        # See above re enums
+        result = '1'
 
     # TODO more types
     # GimpParamParasite
@@ -163,6 +168,8 @@ def improviseParmStringForType(aType):
 def generateParamString(procName, inParamList,  image, drawable):
     """
     Generate a string of the form '(foo,)' or '()'
+    The string denotes parameters.
+    It will be evaled in Python.
     Returns None for unhandled types (an error)
     """
 

@@ -379,7 +379,7 @@ def testProcs(image, drawable):
 def plugin_main(image, drawable,
       shouldTestScriptFu, shouldTestPythonFu, shouldTestCPlugin,
       shouldTestExportImport, shouldTestTemporary, shouldTestOther,
-      oneToTest):
+      oneToTest, shouldFuzz):
     """
     """
 
@@ -387,7 +387,9 @@ def plugin_main(image, drawable,
     Uncomment this to test more stochastically.
     You can also futz with the ranges in cycle.py to test even harder.
     """
-    # Cycle.turnOnCycling()
+
+    if shouldFuzz:
+        Cycle.turnOnCycling()
 
     # Generate named resources in Gimp
     generateFooGimpData(drawable)
@@ -462,6 +464,7 @@ register(
      (PF_TOGGLE, "shouldTestTemporary", "Temporary procedures?", 1),
      (PF_TOGGLE, "shouldTestOther", "Other (Internal, etc.) procedures?", 1),
      (PF_STRING, "oneToTest", "Test one:", ""),
+     (PF_TOGGLE, "shouldFuzz", "Fuzz till succeed?", 1),
     ],
     [], # No return value
     plugin_main,

@@ -72,7 +72,8 @@ class Cycle():
     999 seems to hang many scripts
     ['1.5', '0.5', "999.000001", "0"]
     """
-    floatRange = ['1.5', '0.5', ]
+    floatRange = ['0.5','0.5','0.5','0.5',  '1.5', '1.5', ]
+    # '1.5',
 
     """
     For SF-VALUE, usually wants a quoted numeric.

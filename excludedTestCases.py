@@ -23,15 +23,16 @@ def isProcedureInteractive(procName):
     Open windows, enter event loop, impeding lights-out testing.
 
     TODO We *can* test them interactively, optionally.
+    Add a control to this plugin.
+
+    Plugins take a parameter runmode, they should respect NONINTERACTIVE.
+    But some don't seem to.
+    So exclude any that we know open windows.
+
+    TODO not respecting runmode is a bug?
     """
     return procName in (
-        """
-        Plugins take a parameter runmode, they should respect NONINTERACTIVE.
-        But some don't seem to.
-        So exclude any that we know open windows.
 
-        TODO not respecting runmode is a bug?
-        """
         "plug-in-animationplay",
 
         "python-fu-console",
