@@ -196,8 +196,7 @@ def generateParamString(procName, inParamList,  image, drawable):
         Use the default, more likely to succeed.
         Especially for num_drawables param, which we don't want to fuzz.
         """
-        improvisedParmString = PDB.default_value_for_procname_arg(procName, argIndex)
-        print(improvisedParmString)
+        improvisedParmString = PDB.default_value_for_procname_arg(procName, argIndex, aType)
 
         if improvisedParmString == "None":
             improvisedParmString = improviseParmStringForType(aType)

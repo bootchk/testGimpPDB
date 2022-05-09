@@ -97,6 +97,10 @@ class Cycle():
         cls.isCycling = True
 
     @classmethod
+    def shouldCycle(cls):
+        return cls.isCycling
+
+    @classmethod
     def start(cls):
         # Called at the beginning of each test.
         # TODO refresh the iterators

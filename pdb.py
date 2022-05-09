@@ -12,10 +12,10 @@ Class that accesses the GIMP PDB.
 
 class PDB():
     @classmethod
-    def default_value_for_procname_arg(cls, procName, argIndex):
+    def default_value_for_procname_arg(cls, procName, argIndex, expectedType):
         """
         Returns str of default value for arg.
-        Default value may be the string "None"
+        Default value may be the string "None" meaning no default specified.
         Exception if argIndex out of range.
         """
 
@@ -33,8 +33,8 @@ class PDB():
         # print(f"Param spec: {paramSpec.__gtype__}")
         # print( dir(paramSpec))
 
-        print(f"Str() of default value: {paramSpec.default_value}")
-        print(f"repr() of default value: {repr(paramSpec.default_value)}")
+        #print(f"Str() of default value: {paramSpec.default_value}")
+        #print(f"repr() of default value: {repr(paramSpec.default_value)}")
 
         # We don't expect paramSpec is None.  If so, the rest will raise exception.
         # We do allow the default_value to represent None, meaning no default value specified.
@@ -42,9 +42,7 @@ class PDB():
         result = str(paramSpec.default_value)
 
         """
-        We expect the string to be "None"
-        or a string that looks like an argument in Python to a PDB procedure.
-        However,the str could still look like:
+        Str could still look like:
         <enum GIMP_RUN_NONINTERACTIVE of type Gimp.RunMode>
         because the __str__ is deficient?
 
@@ -54,5 +52,15 @@ class PDB():
         if "<enum" in result:
             result = '1'
 
+        """
+        Add quotes to make string defaults look like string literals.
+        """
+        if result != "None" and expectedType == "gchararray" :
+            result = '"' + result + '"'
+
+        """
+        Ensure the string is "None"
+        or a string that looks like an argument in Python to a PDB procedure.
+        """
         assert (isinstance(result, str))
         return result

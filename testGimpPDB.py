@@ -243,6 +243,12 @@ def testGeneralProc(procName, inParamList,  image, drawable):
                 # Usually one of the parameters that we don't permute is not valid.
                 break
 
+        # hack.  If tester does not want to iterate
+        # WIP restructure this.
+        # For now, just suffer many iterations.
+        #if Cycle.shouldCycle():
+        #    break
+
     # Exhausted attempts without passing, or a call_result that we don't iterate on
     TestStats.sample("fail", call_result)
     TestLog.sayEnd("Fail, procedure returned an error.")

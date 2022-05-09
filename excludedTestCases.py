@@ -41,9 +41,16 @@ def isProcedureInteractive(procName):
         "plug-in-unit-editor",
         "plug-in-screenshot",
         "plug-in-metadata-viewer",
+        # Appears in Help>Procedure Browser.
+        # Duplicates the Browse button in Python Console???  Duplicate code??
+        "plug-in-dbbrowser",
         # Hang, with many Gtk errors
         "plug-in-metadata-editor",
         "plug-in-plug-in-details",
+
+        # Has a GUI.
+        # Can't be used NON-INTERACTIVE, since no parameters that specify operations
+        "plug-in-gfig",
 
         # Has a GUI.
         # For complete testing of ScriptFu dialog.
@@ -110,6 +117,10 @@ def isProcedureSpecialCase(procName):
        "gimp-online-bugs-features",
        "gimp-online-roadmap",
        # gimp-web
+
+       # Not to be used in production, for GIMP developers only
+       "gimp-debug-timer-start",    # should succeed
+       "gimp-debug-timer-end",      # fails if no timer started
 
        #Exclude some pdb management functions.
        #We know they work??
