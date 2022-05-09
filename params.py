@@ -6,6 +6,7 @@ from cycle import Cycle
 from procedureCategory import ProcedureCategory
 from specialParams import SpecialParams
 
+from pdb import PDB
 
 
 
@@ -188,10 +189,22 @@ def generateParamString(procName, inParamList,  image, drawable):
     else:
         startParam = 0
 
+    argIndex = startParam
     for aType in inParamList[startParam:]:
-        improvisedParmString = improviseParmStringForType(aType)
+
+        """
+        Use the default, more likely to succeed.
+        Especially for num_drawables param, which we don't want to fuzz.
+        """
+        improvisedParmString = PDB.default_value_for_procname_arg(procName, argIndex)
+        print(improvisedParmString)
+
+        if improvisedParmString == "None":
+            improvisedParmString = improviseParmStringForType(aType)
+
         # trailing comma will be OK to Python
         result = result + improvisedParmString + ','
+        argIndex += 1
 
 
     result = result + ')'
