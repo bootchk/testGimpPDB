@@ -321,12 +321,18 @@ def testSingleProc(procName, image, drawable):
 
     # pass procName, its dictionary of attributes
     try:
-        testAProc(procName, ProceduresDB.attributeDictionary(procName),  image, drawable)
+        attributes = ProceduresDB.attributeDictionary(procName)
     except KeyError:
-        # !!! Remember we are using a dump of the PDB, not the real time PDB
         message = f"Failed to find procedure in local copy of PDB: {procName}, use hyphens?"
         TestLog.say(message)
         pdb.gimp_message(message)
+    try:
+        testAProc(procName, attributes,  image, drawable)
+    except:
+        message = f"Failed to test procedure: {procName}, database flaw?"
+        TestLog.say(message)
+        pdb.gimp_message(message)
+
 
     # Caller may delete test image or undo changes made by procedure
 
@@ -384,8 +390,9 @@ def testProcs(image, drawable):
 
 def plugin_main(image, drawable,
       shouldTestScriptFu, shouldTestPythonFu, shouldTestCPlugin,
-      shouldTestExportImport, shouldTestTemporary, shouldTestOther,
-      oneToTest, shouldFuzz):
+      shouldTestExportImport, shouldTestOther,
+      oneToTest,
+      shouldTestTemporary, shouldFuzz):
     """
     """
 
@@ -414,10 +421,8 @@ def plugin_main(image, drawable,
     # selection in image
     # strokes in image
 
-    TestLog.say(f"!!!! Reading the PDB from a JSON file, not from the GIMP PDB !!!!")
-    TestLog.say(f"!!!! If it is not current, expect tests to fail              !!!!")
-    TestLog.say(f"!!!! Please read testPDB/process.md and readme.md            !!!!")
-    ProceduresDB.read()
+    ProceduresDB.readFromJSON()
+    ProceduresDB.readFromGimp()
 
     UserFilter.setChoices(shouldTestScriptFu, shouldTestPythonFu, shouldTestCPlugin,
          shouldTestExportImport, shouldTestTemporary, shouldTestOther)
@@ -467,9 +472,9 @@ register(
      (PF_TOGGLE, "shouldTestPythonFu", "PythonFu procedures?", 1),
      (PF_TOGGLE, "shouldTestCPlugin", "C Plugin procedures?", 1),
      (PF_TOGGLE, "shouldTestExportImport", "Export/Import procedures?", 1),
-     (PF_TOGGLE, "shouldTestTemporary", "Temporary procedures?", 1),
      (PF_TOGGLE, "shouldTestOther", "Other (Internal, etc.) procedures?", 1),
      (PF_STRING, "oneToTest", "Test one:", ""),
+     (PF_TOGGLE, "shouldTestTemporary", "Temporary procedures?", 1),
      (PF_TOGGLE, "shouldFuzz", "Fuzz till succeed?", 1),
     ],
     [], # No return value

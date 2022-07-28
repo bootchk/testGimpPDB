@@ -30,7 +30,7 @@ class ProcedureCategory:
 
     def isTemporary(procName):
         # Note that all (?) of temporary procedures are omitted later anyway ???
-        return ProceduresDB.typeof(procName) == "Temporary Procedure"
+        return ProceduresDB.isTypeTemporary(procName)
 
 
 

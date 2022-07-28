@@ -33,6 +33,13 @@ class UserFilter:
     """
     def userWantsTest(procedure_name):
         result = True
+
+        """
+        Temporary is orthogonal.
+        A Temporary  script is also ScriptFu, Python, or C.
+        So to test a Temporary ScriptFu, user must choose two checkboxes.
+        Choosing the Temporary checkbox alone does not test anything.
+        """
         if   ProcedureCategory.isScriptFu(procedure_name):
             if not UserFilter._shouldTestScriptFu :
                 result = False
@@ -45,9 +52,6 @@ class UserFilter:
         elif ProcedureCategory.isLoadSave(procedure_name):
             if not UserFilter._shouldTestExportImport :
                 result = False
-        elif ProcedureCategory.isTemporary(procedure_name):
-            if not UserFilter._shouldTestTemporary :
-                result = False
         else:
             """
             Other is: Internal or Extension
@@ -56,4 +60,9 @@ class UserFilter:
             """
             if not UserFilter._shouldTestOther:
                 result = False
+
+        if ProcedureCategory.isTemporary(procedure_name):
+            if not UserFilter._shouldTestTemporary :
+                result = False
+
         return result
