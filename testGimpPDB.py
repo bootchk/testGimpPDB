@@ -421,7 +421,8 @@ def plugin_main(image, drawable,
     # selection in image
     # strokes in image
 
-    ProceduresDB.readFromJSON()
+    # Choose one
+    # ProceduresDB.readFromJSON()
     ProceduresDB.readFromGimp()
 
     UserFilter.setChoices(shouldTestScriptFu, shouldTestPythonFu, shouldTestCPlugin,
